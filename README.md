@@ -11,7 +11,7 @@ Go to command prompt and enter: <br/>
 -npm install -g @ionic/cli @capacitor/assets <br/>
 (Installing Ionic and capacitor to make emulator) <br/>
 -CD in command prompt to where you want to put the folder <br/>
--git clone https://github.com/Sanmeet-EWU/cscd-488-490-project-save-farmers.git savefarmer <br/>
+-git clone https://github.com/Sanmeet-EWU/cscd-488-490-project-save-farmers/tree/main/Source/savefarmer.git savefarmer <br/>
 -cd savefarmer && npm install && ionic serve <br/>
 (run this command should open up the app in brower. If not then you're missing vue or ionic) <br/>
 <br/>
