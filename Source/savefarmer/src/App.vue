@@ -50,6 +50,8 @@ import {
   warningSharp,
   personCircleOutline,
   personCircleSharp,
+  homeOutline,
+  homeSharp,
 } from 'ionicons/icons';
 
 const selectedIndex = ref(0);
@@ -74,8 +76,8 @@ const appPages = [
     mdIcon: heartSharp,
   },
   {
-    title: 'Archived',
-    url: '/Archived',
+    title: 'About',
+    url: '/About',
     iosIcon: archiveOutline,
     mdIcon: archiveSharp,
   },
@@ -86,10 +88,10 @@ const appPages = [
     mdIcon: trashSharp,
   },
   {
-    title: 'Spam',
-    url: '/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp,
+    title: 'Home',
+    url: '/Home',
+    iosIcon: homeOutline,
+    mdIcon: homeSharp,
   },
 ];
 
