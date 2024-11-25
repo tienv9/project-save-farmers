@@ -25,7 +25,7 @@
 
           <ion-button expand="block" class="login-button">Login</ion-button>
           <div class="misc">
-            <a href="/ForgotPassword" class="link">Forgot your password?</a>
+            <a href="/reset-password" class="link">Forgot your password?</a>
             <p>
               Don't have an account? <a href="/SignUp" class="link">Sign Up</a>
             </p>

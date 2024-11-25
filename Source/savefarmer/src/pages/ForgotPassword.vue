@@ -3,43 +3,20 @@
       <div class="login-container">
         <ion-card>
           <ion-card-header>
-            <ion-card-title class="centered-title">Create your account</ion-card-title>
+            <ion-card-title class="centered-title">Reset Password</ion-card-title>
           </ion-card-header>
   
           <ion-card-content>
             <ion-item>
               <ion-label position="floating" class="field-title"
-                >Full name</ion-label
-              >
-              <ion-input type="text" placeholder="Email or Username"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating" class="field-title"
-                >Username</ion-label
-              >
-              <ion-input type="text" placeholder="Email or Username"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating" class="field-title"
                 >Email</ion-label
               >
-              <ion-input type="text" placeholder="Email or Username"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="floating" class="field-title"
-                >Password</ion-label
-              >
-              <ion-input
-                type="password"
-                placeholder="Enter your password"
-              ></ion-input>
-            </ion-item>
+              <ion-input type="text" placeholder="Enter your email"></ion-input>
+            </ion-item> 
   
-            <ion-button href="/Login" expand="block" class="login-button">Create Account <ion-icon color="white" icon="arrow-forward-outline"></ion-icon></ion-button>
+            <ion-button href="/Login" expand="block" class="login-button">Send reset email <ion-icon color="white" icon="arrow-forward-outline">  </ion-icon></ion-button>
             <div class="misc">
-              <p>
-                Already have an account? <a href="/Login" class="link">Log in</a>
-              </p>
+              <a href="/Login" class="link">Back to login</a>
             </div>
           </ion-card-content>
         </ion-card>
@@ -76,14 +53,13 @@
       IonIcon,
     },
   });
-  
+
   import {arrowForwardOutline} from 'ionicons/icons';
   import { addIcons } from "ionicons";
 
   addIcons({
     "arrow-forward-outline": arrowForwardOutline,
   });
-
   </script>
   
   <style scoped>

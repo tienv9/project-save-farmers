@@ -23,6 +23,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('@/pages/Home.vue')
   },
   {
+    path: '/reset-password',
+    component: () => import ('@/pages/ForgotPassword.vue')
+  },
+  {
     path: '/:id',
     component: () => import ('@/pages/FolderPage.vue')
   }
