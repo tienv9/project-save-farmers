@@ -15,6 +15,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('@/pages/Profile.vue')
   },
   {
+    path: '/SignUp',
+    component: () => import ('@/pages/SignUp.vue')
+  },
+  {
     path: '/:id',
     component: () => import ('@/pages/FolderPage.vue')
   }
