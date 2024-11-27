@@ -65,6 +65,28 @@ You can now open the **entire folder** with a code editor such as VS Code (make 
      *(This should launch the emulator. Note: It may take some time.)*
 
 --- 
+## Cypress Testing Instructions
+
+### Prerequisites:
+1. Verify Cypress is installed:
+    ```bash  
+    npm install cypress
+    
+2. Ensure that the development server is running before starting Cypress:
+   ```bash
+   npm run dev
+   
+By default, this serves the app at http://localhost:5173. You can change the base port in cypress.config.ts to match your local machine.
+
+3. Run tests with Cypress:
+    ```bash
+    npm run test:e2e
+
+4. Navigate to navigation.spec.ts to modify/view tests:
+
+    ```bash
+    cd savefarmer/tests/e2e/specs/navigation.spec.ts
+
 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/ixLrLXsm)
 
