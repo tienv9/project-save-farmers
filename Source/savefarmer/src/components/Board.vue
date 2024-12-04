@@ -1,5 +1,6 @@
 <template>
   <ion-page>
+    <ion-content>
     <div class="board">
       <ion-card v-for="(post, index) in posts" :key="index" class="board-card">
         <ion-card-header>
@@ -37,12 +38,13 @@
         </ion-card-content>
       </ion-card>
     </div>
+  </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent } from '@ionic/vue';
+import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent, IonContent } from '@ionic/vue';
 import cornIcon from '@/images/icons/corn.png';
 import tomatoIcon from '@/images/icons/tomato.png';
 import wheatIcon from '@/images/icons/wheat.png';
@@ -182,6 +184,11 @@ function getCropIcon(cropType: string): string {
   height: auto; /* Maintain aspect ratio */
   vertical-align: middle; /* Align with text vertically */
   margin-right: 8px; /* Space between image and text */
+}
+
+/* Add padding on top of ion-content to avoid content overlapping the header */
+ion-content {
+  --padding-top: 50px; /* Adjust based on the header height */
 }
 
 
