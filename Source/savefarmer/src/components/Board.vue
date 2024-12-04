@@ -1,5 +1,5 @@
 <template>
-  <ion-content>
+  <ion-page>
     <div class="board">
       <ion-card v-for="(post, index) in posts" :key="index" class="board-card">
         <ion-card-header>
@@ -37,11 +37,12 @@
         </ion-card-content>
       </ion-card>
     </div>
-  </ion-content>
+  </ion-page>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent } from '@ionic/vue';
 import cornIcon from '@/images/icons/corn.png';
 import tomatoIcon from '@/images/icons/tomato.png';
 import wheatIcon from '@/images/icons/wheat.png';
