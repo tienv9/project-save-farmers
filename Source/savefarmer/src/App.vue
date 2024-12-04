@@ -7,7 +7,7 @@
           <ion-list id="inbox-list">
             <ion-list-header>Button list</ion-list-header>
 
-            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
+            <ion-menu-toggle aria-hidden="true" :auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
@@ -22,7 +22,7 @@
         <ion-header :translucent="true">
           <ion-toolbar>
             <ion-buttons slot="start">
-              <ion-menu-button color="primary"></ion-menu-button>
+              <ion-menu-button></ion-menu-button>
             </ion-buttons>
             <ion-title>My Farmer</ion-title>
           </ion-toolbar>
