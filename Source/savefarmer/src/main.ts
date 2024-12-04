@@ -90,20 +90,18 @@ window.addEventListener('DOMContentLoaded', async () => {
         // throw new Error(`Error: execute failed`);
         // }
 
-        //adding test record to db
-        const respInsert = await db.query(
-          'INSERT INTO test (id,name) VALUES (?,?)',
-          [Date.now(),'NAME' + Date.now()]
-        );
+        // //adding test record to db
+        // const respInsert = await db.query(
+        //   'INSERT INTO test (id,name) VALUES (?,?)',
+        //   [Date.now(),'NAME' + Date.now()]
+        // );
+        // console.log(`res: ${JSON.stringify(respInsert)}`);
 
-        console.log(`res: ${JSON.stringify(respInsert)}`);
-
-        //query db
-        const respSelect = await db.query(
-          'SELECT * FROM test'
-        );
-
-        console.log(`res: ${JSON.stringify(respSelect)}`);
+        // //query db
+        // const respSelect = await db.query(
+        //   'SELECT * FROM test'
+        // );
+        // console.log(`res: ${JSON.stringify(respSelect)}`);
 
 
         //close db
