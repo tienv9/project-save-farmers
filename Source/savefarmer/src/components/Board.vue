@@ -1,151 +1,187 @@
 <template>
   <ion-content>
-    <!-- The Board Container -->
     <div class="board">
       <ion-card v-for="(post, index) in posts" :key="index" class="board-card">
         <ion-card-header>
-          <ion-card-title>{{ post.title }}</ion-card-title>
-          <ion-card-subtitle>
-            Price: {{ (post.price) }} $ per 1000 {{ post.crop_type }} by {{ post.date }}
-            <span v-if="post.expiry_date"> (Expires: {{ post.expiry_date }})</span>
-          </ion-card-subtitle>
+          <ion-card-title>
+            <img :src="getCropIcon(post.crop_type)" alt="Crop Icon" class="crop-icon" />
+            {{ post.title }}
+          </ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <p><strong>Location:</strong> {{ post.location }}</p>
-          <p><strong>Contact:</strong> {{ post.contact }}</p>
-          <p><strong>Crop Type:</strong> {{ post.crop_type }}</p>
-          <p><strong>Amount:</strong> {{ post.amount }}</p>
-          <p><strong>Extra Info:</strong> {{ post.extra_info }}</p>
+          <!-- first line -->
+          <div class="info-header">
+            <span><strong>Price:</strong></span>
+            <span><strong>Produce:</strong></span>
+            <span><strong>Location:</strong></span>
+            <span><strong>Contact:</strong></span>
+          </div>
+          <!-- second line -->
+          <div class="info-details">
+            <span>${{ post.price }}</span>
+            <span>{{ post.crop_type }}</span>
+            <span>{{ post.vendor_name }}</span>
+            <span>{{ formatContact(post.contact) }}</span>
+          </div>
+          <!-- third line -->
+          <div class="info-2details">
+            <span class="date-column">
+              <div>Date Listed:</div>
+              <div>{{ post.date }}</div>
+            </span>
+            <span>{{ post.amount }}</span>
+            <span>{{ post.location }}</span>
+            <span>{{ post.email }}</span>
+          </div>
+          <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
         </ion-card-content>
       </ion-card>
     </div>
   </ion-content>
 </template>
 
-  
-
 <script setup lang="ts">
 import { ref } from 'vue';
+import cornIcon from '@/images/icons/corn.png';
+import tomatoIcon from '@/images/icons/tomato.png';
+import wheatIcon from '@/images/icons/wheat.png';
+import carrotIcon from '@/images/icons/carrot.png';
+import cropIcon from '@/images/icons/crop.png';
+import potatoIcon from '@/images/icons/potato.png';
 
-// Define a post type for better structure
 interface Post {
   title: string;
   price: number;
   crop_type: string;
   amount: number;
   location: string;
-  contact : string;
+  contact: string;
   extra_info: string;
   date: string;
   expiry_date: string;
+  email: string;
+  vendor_name: string;
 }
 
-// Define a list of posts
 const posts = ref<Post[]>([
   {
-    title: 'Post Title',
+    title: 'Fresh Potatoes for Sale. Organic and Locally Grown.',
     price: 100,
-    crop_type: 'Potatoes',
+    crop_type: 'Potato',
     amount: 100,
-    location: 'Location',
-    contact: 'Contact',
+    location: 'Spokane, WA, USA',
+    contact: '8496554654',
+    vendor_name: 'Red Barn Farms',
+    email: 'nowhere@somewhere.com',
     extra_info: 'Extra Info',
     date: '2021-09-01',
     expiry_date: '2021-09-30',
-  },
+  },  
   {
-    title: 'Post Title 2',
+    title: 'Carrots for Sale. Fresh and Organic.',
     price: 200,
-    crop_type: 'Carrots',
+    crop_type: 'Carrot',
     amount: 200,
-    location: 'Location 2',
-    contact: 'Contact 2',
+    location: 'Seattle, WA, USA',
+    contact: '2156548231',
+    vendor_name: 'Blue Barn Farms',
+    email: 'somewhere@nowhere.com',
     extra_info: 'Extra Info 2',
     date: '2021-09-02',
     expiry_date: '2021-09-29',
   },
-  {
-    title: 'Post Title 2',
-    price: 200,
-    crop_type: 'Carrots',
-    amount: 200,
-    location: 'Location 2',
-    contact: 'Contact 2',
-    extra_info: 'Extra Info 2',
-    date: '2021-09-02',
-    expiry_date: '2021-09-29',
-  },
-  {
-    title: 'Post Title 2',
-    price: 200,
-    crop_type: 'Carrots',
-    amount: 200,
-    location: 'Location 2',
-    contact: 'Contact 2',
-    extra_info: 'Extra Info 2',
-    date: '2021-09-02',
-    expiry_date: '2021-09-29',
-  },
-  {
-    title: 'Post Title 2',
-    price: 200,
-    crop_type: 'Carrots',
-    amount: 200,
-    location: 'Location 2',
-    contact: 'Contact 2',
-    extra_info: 'Extra Info 2',
-    date: '2021-09-02',
-    expiry_date: '2021-09-29',
-  },
-  {
-    title: 'Post Title 2',
-    price: 200,
-    crop_type: 'Carrots',
-    amount: 200,
-    location: 'Location 2',
-    contact: 'Contact 2',
-    extra_info: 'Extra Info 2',
-    date: '2021-09-02',
-    expiry_date: '2021-09-29',
-  },
-  {
-    title: 'Post Title 2',
-    price: 200,
-    crop_type: 'Carrots',
-    amount: 200,
-    location: 'Location 2',
-    contact: 'Contact 2',
-    extra_info: 'Extra Info 2',
-    date: '2021-09-02',
-    expiry_date: '2021-09-29',
-  },
-  {
-    title: 'Post Title 2',
-    price: 200,
-    crop_type: 'Carrots',
-    amount: 200,
-    location: 'Location 2',
-    contact: 'Contact 2',
-    extra_info: 'Extra Info 2',
-    date: '2021-09-02',
-    expiry_date: '2021-09-29',
-  },
-
-  // Add more posts here
 ]);
+
+function formatContact(contact: string): string {
+  return contact.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+}
+
+//icon from https://www.flaticon.com/ and need to put in Attribution
+//would be better if they all from the same pack but should work for now
+function getCropIcon(cropType: string): string {
+  switch (cropType.toLowerCase()) {
+    case 'corn':
+      return cornIcon;
+    case 'tomato':
+      return tomatoIcon;
+    case 'wheat':
+      return wheatIcon;
+    case 'carrot':
+      return carrotIcon;
+    case 'potato':
+      return potatoIcon;
+    default:
+      return cropIcon;
+  }
+}
+
+
 </script>
 
 
-
 <style scoped>
+
+
 .board {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
+  gap: 0px; /* need remove top and bottom padding and use gap for distance between card*/
+  padding: 15px;
 }
 
 .board-card {
   width: 100%;
+  font-family:'Courier New', Courier, monospace;
 }
+
+.info-header {
+  display: flex;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.info-details {
+  display: flex;
+  font-size: 1.3rem;
+}
+
+.info-2details {
+  display: flex;
+  font-size: 1rem;
+}
+
+.info-header span,
+.info-2details span,
+.info-details span {
+  flex: 1;
+  flex-direction: column;
+  text-align: left; 
+}
+
+.date-column {
+  display: flex;
+  flex-direction: column; /* Stack "Date Listed" and date vertically */
+  text-align: left; /* Align text to the left */
+  line-height: 1; /* Reduce line height */
+}
+
+.date-column div:first-child {
+  font-weight: bold; 
+  font-size: 0.9rem;
+}
+
+.expiry-date {
+  margin-top: auto; /* Push the expiration date to the bottom */
+  text-align: right; /* Align the expiration date to the right */
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.crop-icon {
+  width: 1.5rem; /* Adjust width to match text size */
+  height: auto; /* Maintain aspect ratio */
+  vertical-align: middle; /* Align with text vertically */
+  margin-right: 8px; /* Space between image and text */
+}
+
+
 </style>
