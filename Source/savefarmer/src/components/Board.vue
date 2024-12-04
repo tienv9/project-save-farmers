@@ -93,6 +93,32 @@ const posts = ref<Post[]>([
     date: '2021-09-02',
     expiry_date: '2021-09-29',
   },
+  {
+    title: 'Rotten Tomatoes for Sale. Cheap and Expired.',
+    price: 10,
+    crop_type: 'Tomato',
+    amount: 200,
+    location: 'Seattle, WA, USA',
+    contact: '2424548231',
+    vendor_name: 'Brown Barn Farms',
+    email: 'somewhere2@nowhere.com',
+    extra_info: 'Extra Info 2',
+    date: '2021-09-02',
+    expiry_date: '2021-09-29',
+  },
+  {
+    title: 'Unripe Corn for Sale. Fresh and Raw.',
+    price: 900,
+    crop_type: 'Corn',
+    amount: 1,
+    location: 'Seattle, WA, USA',
+    contact: '9999999999',
+    vendor_name: 'Yellow Barn Farms',
+    email: 'nowhere2@nowhere.com',
+    extra_info: 'Extra Info 2',
+    date: '2021-09-02',
+    expiry_date: '2021-09-29',
+  },
 ]);
 
 function formatContact(contact: string): string {
