@@ -96,7 +96,7 @@ const addItem = async() => {
   await db.value?.open();
   //query db
   const respInsert = await db.value?.query(
-    'INSERT INTO test6 (id,name,qty,loc) VALUES (?,?,?,?)',
+    'INSERT INTO test7 (id,name,qty,loc) VALUES (?,?,?,?)',
     [Date.now(),inputName.value,inputQuantity.value,inputLocation.value]
     );
   console.log(`res: ${JSON.stringify(respInsert)}`);
@@ -115,7 +115,7 @@ const loadData = async() => {
   //losad db
   await db.value?.open();
   //query db
-  const respSelect = await db.value?.query('SELECT * FROM test6');
+  const respSelect = await db.value?.query('SELECT * FROM test7');
         console.log(`res: ${JSON.stringify(respSelect)}`);
   
   await db.value?.close();

@@ -79,7 +79,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         await db.open();
         console.log(`db: db_vite opened`);
         const queryCreateTable = `
-          CREATE TABLE IF NOT EXISTS test6 (
+          CREATE TABLE IF NOT EXISTS test7 (
           id INTEGER PRIMARY KEY NOT NULL,
           name TEXT NOT NULL,
           qty TEXT NOT NULL,
