@@ -11,14 +11,29 @@
 
     <ion-content :fullscreen="true" class="ion-padding">
 
+    
+
       <ion-item>
-      <ion-input type="text" v-model="inputName"></ion-input>
+        <ion-label >Product:</ion-label>
+       <ion-input type="text" v-model="inputName"></ion-input>
+       <ion-label >Quantity:</ion-label>
+       <ion-input type="text" v-model="inputQuantity"></ion-input>
+        <ion-label >Where:</ion-label>
+        <ion-input type="text" v-model="inputLocation"></ion-input>
       <ion-button slot="end" @click="addItem">Save</ion-button>
     </ion-item>
+
     <h3>THE DATA</h3>
-      <ion-item v-for="item in items" :key="item?.id">
+      <ion-item v-for="item in items" :key="item?.id" >
         <ion-label>
-          {{ item.name }}
+          <ion-label>ID: {{ item.id }}</ion-label>
+            
+          <ion-label>Product: {{ item.name }}</ion-label>
+          
+          <ion-label>Qty: {{ item.qty }}</ion-label>
+          
+          <ion-label>Where: {{ item.loc }}</ion-label>
+          
         </ion-label>
       </ion-item>
 
@@ -46,7 +61,11 @@ import { ref } from 'vue';
 const items = ref<any>();
 const db = ref<SQLiteDBConnection>();
 const sqlite = ref<SQLiteConnection>();
+
 const inputName = ref<string>("");
+const inputQuantity = ref<string>("");
+const inputLocation = ref<string>("");
+
 
 onIonViewDidEnter(async () => {
   // validate the connection
@@ -77,8 +96,8 @@ const addItem = async() => {
   await db.value?.open();
   //query db
   const respInsert = await db.value?.query(
-    'INSERT INTO test (id,name) VALUES (?,?)',
-    [Date.now(), inputName.value]
+    'INSERT INTO test6 (id,name,qty,loc) VALUES (?,?,?,?)',
+    [Date.now(),inputName.value,inputQuantity.value,inputLocation.value]
     );
   console.log(`res: ${JSON.stringify(respInsert)}`);
   
@@ -86,7 +105,7 @@ const addItem = async() => {
   await loadData();
 
 } catch (error) {
-    alert((error as Error).message);
+    alert((error as Error).message+"      ADD");
   }
 };
 
@@ -96,13 +115,14 @@ const loadData = async() => {
   //losad db
   await db.value?.open();
   //query db
-  const respSelect = await db.value?.query('SELECT * FROM test');
+  const respSelect = await db.value?.query('SELECT * FROM test6');
         console.log(`res: ${JSON.stringify(respSelect)}`);
   
   await db.value?.close();
   items.value = respSelect?.values;
+  
   } catch (error) {
-    alert((error as Error).message);
+    alert((error as Error).message+"     LOAD");
   }
 
 };

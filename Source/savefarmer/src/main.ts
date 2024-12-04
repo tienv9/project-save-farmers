@@ -79,11 +79,14 @@ window.addEventListener('DOMContentLoaded', async () => {
         await db.open();
         console.log(`db: db_vite opened`);
         const queryCreateTable = `
-          CREATE TABLE IF NOT EXISTS test (
+          CREATE TABLE IF NOT EXISTS test6 (
           id INTEGER PRIMARY KEY NOT NULL,
-          name TEXT NOT NULL
+          name TEXT NOT NULL,
+          qty TEXT NOT NULL,
+          loc TEXT NOT NULL
          );
         `
+        
         const respCT = await db.execute(queryCreateTable);
         console.log(`res: ${JSON.stringify(respCT)}`);
         // if(res.changes && res.changes.changes && res.changes.changes < 0) {
