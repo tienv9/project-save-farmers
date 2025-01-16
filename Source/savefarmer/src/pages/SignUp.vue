@@ -47,7 +47,7 @@
     </ion-page>
   </template>
   
-  <script lang="ts">
+  <script lang="ts" setup>
   import {
     IonButton,
     IonCard,
@@ -59,23 +59,7 @@
     IonLabel,
     IonInput,
     IonIcon,
-  } from "@ionic/vue";
-  import { defineComponent } from "vue";
-  
-  export default defineComponent({
-    components: {
-      IonButton,
-      IonCard,
-      IonCardContent,
-      IonCardHeader,
-      IonCardTitle,
-      IonPage,
-      IonItem,
-      IonLabel,
-      IonInput,
-      IonIcon,
-    },
-  });
+  } from "@ionic/vue";  
   
   import {arrowForwardOutline} from 'ionicons/icons';
   import { addIcons } from "ionicons";
