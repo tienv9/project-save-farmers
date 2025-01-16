@@ -25,12 +25,16 @@
               <ion-menu-button></ion-menu-button>
             </ion-buttons>
             <ion-title>My Farmer</ion-title>
+            <ion-buttons shape="round" slot="end" @click="openModal"> 
+              <ion-icon size="large" :icon="addCircleOutline"></ion-icon>
+            </ion-buttons>
           </ion-toolbar>
         </ion-header>
 
         <ion-router-outlet id="main-content"></ion-router-outlet>
       </ion-content>
     </ion-split-pane>
+    <CreatePostModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" />
   </ion-app>
 </template>
 
@@ -67,7 +71,18 @@ import {
   trashSharp,
   homeOutline,
   homeSharp,
+  addCircleOutline,
 } from 'ionicons/icons';
+
+import CreatePostModal from '@/components/CreatePost.vue';
+  
+  
+
+  const isModalOpen = ref(false);
+
+  const openModal = () => {
+  isModalOpen.value = true;
+};
 
 const selectedIndex = ref(0);
 // Temporary and can be moved later
