@@ -9,6 +9,22 @@
             {{ post.title }}
           </ion-card-title>
         </ion-card-header>
+        <div v-if="isMobileWidth">
+        <ion-card-content>
+          <div class="info-header">
+            <span><strong>Price: ${{ post.price }}</strong></span>
+            <span><strong>Produce: {{ post.crop_type }}</strong></span>
+            <span><strong>Amount: {{ post.amount }}</strong></span>
+            <span><strong>Vendor: {{ post.vendor_name }}</strong></span>
+            <span><strong>Location: {{ post.location }}</strong></span>
+            <span><strong>Contact: {{ postSer.formatContact(post.contact) }}</strong></span>
+            <span><strong>Email: {{ post.email }}</strong></span>
+            <span><strong>Date Listed: {{ post.date }}</strong></span>
+          </div>
+          <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
+        </ion-card-content>
+      </div>
+      <div v-else>
         <ion-card-content>
           <!-- first line -->
           <div class="info-header">
@@ -36,6 +52,7 @@
           </div>
           <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
         </ion-card-content>
+      </div>
       </ion-card>
     </div>
   </ion-content>
@@ -43,12 +60,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent, IonContent } from '@ionic/vue';
 import { postSer} from '@/scripts/PostService';
-
 const posts = computed(() => postSer.posts.value);
 
+const isMobileWidth = ref(false);
+
+const checkScreenWidth = () => {
+  isMobileWidth.value = window.innerWidth < 500;
+};
+
+onMounted(() => {
+  checkScreenWidth();
+  window.addEventListener('resize', checkScreenWidth);
+});
 
 </script>
 
@@ -122,5 +148,71 @@ ion-content {
   --padding-top: 50px; /* Adjust based on the header height */
 }
 
+
+/* Mobile layout: Adjust for smaller screens */
+@media (max-width: 768px) {
+  .info-header, .info-details, .info-2details {
+    flex-direction: column;
+  }
+
+  .info-header span, .info-2details span, .info-details span {
+    flex: none; /* Allow elements to stack vertically */
+    text-align: left; /* Align to the left */
+  }
+
+  .board-card {
+    width: 100%; /* Full width on mobile */
+  }
+
+  .info-header {
+    font-size: 1.2rem;
+  }
+
+  .info-details {
+    font-size: 1.1rem;
+  }
+
+  .info-2details {
+    font-size: 0.9rem;
+  }
+
+  .date-column div:first-child {
+    font-size: 0.8rem;
+  }
+
+  .expiry-date {
+    font-size: 0.7rem;
+  }
+
+  .crop-icon {
+    width: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-header {
+    font-size: 1rem;
+  }
+
+  .info-details {
+    font-size: 1rem;
+  }
+
+  .info-2details {
+    font-size: 0.9rem;
+  }
+
+  .date-column div:first-child {
+    font-size: 0.7rem;
+  }
+
+  .expiry-date {
+    font-size: 0.6rem;
+  }
+
+  .crop-icon {
+    width: 1rem;
+  }
+}
 
 </style>
