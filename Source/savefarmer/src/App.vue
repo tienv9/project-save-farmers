@@ -100,6 +100,12 @@ const appPages = [
     mdIcon: personCircleSharp,
   },
   {
+    title: 'database',
+    url: '/database',
+    iosIcon: personCircleOutline,
+    mdIcon: personCircleSharp,
+  },
+  {
     title: 'Sign Up',
     url: '/SignUp',
     iosIcon: heartOutline,
