@@ -68,6 +68,12 @@ const appPages = [
     mdIcon: personCircleSharp,
   },
   {
+    title: 'database',
+    url: '/database',
+    iosIcon: personCircleOutline,
+    mdIcon: personCircleSharp,
+  },
+  {
     title: 'Favorites',
     url: '/Favorites',
     iosIcon: heartOutline,
