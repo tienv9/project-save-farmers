@@ -1,199 +1,124 @@
-<template>
-  <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>{{ $route.params.id }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
+  <template>
+    <ion-page>
+      <!-- Main content area wrapped inside ion-content -->
+      <ion-content>
+        <div class="profile-container">
+          <ion-card class="profile-card">
+            <ion-card-header>
+              <ion-card-title>User Profile</ion-card-title>
+            </ion-card-header>
 
-    <ion-content :fullscreen="true" class="ion-padding">
+            <ion-card-content>
+              <!-- Profile image (avatar) -->
+              <ion-avatar class="profile-avatar">
+                <img src="../images/farmer-stock.jpg" alt="Profile Image" />
+              </ion-avatar>
 
-    
+              <!-- Username and Bio -->
+              <div class="profile-details">
+                <h2 class="profile-username">John Doe</h2>
+                <p class="profile-bio">sdqwefhhejfqefqhfbqwfqkfqwfb</p>
+              </div>
 
-      <ion-item>
-        <ion-label >Product:</ion-label>
-       <ion-input type="text" v-model="inputName"></ion-input>
-       <ion-label >Quantity:</ion-label>
-       <ion-input type="text" v-model="inputQuantity"></ion-input>
-        <ion-label >Where:</ion-label>
-        <ion-input type="text" v-model="inputLocation"></ion-input>
-      <ion-button slot="end" @click="addItem">Save</ion-button>
-    </ion-item>
+              <!-- Additional Profile Information -->
+              <ion-item>
+                <ion-label>Email</ion-label>
+                <ion-text>johndoe@example.com</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label>Location</ion-label>
+                <ion-text>New York, USA</ion-text>
+              </ion-item>
+            </ion-card-content>
 
-    <h3>THE DATA</h3>
-      <ion-item v-for="item in items" :key="item?.id" >
-        <ion-label>
-          <ion-label>ID: {{ item.id }}</ion-label>
-            
-          <ion-label>Product: {{ item.name }}</ion-label>
-          
-          <ion-label>Qty: {{ item.qty }}</ion-label>
-          
-          <ion-label>Where: {{ item.loc }}</ion-label>
-          
-        </ion-label>
-        <ion-button slot="end" @click="() => deleteItem(item.id)">Delete</ion-button>
+            <!-- Edit button, Ideally this should open up a card with edit functionality -->
+            <ion-button expand="block" class="edit-button" >Edit Profile</ion-button>
+            <ion-button expand="block" class="edit-button" @click="openModal">Create Post</ion-button>
+          </ion-card>
+        </div>
+        <CreatePostModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" />
+      </ion-content>
+    </ion-page>
+  </template>
 
-      </ion-item>
+  <script lang="ts" setup>
+  import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonText, IonButton, IonAvatar, IonPage, IonContent } from '@ionic/vue';
+  import { ref } from 'vue';
+  ////placeholder
+  import CreatePostModal from '@/components/CreatePost.vue';
+  ////
 
+  const isModalOpen = ref(false);
 
-
-      <!-- <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">{{ $route.params.id }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <div id="container">
-        <strong class="capitalize">{{ $route.params.id }}</strong>
-        <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div> -->
-    </ion-content>
-  </ion-page>
-</template>
-
-<script setup lang="ts">
-import { SQLiteConnection, CapacitorSQLite, SQLiteDBConnection } from '@capacitor-community/sqlite';
-import { IonButtons, IonItem, IonButton, IonInput, IonLabel, onIonViewDidEnter, onIonViewWillLeave, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { ref } from 'vue';
-
-const items = ref<any>();
-const db = ref<SQLiteDBConnection>();
-const sqlite = ref<SQLiteConnection>();
-
-const inputName = ref<string>("");
-const inputQuantity = ref<string>("");
-const inputLocation = ref<string>("");
-
-
-onIonViewDidEnter(async () => {
-  // validate the connection
-  sqlite.value = new SQLiteConnection(CapacitorSQLite)
-  const ret = await sqlite.value.checkConnectionsConsistency();
-        const isConn = (await sqlite.value.isConnection("db_vite", false)).result;
-        // let db = null;
-        if (ret.result && isConn) {
-            db.value = await sqlite.value.retrieveConnection("db_vite",false);
-        } else {
-            db.value  = await sqlite.value.createConnection("db_vite", false, "no-encryption", 1, false);
-        }
-        
-    loadData();
-});
-
-// closing connection
-onIonViewWillLeave(async() => {
-  await sqlite.value?.closeConnection("db_vite",false);
-
-});
-
-//do an insert on db
-const addItem = async() => {
-  try {
-
-  //losad db
-  await db.value?.open();
-  //query db
-  await db.value?.query(
-    'INSERT INTO test7 (id,name,qty,loc) VALUES (?,?,?,?);',
-    [Date.now(),inputName.value,inputQuantity.value,inputLocation.value]
-    );
-  
-  // update ui
-  const respSelect = await db.value?.query('SELECT * FROM test7;');
-  items.value = respSelect?.values;
-
-} catch (error) {
-    alert((error as Error).message+"      ADD");
-  }
-  finally {
-    //to make an epmty data set or missing data in it, need or dont need ??
-    inputName.value = "";
-    inputQuantity.value = "";
-    inputLocation.value = "";
-    await db.value?.close();
-
-  }
-};
-
-//do an delete on db
-const deleteItem = async (id: number) => {
-  try {
-
-  //losad db
-  await db.value?.open();
-  //query db
-  await db.value?.query(
-    'DELETE FROM test7 WHERE id=?;', [id]);
-
-  // update ui
-  const respSelect = await db.value?.query('SELECT * FROM test7;');
-  items.value = respSelect?.values;
-
-} catch (error) {
-    alert((error as Error).message+"      ADD");
-  }
-  finally {
-    //to make an epmty data set or missing data in it, need or dont need ??
-    inputName.value = "";
-    inputQuantity.value = "";
-    inputLocation.value = "";
-    await db.value?.close();
-
-  }
-};
-
-// do a select on db
-const loadData = async() => {
-  try {
-  //losad db
-  await db.value?.open();
-  //query db
-  const respSelect = await db.value?.query('SELECT * FROM test7;');
-        console.log(`res: ${JSON.stringify(respSelect)}`);
-  
-  await db.value?.close();
-  items.value = respSelect?.values;
-  
-  } catch (error) {
-    alert((error as Error).message+"     LOAD");
-  }
-  finally {
-    await db.value?.close();
-
-  }
-
+  const openModal = () => {
+  isModalOpen.value = true;
 };
 
 
-</script>
+  </script>
 
-<style scoped>
-#container {
-  text-align: center;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+  <style scoped>
+  /* Profile container should take full height minus the header */
+  .profile-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 100%; /* Full viewport height */
+    flex-direction: column;
+    padding: 16px;
+    box-sizing: border-box;
+  }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
+  /* Card should grow to take up available space */
+  .profile-card {
+    width: 100%;
+    height: 100%; /* Card fills remaining space */
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px; /* Ensure there's space for the edit button */
+  }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  color: #8c8c8c;
-  margin: 0;
-}
+  /* Ensure the avatar is centered */
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 16px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-#container a {
-  text-decoration: none;
-}
-</style>
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .profile-details {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .profile-username {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .profile-bio {
+    font-size: 1rem;
+    color: #666;
+    margin: 4px 0 0;
+  }
+
+  .edit-button {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%); /* Center the button horizontally */
+  }
+
+  /* Add padding on top of ion-content to avoid content overlapping the header */
+  ion-content {
+    --padding-top: 50px; /* Adjust based on the header height */
+  }
+  </style>

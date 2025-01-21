@@ -15,6 +15,22 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('@/pages/Profile.vue')
   },
   {
+    path: '/About',
+    component: () => import ('@/pages/AboutPage.vue')
+  },
+  {
+    path: '/SignUp',
+    component: () => import ('@/pages/SignUp.vue')
+  },
+  {
+    path: '/Home',
+    component: () => import ('@/pages/Home.vue')
+  },
+  {
+    path: '/reset-password',
+    component: () => import ('@/pages/ForgotPassword.vue')
+  },
+  {
     path: '/:id',
     component: () => import ('@/pages/FolderPage.vue')
   },
