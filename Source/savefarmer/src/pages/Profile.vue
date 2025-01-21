@@ -98,12 +98,12 @@ const addItem = async() => {
   await db.value?.open();
   //query db
   await db.value?.query(
-    'INSERT INTO test7 (id,name,qty,loc) VALUES (?,?,?,?)',
+    'INSERT INTO test7 (id,name,qty,loc) VALUES (?,?,?,?);',
     [Date.now(),inputName.value,inputQuantity.value,inputLocation.value]
     );
   
   // update ui
-  const respSelect = await db.value?.query('SELECT * FROM test7');
+  const respSelect = await db.value?.query('SELECT * FROM test7;');
   items.value = respSelect?.values;
 
 } catch (error) {
@@ -130,7 +130,7 @@ const deleteItem = async (id: number) => {
     'DELETE FROM test7 WHERE id=?;', [id]);
 
   // update ui
-  const respSelect = await db.value?.query('SELECT * FROM test7');
+  const respSelect = await db.value?.query('SELECT * FROM test7;');
   items.value = respSelect?.values;
 
 } catch (error) {
@@ -152,7 +152,7 @@ const loadData = async() => {
   //losad db
   await db.value?.open();
   //query db
-  const respSelect = await db.value?.query('SELECT * FROM test7');
+  const respSelect = await db.value?.query('SELECT * FROM test7;');
         console.log(`res: ${JSON.stringify(respSelect)}`);
   
   await db.value?.close();
