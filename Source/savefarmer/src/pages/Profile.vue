@@ -35,6 +35,8 @@
           <ion-label>Where: {{ item.loc }}</ion-label>
           
         </ion-label>
+        <ion-button slot="end" @click="() => deleteItem(item.id)">Delete</ion-button>
+
       </ion-item>
 
 
@@ -95,17 +97,52 @@ const addItem = async() => {
   //losad db
   await db.value?.open();
   //query db
-  const respInsert = await db.value?.query(
+  await db.value?.query(
     'INSERT INTO test7 (id,name,qty,loc) VALUES (?,?,?,?)',
     [Date.now(),inputName.value,inputQuantity.value,inputLocation.value]
     );
-  console.log(`res: ${JSON.stringify(respInsert)}`);
   
-  await db.value?.close();
-  await loadData();
+  // update ui
+  const respSelect = await db.value?.query('SELECT * FROM test7');
+  items.value = respSelect?.values;
 
 } catch (error) {
     alert((error as Error).message+"      ADD");
+  }
+  finally {
+    //to make an epmty data set or missing data in it, need or dont need ??
+    inputName.value = "";
+    inputQuantity.value = "";
+    inputLocation.value = "";
+    await db.value?.close();
+
+  }
+};
+
+//do an delete on db
+const deleteItem = async (id: number) => {
+  try {
+
+  //losad db
+  await db.value?.open();
+  //query db
+  await db.value?.query(
+    'DELETE FROM test7 WHERE id=?;', [id]);
+
+  // update ui
+  const respSelect = await db.value?.query('SELECT * FROM test7');
+  items.value = respSelect?.values;
+
+} catch (error) {
+    alert((error as Error).message+"      ADD");
+  }
+  finally {
+    //to make an epmty data set or missing data in it, need or dont need ??
+    inputName.value = "";
+    inputQuantity.value = "";
+    inputLocation.value = "";
+    await db.value?.close();
+
   }
 };
 
@@ -123,6 +160,10 @@ const loadData = async() => {
   
   } catch (error) {
     alert((error as Error).message+"     LOAD");
+  }
+  finally {
+    await db.value?.close();
+
   }
 
 };
