@@ -9,7 +9,7 @@
 
           <ion-card-content>
             <ion-avatar class="company-avatar">
-              <img src="../images/save-farmers-logo.jpg" alt="Save Farmers Logo" />
+              <img src="../images/farmer-stock.jpg" alt="Save Farmers Logo" />
             </ion-avatar>
 
             <div class="company-details">
