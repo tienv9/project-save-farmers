@@ -42,7 +42,7 @@
             </div>
           </ion-card-content>
 
-          <ion-button expand="block" class="learn-more-button" @click="openModal">Learn More</ion-button>
+          <ion-button expand="block" class="learn-more-button" @click="openModal" href="https://docs.google.com/document/d/1Nq_o75PIsTQNEsXNpeAQcGflzKKeDZB6-WZpnCMvH3k/edit?tab=t.0">Learn More</ion-button>
         </ion-card>
 
         <AboutUsModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" />
