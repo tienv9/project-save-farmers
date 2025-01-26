@@ -33,7 +33,7 @@
 
             <!-- Edit button, Ideally this should open up a card with edit functionality -->
             <ion-button expand="block" class="edit-button" >Edit Profile</ion-button>
-            <ion-button expand="block" class="edit-button" @click="openModal">Create Post</ion-button>
+            <ion-button expand="block" class="edit-button" @click="openPostModal">Create Post</ion-button>
           </ion-card>
         </div>
         <CreatePostModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" />
@@ -50,7 +50,7 @@
 
   const isModalOpen = ref(false);
 
-  const openModal = () => {
+  const openPostModal = () => {
   isModalOpen.value = true;
 };
 
@@ -76,6 +76,7 @@
     display: flex;
     flex-direction: column;
     padding-bottom: 80px; /* Ensure there's space for the edit button */
+    margin: 0px
   }
 
   /* Ensure the avatar is centered */

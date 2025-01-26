@@ -92,6 +92,9 @@ onMounted(() => {
 .board-card {
   width: 100%;
   font-family:'Courier New', Courier, monospace;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
 }
 
 .info-header {

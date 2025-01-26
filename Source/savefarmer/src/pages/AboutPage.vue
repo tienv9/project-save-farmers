@@ -58,6 +58,7 @@ import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 
+//there is no modal component yet for this to open
 const isModalOpen = ref(false);
 
 const openModal = () => {
