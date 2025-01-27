@@ -68,7 +68,7 @@ const posts = computed(() => postSer.posts.value);
 const isMobileWidth = ref(false);
 
 const checkScreenWidth = () => {
-  isMobileWidth.value = window.innerWidth < 500;
+  isMobileWidth.value = window.innerWidth < 850;
 };
 
 onMounted(() => {
@@ -153,7 +153,7 @@ ion-content {
 
 
 /* Mobile layout: Adjust for smaller screens */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .info-header, .info-details, .info-2details {
     flex-direction: column;
   }
@@ -192,7 +192,7 @@ ion-content {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .info-header {
     font-size: 1rem;
   }
