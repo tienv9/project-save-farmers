@@ -87,6 +87,12 @@ import CreatePostModal from '@/components/CreatePost.vue';
 const selectedIndex = ref(0);
 // Temporary and can be moved later
 const appPages = [
+{
+    title: 'Home',
+    url: '/Home',
+    iosIcon: homeOutline,
+    mdIcon: homeSharp,
+  },
   {
     title: 'Login',
     url: '/Login',
@@ -122,13 +128,8 @@ const appPages = [
     url: '/Trash',
     iosIcon: trashOutline,
     mdIcon: trashSharp,
-  },
-  {
-    title: 'Home',
-    url: '/Home',
-    iosIcon: homeOutline,
-    mdIcon: homeSharp,
-  },
+  }
+  
 ];
 
 const path = window.location.pathname.split('/')[1];
