@@ -245,6 +245,7 @@ onMounted(() => {
   flex-direction: column;
   padding-bottom: 80px; /* Ensure there's space for the edit button */
   margin: 0px;
+  overflow-y: auto;
 }
 
 /* Ensure the avatar is centered */
@@ -292,8 +293,8 @@ onMounted(() => {
   left: 1%;
   width: 30%; 
   height: 40%; 
-  border: 1px solid red;
   background-color: transparent;
+  box-shadow: none;
 }
 .chart-container-top-2 {
   position: absolute;
@@ -301,14 +302,15 @@ onMounted(() => {
   left: 32.6%;
   width: 30%; 
   height: 40%; 
-  border: 1px solid red;
   background-color: transparent;
   display: flex;
   flex-direction: column; 
   justify-content: center; 
   align-items: center;
   font-size: 3.5rem;
-  color: rgba(75, 192, 192, 1);  
+  background-color: rgb(56, 142, 212);
+  color: rgb(254, 255, 255); 
+  box-shadow: none; 
 }
 .chart-container-top-3 {
   position: absolute;
@@ -316,8 +318,8 @@ onMounted(() => {
   right: 1%;
   width: 30%; 
   height: 40%; 
-  border: 1px solid red;
   background-color: transparent;
+  box-shadow: none;
 }
 
 .chart-container-bottom-1 {
@@ -328,11 +330,11 @@ onMounted(() => {
   width: 30%;
   height: 20%; 
   background-color: transparent; 
-  border: 1px solid blue; 
   display: flex;
   flex-direction: column; 
   justify-content: center; 
   align-items: center; 
+  box-shadow: none;
 }
 .chart-container-bottom-2 {
   font-family:'Courier New', Courier, monospace;
@@ -342,11 +344,11 @@ onMounted(() => {
   width: 30%;
   height: 20%; 
   background-color: transparent; 
-  border: 1px solid blue; 
   display: flex;
   flex-direction: column; 
   justify-content: center; 
   align-items: center; 
+  box-shadow: none;
 }
 .chart-container-bottom-3 {
   font-family:'Courier New', Courier, monospace;
@@ -356,21 +358,11 @@ onMounted(() => {
   width: 30%;
   height: 20%; 
   background-color: transparent; 
-  border: 1px solid blue; 
   display: flex;
   flex-direction: column; 
   justify-content: center; 
   align-items: center; 
-}
-.UserData {
-  position: absolute;
-  font-family:'Courier New', Courier, monospace;
-  background-color: rgba(32, 58, 20, 0.959);
-  bottom: 8%;
-  left: 1%;
-  width: 40%;
-  height: 35%;
-  z-index: 1;
+  box-shadow: none;
 }
 
 .chartTitle {
@@ -390,10 +382,11 @@ onMounted(() => {
   justify-content: space-between; 
   width: 100%;
 }
+
 .PostHistory {
   font-family:'Courier New', Courier, monospace;
   position: absolute;
-  background-color: rgba(32, 58, 20, 0.959);
+  background-color: rgba(34, 34, 37, 0.959);
   bottom: 8%;
   right: 1%;
   width: 40%;
@@ -402,6 +395,17 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+}
+
+.UserData {
+  position: absolute;
+  font-family:'Courier New', Courier, monospace;
+  background-color: rgba(34, 34, 37, 0.959);
+  bottom: 8%;
+  left: 1%;
+  width: 40%;
+  height: 35%;
+  z-index: 1;
 }
 
 .crop-icon {
