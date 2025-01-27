@@ -41,6 +41,9 @@
 
             <div class="data-container"> <!-- need this to avoid weird inconsistent spacing with absolute -->
           <ion-card class="UserData">
+            <ion-card-content>
+            <ion-card-title style="justify-self: center;">Your weekly Data</ion-card-title>
+            </ion-card-content>
             <ion-card class="chart-container-top">
               <canvas ref="chartCanvas"></canvas>
             </ion-card>
@@ -229,7 +232,7 @@ onMounted(() => {
 }
 .chart-container-top {
   position: absolute;
-  top: 2%;
+  top: 14%;
   left: 1%;
   width: 30%; 
   height: 40%; 
@@ -239,7 +242,7 @@ onMounted(() => {
 .chart-container-bottom {
   font-family:'Courier New', Courier, monospace;
   position: absolute;
-  top: 42%;
+  top: 54%;
   left: 1%;
   width: 30%;
   height: 20%; 
@@ -252,6 +255,7 @@ onMounted(() => {
 }
 .UserData {
   position: absolute;
+  font-family:'Courier New', Courier, monospace;
   background-color: rgba(32, 58, 20, 0.959);
   bottom: 8%;
   left: 1%;
