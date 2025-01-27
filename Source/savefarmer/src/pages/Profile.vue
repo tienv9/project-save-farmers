@@ -44,12 +44,24 @@
             <ion-card-content>
             <ion-card-title style="justify-self: center;">Your weekly Data</ion-card-title>
             </ion-card-content>
-            <ion-card class="chart-container-top">
+            <ion-card class="chart-container-top-1">
               <canvas ref="chartCanvas"></canvas>
             </ion-card>
-            <ion-card class="chart-container-bottom">
-              <ion-text class="earnings">Earnings</ion-text>
-              <ion-text class="earnAmount">$2000</ion-text>
+            <ion-card class="chart-container-bottom-1">
+              <ion-text class="chartTitle">Earnings</ion-text>
+              <ion-text class="chartSubtitle">$2000</ion-text>
+            </ion-card>
+            <ion-card class="chart-container-top-2">
+              <ion-text>20</ion-text>
+            </ion-card>
+            <ion-card class="chart-container-bottom-2">
+              <ion-text class="chartTitle">Active Posts</ion-text>
+            </ion-card>
+            <ion-card class="chart-container-top-3">
+              <canvas ref="cropPieChart"></canvas>
+            </ion-card>
+            <ion-card class="chart-container-bottom-3">
+              <ion-text class="chartTitle">Types sold</ion-text>
             </ion-card>
           </ion-card>
 
@@ -103,6 +115,7 @@ const PostList = computed(() => postSer.posts.value);
 
 Chart.register(...registerables);
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
+const cropPieChart =  ref<HTMLCanvasElement | null>(null);
 
 const isModalOpen = ref(false);
 
@@ -110,7 +123,45 @@ const openPostModal = () => {
   isModalOpen.value = true;
 };
 
-const initializeChart = () => {
+const CropPieChart = () => {
+  if (cropPieChart.value) {
+    const ctx = cropPieChart.value.getContext("2d");
+    if (ctx) {
+      new Chart(ctx, {
+        type: "pie", // Pie chart
+        data: {
+          labels: ["Potato", "Carrot", "Wheat", "Tomato", "Corn", "Mixes"], // Labels for the crops
+          datasets: [
+            {
+              data: [27, 10, 17, 24, 17, 5], // Values for each crop
+              backgroundColor: ["#D2B48C", "#FFA500", "#F5DEB3", "#FF6347", "#FFD700", "#8A2BE2"], // Background colors
+              borderColor: ["#D2B48C", "#FFA500", "#F5DEB3", "#FF6347", "#FFD700", "#8A2BE2"], // Border colors
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return `${tooltipItem.label}: ${tooltipItem.raw}%`; // Show value with % symbol
+                },
+              },
+            },
+            legend: {
+              display: false, // Hide the legend to remove outside labels
+            },
+          },
+        },
+      });
+    }
+  }
+};
+
+const EarningChart = () => {
   if (chartCanvas.value) {
     const ctx = chartCanvas.value.getContext("2d");
     if (ctx) {
@@ -160,10 +211,14 @@ const initializeChart = () => {
       });
     }
   }
-};
+}
 
-// Watch for the chartCanvas ref and initialize the chart once it's available
-initializeChart();
+
+const initializeChart = () => {
+  EarningChart();
+  CropPieChart();
+
+};
 
 onMounted(() => {
   initializeChart();
@@ -230,7 +285,8 @@ onMounted(() => {
   left: 50%;
   transform: translateX(-50%); /* Center the button horizontally */
 }
-.chart-container-top {
+
+.chart-container-top-1 {
   position: absolute;
   top: 14%;
   left: 1%;
@@ -239,11 +295,64 @@ onMounted(() => {
   border: 1px solid red;
   background-color: transparent;
 }
-.chart-container-bottom {
+.chart-container-top-2 {
+  position: absolute;
+  top: 14%;
+  left: 32.6%;
+  width: 30%; 
+  height: 40%; 
+  border: 1px solid red;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
+  font-size: 3.5rem;
+  color: rgba(75, 192, 192, 1);  
+}
+.chart-container-top-3 {
+  position: absolute;
+  top: 14%;
+  right: 1%;
+  width: 30%; 
+  height: 40%; 
+  border: 1px solid red;
+  background-color: transparent;
+}
+
+.chart-container-bottom-1 {
   font-family:'Courier New', Courier, monospace;
   position: absolute;
   top: 54%;
   left: 1%;
+  width: 30%;
+  height: 20%; 
+  background-color: transparent; 
+  border: 1px solid blue; 
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+}
+.chart-container-bottom-2 {
+  font-family:'Courier New', Courier, monospace;
+  position: absolute;
+  top: 54%;
+  left: 32.6%;
+  width: 30%;
+  height: 20%; 
+  background-color: transparent; 
+  border: 1px solid blue; 
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+}
+.chart-container-bottom-3 {
+  font-family:'Courier New', Courier, monospace;
+  position: absolute;
+  top: 54%;
+  right: 1%;
   width: 30%;
   height: 20%; 
   background-color: transparent; 
@@ -264,13 +373,13 @@ onMounted(() => {
   z-index: 1;
 }
 
-.earnings {
+.chartTitle {
   color: rgba(75, 192, 192, 1);
   font-size: 1rem;
   font-weight: bold;
 }
 
-.earnAmount {
+.chartSubtitle {
   color: rgba(75, 192, 192, 1);
   font-size: 1.5rem;
   font-weight: bold;
