@@ -48,6 +48,14 @@ The following are third party plugins that you will need to run the app:
      ```bash
      npm install chart.js
      ```
+- **chartjs-plugin-datalabels**  
+     ```bash
+     npm install chartjs-plugin-datalabels
+     ```
+     OR
+     ```bash
+     yarn add chartjs-plugin-datalabels
+     ```
 ---
 
 # Emulator Instructions
