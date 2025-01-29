@@ -128,6 +128,12 @@ const appPages = [
     url: '/Trash',
     iosIcon: trashOutline,
     mdIcon: trashSharp,
+  },
+  {
+    title: 'Admin',
+    url: '/AdminPage',
+    iosIcon: trashOutline,
+    mdIcon: trashSharp,
   }
   
 ];

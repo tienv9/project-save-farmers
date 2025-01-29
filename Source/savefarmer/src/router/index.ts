@@ -37,6 +37,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/database',
     component: () => import ('@/pages/database.vue')
+  },
+  {
+    path: '/AdminPage',
+    component: () => import ('@/pages/AdminPage.vue')
   }
 
 ]
