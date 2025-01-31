@@ -9,33 +9,48 @@
       </ion-toolbar>
     </ion-header>
 
+    <!-- Editing Item -->
     <ion-content :fullscreen="true" class="ion-padding">
+      <template v-if="editItem">
+        <ion-item>
+          <ion-label>Product:</ion-label>
+          <ion-input type="text" v-model="inputName"></ion-input>
+          <ion-label>Quantity:</ion-label>
+          <ion-input type="text" v-model="inputQuantity"></ion-input>
+          <ion-label>Where:</ion-label>
+          <ion-input type="text" v-model="inputLocation"></ion-input>
+          <ion-button @click="() => setEditItem(undefined)">CANCEL</ion-button>
+          <ion-button @click="updateItem">UPDATE</ion-button>
+        </ion-item>
+      </template>
 
-    
-
-      <ion-item>
-        <ion-label >Product:</ion-label>
-       <ion-input type="text" v-model="inputName"></ion-input>
-       <ion-label >Quantity:</ion-label>
-       <ion-input type="text" v-model="inputQuantity"></ion-input>
-        <ion-label >Where:</ion-label>
-        <ion-input type="text" v-model="inputLocation"></ion-input>
-      <ion-button slot="end" @click="addItem">Save</ion-button>
-    </ion-item>
-
-    <h3>THE DATA</h3>
-      <ion-item v-for="item in items" :key="item?.id" >
+      <!-- Adding Item -->
+      <template v-else>
+        <ion-item>
+          <ion-label>Product:</ion-label>
+          <ion-input type="text" v-model="inputName"></ion-input>
+          <ion-label>Quantity:</ion-label>
+          <ion-input type="text" v-model="inputQuantity"></ion-input>
+          <ion-label>Where:</ion-label>
+          <ion-input type="text" v-model="inputLocation"></ion-input>
+          <ion-button slot="end" @click="addItem">ADD</ion-button>
+        </ion-item>
+      </template>
+      <h3>THE DATA</h3>
+      <ion-item v-for="item in items" :key="item?.id">
         <ion-label>
           <ion-label>ID: {{ item.id }}</ion-label>
-            
+
           <ion-label>Product: {{ item.name }}</ion-label>
-          
+
           <ion-label>Qty: {{ item.qty }}</ion-label>
-          
+
           <ion-label>Where: {{ item.loc }}</ion-label>
-          
+
         </ion-label>
-        <ion-button slot="end" @click="() => deleteItem(item.id)">Delete</ion-button>
+
+        <ion-button @click="() => setEditItem(item)">Edit</ion-button>
+        <ion-button @click="() => deleteItem(item.id)">Delete</ion-button>
 
       </ion-item>
 
@@ -56,17 +71,27 @@
 </template>
 
 <script setup lang="ts">
+
+type SQLItem = {
+  id: number;
+  name: string;
+  qty: string;
+  loc: string;
+};
+
 import { SQLiteConnection, CapacitorSQLite, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { IonButtons, IonItem, IonButton, IonInput, IonLabel, onIonViewDidEnter, onIonViewWillLeave, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref } from 'vue';
 
-const items = ref<any>();
+const items = ref<SQLItem[] | undefined>();
 const db = ref<SQLiteDBConnection>();
 const sqlite = ref<SQLiteConnection>();
 
 const inputName = ref<string>("");
 const inputQuantity = ref<string>("");
 const inputLocation = ref<string>("");
+
+const editItem = ref<SQLItem | undefined>(undefined);
 
 
 onIonViewDidEnter(async () => {
@@ -134,7 +159,53 @@ const deleteItem = async (id: number) => {
   items.value = respSelect?.values;
 
 } catch (error) {
-    alert((error as Error).message+"      ADD");
+    alert((error as Error).message+"      DELETE");
+  }
+  finally {
+    //to make an epmty data set or missing data in it, need or dont need ??
+    inputName.value = "";
+    inputQuantity.value = "";
+    inputLocation.value = "";
+    await db.value?.close();
+
+  }
+};
+
+
+const setEditItem = (item: SQLItem | undefined) => {
+  if (item) {
+    editItem.value = item;
+    inputName.value = item.name;
+    inputQuantity.value = item.qty;
+    inputLocation.value = item.loc;
+  } else {
+    editItem.value = undefined;
+    inputName.value = "";
+    inputQuantity.value = "";
+    inputLocation.value = "";
+  }
+};
+
+// Update entery in database
+const updateItem = async() => {
+  try {
+
+  //losad db
+  await db.value?.open();
+  //query db
+  await db.value?.query(
+    'UPDATE test7 SET name=?, qty=?, loc=? WHERE id=?;',
+    [inputName.value,inputQuantity.value,inputLocation.value,editItem.value?.id]
+    );
+  
+    setEditItem(undefined);
+
+  // update ui
+  const respSelect = await db.value?.query('SELECT * FROM test7;');
+  items.value = respSelect?.values;
+
+} catch (error) {
+    alert((error as Error).message+"      UPDATE");
   }
   finally {
     //to make an epmty data set or missing data in it, need or dont need ??
