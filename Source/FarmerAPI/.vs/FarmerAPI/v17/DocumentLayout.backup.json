@@ -1,0 +1,96 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd488-490\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\infrastructure\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\infrastructure\\mapping\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd488-490\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd488-490\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\infrastructure\\context\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\infrastructure\\context\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd488-490\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Infrastructure\\Context\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Infrastructure\\Context\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Infrastructure\\Context\\ApplicationDbContext.cs",
+              "RelativeToolTip": "FarmerAPI\\Infrastructure\\Context\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T07:04:12.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Program.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Program.cs",
+              "RelativeToolTip": "FarmerAPI\\Program.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T07:03:30.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Infrastructure\\Mapping\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Infrastructure\\Mapping\\MappingProfile.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Infrastructure\\Mapping\\MappingProfile.cs",
+              "RelativeToolTip": "FarmerAPI\\Infrastructure\\Mapping\\MappingProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T06:45:59.894Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\UserService.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Service\\UserService.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\UserService.cs",
+              "RelativeToolTip": "FarmerAPI\\Service\\UserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-01T06:36:56.972Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
