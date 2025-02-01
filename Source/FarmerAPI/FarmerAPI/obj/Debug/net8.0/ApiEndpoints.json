@@ -53,30 +53,14 @@
   },
   {
     "ContainingType": "FarmerAPI.Controllers.PostController",
-    "Method": "GetPost",
-    "RelativePath": "api/posts/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FarmerAPI.Controllers.PostController",
     "Method": "UpdatePost",
-    "RelativePath": "api/posts/{id}",
+    "RelativePath": "api/posts/{postId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "postId",
         "Type": "System.Guid",
         "IsRequired": true
       },
@@ -91,13 +75,29 @@
   {
     "ContainingType": "FarmerAPI.Controllers.PostController",
     "Method": "DeletePost",
-    "RelativePath": "api/posts/{id}",
+    "RelativePath": "api/posts/{postId}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "postId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FarmerAPI.Controllers.PostController",
+    "Method": "GetAllPostsByUserId",
+    "RelativePath": "api/posts/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
         "Type": "System.Guid",
         "IsRequired": true
       }

@@ -21,20 +21,13 @@ namespace FarmerAPI.Service
         public async Task<PostResponse> CreatePostAsync(PostRequest request)
         {
             var post = _mapper.Map<Post>(request);
-            post.Id = Guid.NewGuid();
-            post.CreatedAt = DateTime.UtcNow;
-            post.UpdatedAt = DateTime.UtcNow;
+            post.PostId = Guid.NewGuid();
+            post.CreateDate = DateTime.UtcNow;
+            post.UpdateDate = DateTime.UtcNow;
 
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<PostResponse>(post);
-        }
-
-        public async Task<PostResponse> GetPostByIdAsync(Guid id)
-        {
-            var post = await _context.Posts.FindAsync(id);
-            if (post == null) throw new Exception("Post not found");
             return _mapper.Map<PostResponse>(post);
         }
 
@@ -44,22 +37,37 @@ namespace FarmerAPI.Service
             return _mapper.Map<IEnumerable<PostResponse>>(posts);
         }
 
-        public async Task<PostResponse> UpdatePostAsync(Guid id, PostRequest request)
+        public async Task<IEnumerable<PostResponse>> GetAllPostsByUserIdAsync(Guid userId)
         {
-            var post = await _context.Posts.FindAsync(id);
+            var posts = await _context.Posts
+                .Where(p => p.UserId == userId)
+                .ToListAsync();
+            return _mapper.Map<IEnumerable<PostResponse>>(posts);
+        }
+
+        public async Task<PostResponse> UpdatePostAsync(Guid postId, PostRequest request)
+        {
+            var post = await _context.Posts.FindAsync(postId);
             if (post == null) throw new Exception("Post not found");
 
             post.Title = request.Title;
-            post.Content = request.Content;
-            post.UpdatedAt = DateTime.UtcNow;
+            post.Price = request.Price;
+            post.CropType = request.CropType;
+            post.Amount = request.Amount;
+            post.Location = request.Location;
+            post.Contact = request.Contact;
+            post.Description = request.Description;
+            post.ExpireDate = request.ExpireDate;
+            post.Name = request.Name;
+            post.UpdateDate = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
             return _mapper.Map<PostResponse>(post);
         }
 
-        public async Task DeletePostAsync(Guid id)
+        public async Task DeletePostAsync(Guid postId)
         {
-            var post = await _context.Posts.FindAsync(id);
+            var post = await _context.Posts.FindAsync(postId);
             if (post == null) throw new Exception("Post not found");
 
             _context.Posts.Remove(post);

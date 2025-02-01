@@ -24,13 +24,6 @@ namespace FarmerAPI.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPost(Guid id)
-        {
-            var response = await _postService.GetPostByIdAsync(id);
-            return Ok(response);
-        }
-
         [HttpGet]
         public async Task<IActionResult> GetAllPosts()
         {
@@ -38,17 +31,24 @@ namespace FarmerAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePost(Guid id, [FromBody] PostRequest request)
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetAllPostsByUserId(Guid userId)
         {
-            var response = await _postService.UpdatePostAsync(id, request);
+            var response = await _postService.GetAllPostsByUserIdAsync(userId);
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePost(Guid id)
+        [HttpPut("{postId}")]
+        public async Task<IActionResult> UpdatePost(Guid postId, [FromBody] PostRequest request)
         {
-            await _postService.DeletePostAsync(id);
+            var response = await _postService.UpdatePostAsync(postId, request);
+            return Ok(response);
+        }
+
+        [HttpDelete("{postId}")]
+        public async Task<IActionResult> DeletePost(Guid postId)
+        {
+            await _postService.DeletePostAsync(postId);
             return NoContent();
         }
     }

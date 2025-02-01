@@ -2,11 +2,18 @@
 {
     public class Post
     {
-        public Guid Id { get; set; }
+        public Guid PostId { get; set; } // Unique identifier for the post
         public string Title { get; set; }
-        public string Content { get; set; }
-        public Guid UserId { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public string Price { get; set; }
+        public string CropType { get; set; }
+        public string Amount { get; set; }
+        public string Location { get; set; }
+        public string Contact { get; set; }
+        public string? Description { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public DateTime ExpireDate { get; set; }
+        public string Name { get; set; }
+        public Guid UserId { get; set; } // Foreign key to connect the post to a user
     }
 }
