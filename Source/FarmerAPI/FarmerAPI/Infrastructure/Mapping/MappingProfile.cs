@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FarmerAPI.Domain.Contracts;
 using FarmerAPI.Domain.Entities;
+using Microsoft.Extensions.Hosting;
 
 namespace FarmerAPI.Infrastructure.Mapping
 {
@@ -11,6 +12,8 @@ namespace FarmerAPI.Infrastructure.Mapping
             CreateMap<ApplicationUser, UserResponse>();
             CreateMap<ApplicationUser, CurrentUserResponse>();
             CreateMap<UserRegisterRequest, ApplicationUser>();
+            CreateMap<Post, PostResponse>();
+            CreateMap<PostRequest, Post>();
         }
     }
 }

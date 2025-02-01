@@ -28,7 +28,7 @@
   {
     "ContainingType": "FarmerAPI.Controllers.PostController",
     "Method": "CreatePost",
-    "RelativePath": "api/Post",
+    "RelativePath": "api/posts",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -44,7 +44,7 @@
   {
     "ContainingType": "FarmerAPI.Controllers.PostController",
     "Method": "GetAllPosts",
-    "RelativePath": "api/Post",
+    "RelativePath": "api/posts",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -53,8 +53,8 @@
   },
   {
     "ContainingType": "FarmerAPI.Controllers.PostController",
-    "Method": "GetPostById",
-    "RelativePath": "api/Post/{id}",
+    "Method": "GetPost",
+    "RelativePath": "api/posts/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -70,7 +70,7 @@
   {
     "ContainingType": "FarmerAPI.Controllers.PostController",
     "Method": "UpdatePost",
-    "RelativePath": "api/Post/{id}",
+    "RelativePath": "api/posts/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -91,7 +91,7 @@
   {
     "ContainingType": "FarmerAPI.Controllers.PostController",
     "Method": "DeletePost",
-    "RelativePath": "api/Post/{id}",
+    "RelativePath": "api/posts/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
