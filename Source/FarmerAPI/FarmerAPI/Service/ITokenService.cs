@@ -4,7 +4,7 @@ namespace FarmerAPI.Service
 {
     public interface ITokenService
     {
-        Task<string> GenerateToken(ApplicationUser user);
+        Task<string> GenerateToken(User user);
         string GenerateRefreshToken();
     }
 }

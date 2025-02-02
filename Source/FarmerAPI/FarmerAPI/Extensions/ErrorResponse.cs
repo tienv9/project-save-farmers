@@ -1,4 +1,4 @@
-﻿namespace FarmerAPI.Domain.Contracts
+﻿namespace FarmerAPI.Extensions
 {
     public class ErrorResponse
     {

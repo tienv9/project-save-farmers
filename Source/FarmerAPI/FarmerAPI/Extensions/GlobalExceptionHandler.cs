@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
-namespace FarmerAPI.Exceptions
+namespace FarmerAPI.Extensions
 {
     public class GlobalExceptionHandler : IExceptionHandler
     {

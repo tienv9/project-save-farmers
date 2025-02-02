@@ -1,5 +1,5 @@
-﻿using FarmerAPI.Domain.Contracts;
-using FarmerAPI.Domain.Entities;
+﻿using FarmerAPI.Domain.Entities;
+using FarmerAPI.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,10 +15,10 @@ namespace FarmerAPI.Service
         private readonly string? _validIssuer;
         private readonly string? _validAudience;
         private readonly double _expires;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly ILogger<TokenService> _logger;
 
-        public TokenService(IConfiguration configuration, UserManager<ApplicationUser> userManager, ILogger<TokenService> logger)
+        public TokenService(IConfiguration configuration, UserManager<User> userManager, ILogger<TokenService> logger)
         {
             _userManager = userManager;
             _logger = logger;
@@ -34,7 +34,7 @@ namespace FarmerAPI.Service
             _expires = jwtSettings.Expires;
         }
 
-        public async Task<string> GenerateToken(ApplicationUser user)
+        public async Task<string> GenerateToken(User user)
         {
             var singingCredentials = new SigningCredentials(_secretKey, SecurityAlgorithms.HmacSha256);
             var claims = await GetClaimsAsync(user);
@@ -62,7 +62,7 @@ namespace FarmerAPI.Service
             return refreshToken;
         }
 
-        private async Task<List<Claim>> GetClaimsAsync(ApplicationUser user)
+        private async Task<List<Claim>> GetClaimsAsync(User user)
         {
             var claims = new List<Claim>
             {

@@ -1,5 +1,4 @@
 using FarmerAPI.Domain.Entities;
-using FarmerAPI.Exceptions;
 using FarmerAPI.Extensions;
 using FarmerAPI.Infrastructure.Context;
 using FarmerAPI.Infrastructure.Mapping;
@@ -70,7 +69,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Adding Identity
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 

@@ -12,11 +12,11 @@ namespace FarmerAPI.Service
     {
         private readonly ITokenService _tokenService;
         private readonly ICurrentUserService _currentUserService;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly ILogger<UserService> _logger;
 
-        public UserService(ITokenService tokenService, ICurrentUserService currentUserService, UserManager<ApplicationUser> userManager, IMapper mapper, ILogger<UserService> logger)
+        public UserService(ITokenService tokenService, ICurrentUserService currentUserService, UserManager<User> userManager, IMapper mapper, ILogger<UserService> logger)
         {
             _tokenService = tokenService;
             _currentUserService = currentUserService;
@@ -35,7 +35,7 @@ namespace FarmerAPI.Service
                 throw new Exception("Email already exists");
             }
 
-            var newUser = _mapper.Map<ApplicationUser>(request);
+            var newUser = _mapper.Map<User>(request);
 
             // Generate a unique username
             newUser.UserName = GenerateUserName(request.FirstName, request.LastName);
@@ -113,7 +113,7 @@ namespace FarmerAPI.Service
             
 
 
-            var userResponse = _mapper.Map<ApplicationUser, UserResponse>(user);
+            var userResponse = _mapper.Map<User, UserResponse>(user);
             userResponse.AccessToken = token;
             userResponse.RefreshToken = refreshToken;
             return userResponse;

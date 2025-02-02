@@ -9,9 +9,9 @@ namespace FarmerAPI.Infrastructure.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<ApplicationUser, UserResponse>();
-            CreateMap<ApplicationUser, CurrentUserResponse>();
-            CreateMap<UserRegisterRequest, ApplicationUser>();
+            CreateMap<User, UserResponse>();
+            CreateMap<User, CurrentUserResponse>();
+            CreateMap<UserRegisterRequest, User>();
             CreateMap<Post, PostResponse>();
             CreateMap<PostRequest, Post>();
         }
