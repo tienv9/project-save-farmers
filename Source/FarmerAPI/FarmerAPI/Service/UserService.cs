@@ -84,6 +84,13 @@ namespace FarmerAPI.Service
                 throw new Exception("Invalid email or password");
             }
 
+            if (user.CreateAt == default)
+            {
+                user.CreateAt = DateTime.Now;
+            }
+
+            user.UpdateAt = DateTime.Now;
+
             // Generate access token
             var token = await _tokenService.GenerateToken(user);
 
@@ -95,8 +102,6 @@ namespace FarmerAPI.Service
             var refreshTokenHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(refreshToken));
             user.RefreshToken = Convert.ToBase64String(refreshTokenHash);
             user.RefreshTokenExpiryTime = DateTime.Now.AddDays(2);
-            user.UpdateAt = DateTime.Now;
-            user.CreateAt = DateTime.Now;
             // Update user information in database
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -105,7 +110,6 @@ namespace FarmerAPI.Service
                 _logger.LogError("Failed to update user: {errors}", errors);
                 throw new Exception($"Failed to update user: {errors}");
             }
-
             
 
 
