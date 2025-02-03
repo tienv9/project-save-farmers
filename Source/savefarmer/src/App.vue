@@ -123,12 +123,12 @@ const appPages = [
     iosIcon: archiveOutline,
     mdIcon: archiveSharp,
   },
-  {
-    title: 'Trash',
-    url: '/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp,
-  },
+  // {
+  //   title: 'Trash',
+  //   url: '/Trash',
+  //   iosIcon: trashOutline,
+  //   mdIcon: trashSharp,
+  // },
   {
     title: 'Admin',
     url: '/AdminPage',
