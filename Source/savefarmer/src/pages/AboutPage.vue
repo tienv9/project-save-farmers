@@ -74,7 +74,7 @@ onMounted(() => {
       datasets: [
         {
           label: 'App Progress',
-          data: [0, 23], // The progress is at 15% during the 'Development' phase
+          data: [0, 34], // The progress is at 15% during the 'Development' phase
           borderColor: '#4caf50',
           backgroundColor: 'rgba(76, 175, 80, 0.2)',
           tension: 0.3,
