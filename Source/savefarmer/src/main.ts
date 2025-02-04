@@ -39,9 +39,22 @@ import './theme/variables.css';
 import { Capacitor } from '@capacitor/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { JeepSqlite } from 'jeep-sqlite/dist/components/jeep-sqlite';
+import Axios from 'axios';
 
 customElements.define('jeep-sqlite', JeepSqlite);
 console.log(`after customElements.define`);
+
+//this will connect to local server when visual studio is running the server
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  Axios.defaults.baseURL = 'http://localhost:5209/'
+}
+
+
+
+
+
+
+
 
 window.addEventListener('DOMContentLoaded', async () => {
   

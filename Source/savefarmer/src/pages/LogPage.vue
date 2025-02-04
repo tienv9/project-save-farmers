@@ -11,19 +11,24 @@
             <ion-label position="floating" class="field-title"
               >Username</ion-label
             >
-            <ion-input type="text" placeholder="Email or Username"></ion-input>
+            <ion-input
+              v-model="email"
+              type="text"
+              placeholder="Email or Username"
+            ></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="floating" class="field-title"
               >Password</ion-label
             >
             <ion-input
-              type="password"
-              placeholder="Enter your password"
+              v-model="password"
+              type="text"
+              placeholder="password"
             ></ion-input>
           </ion-item>
 
-          <ion-button expand="block" class="login-button">Login</ion-button>
+          <ion-button expand="block" class="login-button" @click="handleLogin">Login</ion-button>
           <div class="misc">
             <a href="/reset-password" class="link">Forgot your password?</a>
             <p>
@@ -48,6 +53,32 @@ import {
   IonLabel,
   IonInput,
 } from "@ionic/vue";
+import { ref } from "vue";
+import axios from "axios";
+
+const email = ref("");
+const password = ref("");
+
+const handleLogin = async () => {
+  try {
+    const response = await axios.post('https://localhost:7170/api/login', {
+      email: email.value,
+      password: password.value
+    });
+    if (response.status === 200) {
+      // Fixed string concatenation and missing parenthesis
+      alert('Login successful! Your ID is: ' + response.data.id + "\n" + 
+            'Your name is: ' + response.data.firstName + ' ' + response.data.lastName + "\n" +
+            'Your email is: ' + response.data.email + "\n" + 
+            'Your role is: ' + response.data.role);
+      window.location.href = '/Profile';
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    alert('Login failed. Please check your credentials.');
+  }
+};
+
 
 </script>
 
