@@ -9,12 +9,12 @@
         <ion-card-content>
           <ion-item>
             <ion-label position="floating" class="field-title"
-              >Username</ion-label
+              >Email</ion-label
             >
             <ion-input
               v-model="email"
               type="text"
-              placeholder="Email or Username"
+              placeholder="Email"
             ></ion-input>
           </ion-item>
           <ion-item>

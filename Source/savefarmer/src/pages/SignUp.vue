@@ -9,33 +9,46 @@
           <ion-card-content>
             <ion-item>
               <ion-label position="floating" class="field-title"
-                >Full name</ion-label
+                >First name</ion-label
               >
-              <ion-input type="text" placeholder="Email or Username"></ion-input>
+              <ion-input type="text" placeholder="Email or Username" v-model="firstname"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="floating" class="field-title"
+                >Last name</ion-label
+              >
+              <ion-input type="text" placeholder="Email or Username" v-model="lastname"></ion-input>
+            </ion-item>
+            <!-- <ion-item>
+              <ion-label position="floating" class="field-title"
                 >Username</ion-label
               >
-              <ion-input type="text" placeholder="Email or Username"></ion-input>
+              <ion-input type="text" placeholder="Email or Username" v-model="username"></ion-input>
+            </ion-item> -->
+            <ion-item>
+              <ion-label position="floating" class="field-title"
+                >Farmer or Buyer</ion-label>
+              <!-- <ion-input type="text" placeholder="Email or Username" v-model="email" required></ion-input> -->
+                <ion-select type="text" placeholder="Someone" v-model="role">
+                  <ion-select-option value="farmer">Farmer</ion-select-option>
+                  <ion-select-option value="buyer">Buyer</ion-select-option>
+                </ion-select>
             </ion-item>
             <ion-item>
               <ion-label position="floating" class="field-title"
                 >Email</ion-label
               >
-              <ion-input type="text" placeholder="Email or Username"></ion-input>
+              <ion-input type="text" placeholder="Email or Username" v-model="email"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="floating" class="field-title"
                 >Password</ion-label
               >
-              <ion-input
-                type="password"
-                placeholder="Enter your password"
-              ></ion-input>
+              <ion-input type="password" placeholder="Enter your password" v-model="password"></ion-input>
             </ion-item>
-  
-            <ion-button href="/Login" expand="block" class="login-button">Create Account <ion-icon color="white" icon="arrow-forward-outline"></ion-icon></ion-button>
+            
+            <!-- href="/Login" -->
+            <ion-button expand="block" class="login-button" @click="handleLogin">Create Account <ion-icon color="white" icon="arrow-forward-outline"></ion-icon></ion-button>
             <div class="misc">
               <p>
                 Already have an account? <a href="/Login" class="link">Log in</a>
@@ -67,6 +80,41 @@
   addIcons({
     "arrow-forward-outline": arrowForwardOutline,
   });
+
+  import { ref } from "vue";
+  import axios from "axios";
+
+  const firstname = ref("");
+  const lastname = ref("");
+  // const username = ref("");
+  const role = ref("");
+  const email = ref("");
+  const password = ref("");
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('https://localhost:7170/api/register', {
+        firstname: firstname.value,
+        lastname: lastname.value,
+        // username: username.value,
+        role: role.value,
+        email: email.value,
+        password: password.value
+      });
+      if (response.status === 200) {
+        // Fixed string concatenation and missing parenthesis
+        // 'Your username is: ' + response.data.username + "\n" +
+        alert('Signup successful! Your ID is: ' + response.data.id + "\n" + 
+              'Your name is: ' + response.data.firstName + ' ' + response.data.lastName + "\n" +
+              'Your email is: ' + response.data.email + "\n" + 
+              'Your role is: ' + response.data.role);
+        window.location.href = '/SignUp';
+      }
+    } catch (error) {
+      console.error('Signup error:', error);
+      alert('Signup failed. Please check your inputs.');
+    }
+  };
 
   </script>
   
