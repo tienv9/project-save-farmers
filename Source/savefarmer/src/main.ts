@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, ref } from 'vue'
 import App from './App.vue'
 import router from './router';
 
@@ -48,12 +48,12 @@ console.log(`after customElements.define`);
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
   Axios.defaults.baseURL = 'http://localhost:5209/'
 }
-
+const token = localStorage.getItem('RefreshToken')
 
 const refreshAccessToken = async () => {
   try {
     const response = await Axios.post('https://localhost:7170/api/refresh-token', {
-      refreshToken: localStorage.getItem('RefreshToken')
+      refreshToken: token
     });
     if (response.status === 200) {
       sessionStorage.setItem('AccessToken', response.data.accessToken);
@@ -77,7 +77,11 @@ const refreshAccessToken = async () => {
 };
 
 
-
+if (token) {
+  refreshAccessToken();
+} else {
+  router.push('/login');
+}
 
 
 
@@ -159,7 +163,6 @@ const app = createApp(App)
 
 router.isReady().then(() => {
   app.mount('#app');
-  refreshAccessToken();
 });
 
 } catch (e) {

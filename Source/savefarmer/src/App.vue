@@ -34,6 +34,9 @@
             <ion-buttons shape="round" slot="end" @click="checkUser">
               <ion-icon size="large" :icon="personCircleOutline"></ion-icon>
             </ion-buttons>
+            <ion-buttons shape="round" slot="end" @click="logOut">
+              <ion-icon size="large" :icon="logOutOutline"></ion-icon>
+            </ion-buttons>
           </ion-toolbar>
         </ion-header>
 
@@ -78,7 +81,8 @@ import {
   homeOutline,
   homeSharp,
   addCircleOutline,
-  bagCheckOutline
+  bagCheckOutline,
+  logOutOutline,
 } from 'ionicons/icons';
 
 import CreatePostModal from '@/components/CreatePost.vue';
@@ -99,6 +103,13 @@ const checkUser = () => {
   } else {
     alert("No ID found");
   }
+};
+
+const logOut = () => {
+  sessionStorage.clear();
+  localStorage.clear();
+  window.location.reload();
+  window.location.href = '/Home';
 };
 
 

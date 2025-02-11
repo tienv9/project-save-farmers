@@ -49,5 +49,20 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
+//this redirect all traffic to that is not login, signup or home to login if there no access token
+// Ctrl + / to comment out code
+
+// router.beforeEach((to, from, next) => {
+//   const token = sessionStorage.getItem('AccessToken');
+//   if (!token && to.path !== '/Login' && to.path !== '/SignUp' && to.path !== '/Home') {
+//     next('/Login');
+//   }
+//   else if (token && (to.path === '/Login' || to.path === '/SignUp')) {
+//     next('/Home');
+//   }
+//    else {
+//     next();
+//   }
+// });
 
 export default router

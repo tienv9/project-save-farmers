@@ -53,7 +53,7 @@ import {
   IonLabel,
   IonInput,
 } from "@ionic/vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 
 const email = ref("");
@@ -91,12 +91,6 @@ const handleLogin = async () => {
     }
 };
 
-onMounted(() => {
-  const token = sessionStorage.getItem('AccessToken');
-  if (token != null || token != undefined) {
-    window.location.href = '/Home';
-  }
-});
 
 </script>
 
