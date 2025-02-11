@@ -85,28 +85,100 @@
   const email = ref("");
   const password = ref("");
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('https://localhost:7170/api/register', {
-        FirstName: firstName.value,
-        LastName: lastName.value,
-        Email: email.value,
-        Password: password.value,
-        Role: role.value
-      });
-      if (response.status === 200) {
-        window.location.href = '/Login';
-      }
-    } catch (error : any) {
-      if (error.response) {
-        alert(error.response.data.title);
-      } else if (error.request) {
-        alert('No response from server. Please try again.');
-      } else {
-        alert('An unexpected error occurred.');
-      }
+  const validations : any = {
+  firstName: [
+    { type: 'required', message: 'First name is required.' },
+  ],
+  lastName: [
+    { type: 'required', message: 'Last name is required.' },
+  ],
+  email: [
+    { type: 'required', message: 'Email is required.' },
+    { type: 'pattern', message: 'Please enter a valid email address.' },
+  ],
+  password: [
+    { type: 'required', message: 'Password is required.' },
+    { type: 'minlength', message: 'Password must be at least 9 characters long.' },
+    { type: 'passwordStrength', message: 'Password must contain at least one letter and one number.' },
+  ],
+  role: [
+    { type: 'required', message: 'Account type is required.' },
+  ],
+};
+
+const validateEmail = (email: string) => {
+  return email.includes('@') && email.includes('.');
+};
+
+const validatePassword = (password: string) => {
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  return password.length >= 9 && hasLetter && hasNumber;
+};
+
+const validateField = (field: string) => {
+  const fieldValue = eval(field).value;
+  const fieldValidations = validations[field];
+  const errors: string[] = [];
+
+  fieldValidations.forEach((validation: any) => {
+    if (validation.type === 'required' && !fieldValue) {
+      errors.push(validation.message);
     }
-  };
+    if (validation.type === 'minlength' && fieldValue.length < 9 && field === 'password') {
+      errors.push(validation.message);
+    }
+    if (validation.type === 'pattern' && field === 'email' && !validateEmail(fieldValue)) {
+      errors.push(validation.message);
+    }
+    if (validation.type === 'passwordStrength' && field === 'password' && !validatePassword(fieldValue)) {
+      errors.push(validation.message);
+    }
+  });
+
+  return errors;
+};
+
+//probably should be refactored into toast so it look nicer instead of error alert
+const handleLogin = async () => {
+  let hasErrors = false;
+  let allErrors: string[] = [];
+
+  ['firstName', 'lastName', 'email', 'password', 'role'].forEach(field => {
+    const fieldErrors = validateField(field);
+    if (fieldErrors.length > 0) {
+      hasErrors = true;
+      allErrors = [...allErrors, ...fieldErrors];
+    }
+  });
+
+  if (hasErrors) {
+    alert(allErrors.join("\n"));
+    return;
+  }
+
+  try {
+    const response = await axios.post('https://localhost:7170/api/register', {
+      FirstName: firstName.value,
+      LastName: lastName.value,
+      Email: email.value,
+      Password: password.value,
+      Role: role.value
+    });
+
+    if (response.status === 200) {
+      window.location.href = '/Login';
+    }
+  } catch (error: any) {
+    if (error.response) {
+      alert(error.response.data.title);
+    } else if (error.request) {
+      alert('No response from server. Please try again.');
+    } else {
+      alert('An unexpected error occurred.');
+    }
+  }
+};
 
   </script>
   
