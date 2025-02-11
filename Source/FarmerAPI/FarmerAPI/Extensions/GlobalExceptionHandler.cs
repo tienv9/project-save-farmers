@@ -25,12 +25,14 @@ namespace FarmerAPI.Extensions
             {
                 case BadHttpRequestException:
                     response.statusCode = (int)HttpStatusCode.BadRequest;
-                    response.Title = exception.GetType().Name;
+                    response.Title = exception.Message;
+                    response.Details = exception.Message;
                     break;
 
                 default:
                     response.statusCode = (int)HttpStatusCode.InternalServerError;
-                    response.Title = "Internal Server Error";
+                    response.Title = exception.Message;
+                    response.Details = exception.Message;
                     break;
             }
 

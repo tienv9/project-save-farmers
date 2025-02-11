@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj": {}
+    "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj": {
+    "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj",
+        "projectUniqueName": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj",
         "projectName": "FarmerAPI",
-        "projectPath": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj",
+        "projectPath": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj",
         "packagesPath": "C:\\Users\\vocon\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\obj\\",
+        "outputPath": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vocon\\AppData\\Roaming\\NuGet\\NuGet.Config",

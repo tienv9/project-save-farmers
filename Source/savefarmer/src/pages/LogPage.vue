@@ -71,12 +71,17 @@ const handleLogin = async () => {
             'Your name is: ' + response.data.firstName + ' ' + response.data.lastName + "\n" +
             'Your email is: ' + response.data.email + "\n" + 
             'Your role is: ' + response.data.role);
-      window.location.href = '/Profile';
+      window.location.href = '/Home';
     }
-  } catch (error) {
-    console.error('Login error:', error);
-    alert('Login failed. Please check your credentials.');
-  }
+  } catch (error : any) {
+      if (error.response) {
+        alert(error.response.data.title);
+      } else if (error.request) {
+        alert('No response from server. Please try again.');
+      } else {
+        alert('An unexpected error occurred.');
+      }
+    }
 };
 
 

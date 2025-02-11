@@ -11,34 +11,27 @@
               <ion-label position="floating" class="field-title"
                 >First name</ion-label
               >
-              <ion-input type="text" placeholder="Email or Username" v-model="firstname"></ion-input>
+              <ion-input type="text" placeholder="Enter your First name" v-model="firstName"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="floating" class="field-title"
                 >Last name</ion-label
               >
-              <ion-input type="text" placeholder="Email or Username" v-model="lastname"></ion-input>
+              <ion-input type="text" placeholder="Enter your Last name" v-model="lastName"></ion-input>
             </ion-item>
-            <!-- <ion-item>
-              <ion-label position="floating" class="field-title"
-                >Username</ion-label
-              >
-              <ion-input type="text" placeholder="Email or Username" v-model="username"></ion-input>
-            </ion-item> -->
             <ion-item>
               <ion-label position="floating" class="field-title"
-                >Farmer or Buyer</ion-label>
-              <!-- <ion-input type="text" placeholder="Email or Username" v-model="email" required></ion-input> -->
-                <ion-select type="text" placeholder="Someone" v-model="role">
-                  <ion-select-option value="farmer">Farmer</ion-select-option>
-                  <ion-select-option value="buyer">Buyer</ion-select-option>
+                >Account type</ion-label>
+                <ion-select v-model="role">
+                  <ion-select-option value="Buyer">Buyer</ion-select-option>
+                  <ion-select-option value="Farmer">Farmer</ion-select-option>
                 </ion-select>
             </ion-item>
             <ion-item>
               <ion-label position="floating" class="field-title"
                 >Email</ion-label
               >
-              <ion-input type="text" placeholder="Email or Username" v-model="email"></ion-input>
+              <ion-input type="text" placeholder="Enter your Email" v-model="email"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="floating" class="field-title"
@@ -72,6 +65,8 @@
     IonLabel,
     IonInput,
     IonIcon,
+    IonSelect,
+    IonSelectOption
   } from "@ionic/vue";  
   
   import {arrowForwardOutline} from 'ionicons/icons';
@@ -84,35 +79,32 @@
   import { ref } from "vue";
   import axios from "axios";
 
-  const firstname = ref("");
-  const lastname = ref("");
-  // const username = ref("");
-  const role = ref("");
+  const firstName = ref("");
+  const lastName = ref("");
+  const role = ref("Buyer")
   const email = ref("");
   const password = ref("");
 
   const handleLogin = async () => {
     try {
       const response = await axios.post('https://localhost:7170/api/register', {
-        firstname: firstname.value,
-        lastname: lastname.value,
-        // username: username.value,
-        role: role.value,
-        email: email.value,
-        password: password.value
+        FirstName: firstName.value,
+        LastName: lastName.value,
+        Email: email.value,
+        Password: password.value,
+        Role: role.value
       });
       if (response.status === 200) {
-        // Fixed string concatenation and missing parenthesis
-        // 'Your username is: ' + response.data.username + "\n" +
-        alert('Signup successful! Your ID is: ' + response.data.id + "\n" + 
-              'Your name is: ' + response.data.firstName + ' ' + response.data.lastName + "\n" +
-              'Your email is: ' + response.data.email + "\n" + 
-              'Your role is: ' + response.data.role);
-        window.location.href = '/SignUp';
+        window.location.href = '/Login';
       }
-    } catch (error) {
-      console.error('Signup error:', error);
-      alert('Signup failed. Please check your inputs.');
+    } catch (error : any) {
+      if (error.response) {
+        alert(error.response.data.title);
+      } else if (error.request) {
+        alert('No response from server. Please try again.');
+      } else {
+        alert('An unexpected error occurred.');
+      }
     }
   };
 

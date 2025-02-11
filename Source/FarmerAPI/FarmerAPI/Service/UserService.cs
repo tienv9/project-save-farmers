@@ -28,6 +28,11 @@ namespace FarmerAPI.Service
         public async Task<UserResponse> RegisterAsync(UserRegisterRequest request)
         {
             _logger.LogInformation("Registering user");
+            if (string.IsNullOrWhiteSpace(request.Email) || !IsValidEmail(request.Email))
+            {
+                _logger.LogError("Invalid email format");
+                throw new Exception("Invalid email address");
+            }
             var existingUser = await _userManager.FindByEmailAsync(request.Email);
             if (existingUser != null)
             {
@@ -38,6 +43,11 @@ namespace FarmerAPI.Service
             var newUser = _mapper.Map<User>(request);
 
             // Generate a unique username
+            if (string.IsNullOrWhiteSpace(newUser.UserName) || !newUser.UserName.All(char.IsLetterOrDigit))
+            {
+                _logger.LogError("Invalid username generated from First Name or Last Name");
+                throw new Exception("First Name or Last Name is empty.");
+            }
             newUser.UserName = GenerateUserName(request.FirstName, request.LastName);
             var result = await _userManager.CreateAsync(newUser, request.Password);
             if (!result.Succeeded)
@@ -51,6 +61,10 @@ namespace FarmerAPI.Service
             newUser.CreateAt = DateTime.Now;
             newUser.UpdateAt = DateTime.Now;
             return _mapper.Map<UserResponse>(newUser);
+        }
+        private static bool IsValidEmail(string email)
+        {
+            return email.Contains('@') && email.Contains('.');
         }
 
         private string GenerateUserName(string firstName, string lastName)
