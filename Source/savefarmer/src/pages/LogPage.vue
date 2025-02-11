@@ -53,7 +53,7 @@ import {
   IonLabel,
   IonInput,
 } from "@ionic/vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import axios from "axios";
 
 const email = ref("");
@@ -66,13 +66,17 @@ const handleLogin = async () => {
       password: password.value
     });
     if (response.status === 200) {
-      localStorage.setItem('RefreshToken', JSON.stringify(response.data.RefreshToken));
-      
-      sessionStorage.setItem('AccessToken', response.data.AccessToken);
-      sessionStorage.setItem('Id', response.data.Id);
-      sessionStorage.setItem('FirstName', JSON.stringify(response.data.FirstName));
-      sessionStorage.setItem('Email', JSON.stringify(response.data.Email));
-      sessionStorage.setItem('Role', JSON.stringify(response.data.Role));
+      localStorage.setItem('RefreshToken', response.data.refreshToken);
+      alert(response.data.refreshToken);
+      sessionStorage.setItem('AccessToken', response.data.accessToken);
+      sessionStorage.setItem('Id', response.data.id);
+      sessionStorage.setItem('FirstName', response.data.firstName);
+      sessionStorage.setItem('LastName', response.data.lastName);
+      sessionStorage.setItem('Email', response.data.email);
+      sessionStorage.setItem('Role', response.data.role);
+
+      // set the authorization header for all axios requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.AccessToken}`;
 
       window.location.href = '/Home';
     }
@@ -87,6 +91,12 @@ const handleLogin = async () => {
     }
 };
 
+onMounted(() => {
+  const token = sessionStorage.getItem('AccessToken');
+  if (token != null || token != undefined) {
+    window.location.href = '/Home';
+  }
+});
 
 </script>
 

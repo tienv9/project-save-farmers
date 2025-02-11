@@ -50,6 +50,32 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
 }
 
 
+const refreshAccessToken = async () => {
+  try {
+    const response = await Axios.post('https://localhost:7170/api/refresh-token', {
+      refreshToken: localStorage.getItem('RefreshToken')
+    });
+    if (response.status === 200) {
+      sessionStorage.setItem('AccessToken', response.data.accessToken);
+      sessionStorage.setItem('Id', response.data.id);
+      sessionStorage.setItem('FirstName', response.data.firstName);
+      sessionStorage.setItem('LastName', response.data.lastName);
+      sessionStorage.setItem('Email', response.data.email);
+      sessionStorage.setItem('Role', response.data.role);
+      
+      Axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.AccessToken}`;
+    }
+  } catch (error : any) {
+    if (error.response) {
+      alert(error.response.data.title);
+    } else if (error.request) {
+      alert('No response from server. Please try again.');
+    } else {
+      alert('An unexpected error occurred.');
+    }
+  }
+};
+
 
 
 
@@ -133,6 +159,7 @@ const app = createApp(App)
 
 router.isReady().then(() => {
   app.mount('#app');
+  refreshAccessToken();
 });
 
 } catch (e) {
