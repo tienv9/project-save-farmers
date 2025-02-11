@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HiR3QsdaFWc=",
+  "dgSpecHash": "e44o5mA9A60=",
   "success": true,
-  "projectFilePath": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj",
+  "projectFilePath": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\FarmerAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vocon\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\vocon\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",

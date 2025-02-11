@@ -25,9 +25,13 @@
               <ion-menu-button></ion-menu-button>
             </ion-buttons>
             <ion-title>My Farmer</ion-title>
-            <ion-buttons shape="round" slot="end" @click="openModal"> 
-              <ion-icon size="large" :icon="addCircleOutline"></ion-icon>
+            <ion-buttons slot="primary">
+            <ion-button fill="outline" @click="openModal"> 
+              Create Post <ion-icon size="large" :icon="addOutline"></ion-icon>
+            </ion-button>
             </ion-buttons>
+
+            
             <ion-buttons shape="round" slot="end" @click="checkAuth">
               <ion-icon size="large" :icon="bagCheckOutline"></ion-icon>
             </ion-buttons>
@@ -44,6 +48,17 @@
       </ion-content>
     </ion-split-pane>
     <CreatePostModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" />
+
+    <ion-toast
+      :is-open="showToast"
+      message="You need to be logged in to create a post."
+      duration="2000"
+      color="danger"
+      position="top"
+      @did-dismiss="showToast = false"
+    />
+
+
   </ion-app>
 </template>
 
@@ -65,6 +80,8 @@ import {
   IonHeader,
   IonButtons,
   IonMenuButton,
+  IonButton,
+  IonToast,
 } from '@ionic/vue';
 import { ref } from 'vue';
 import {
@@ -80,9 +97,9 @@ import {
   trashSharp,
   homeOutline,
   homeSharp,
-  addCircleOutline,
   bagCheckOutline,
   logOutOutline,
+  addOutline,
 } from 'ionicons/icons';
 
 import CreatePostModal from '@/components/CreatePost.vue';
@@ -114,10 +131,17 @@ const logOut = () => {
 
 
   const isModalOpen = ref(false);
+  const showToast = ref(false);
 
   const openModal = () => {
-  isModalOpen.value = true;
+  const token = sessionStorage.getItem('AccessToken');
+  if (token) {
+    isModalOpen.value = true; 
+  } else {
+    showToast.value = true;
+  }
 };
+
 
 const selectedIndex = ref(0);
 // Temporary and can be moved later
@@ -180,6 +204,12 @@ if (path !== undefined) {
 </script>
 
 <style scoped>
+
+.PostButton {
+  background: antiquewhite;
+  color: red;
+}
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }
