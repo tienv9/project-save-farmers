@@ -1,11 +1,11 @@
-
-import { ref } from 'vue';
-import cornIcon from '@/images/icons/corn.png';
-import tomatoIcon from '@/images/icons/tomato.png';
-import wheatIcon from '@/images/icons/wheat.png';
-import carrotIcon from '@/images/icons/carrot.png';
-import cropIcon from '@/images/icons/crop.png';
-import potatoIcon from '@/images/icons/potato.png';
+import { ref } from "vue";
+import cornIcon from "@/images/icons/corn.png";
+import tomatoIcon from "@/images/icons/tomato.png";
+import wheatIcon from "@/images/icons/wheat.png";
+import carrotIcon from "@/images/icons/carrot.png";
+import cropIcon from "@/images/icons/crop.png";
+import potatoIcon from "@/images/icons/potato.png";
+import axios from "axios";
 
 export interface Post {
   title: string;
@@ -30,8 +30,33 @@ export class PostService {
   }
 
   // Function to create a new post
-  createPost(post: Post): void {
-    this.posts.value.push(post);
+  async createPost(post: Post): Promise<void> {
+    try {
+      const response = await axios.post("https://localhost:7170/api/posts", {
+        title: post.title,
+        price: post.price,
+        cropType: post.crop_type,
+        amount: post.amount,
+        location: post.location,
+        contact: post.contact,
+        description: post.extra_info,
+        date: post.date,
+        expiry_date: post.expiry_date,
+        name: post.email,
+        userId: post.vendor_name,
+      });
+      if (response.status === 201) {
+        this.posts.value.push(post);
+      }
+    } catch (error: any) {
+      if (error.response) {
+        alert(error.response.data.title);
+      } else if (error.request) {
+        alert("No response from server. Please try again.");
+      } else {
+        alert("An unexpected error occurred.");
+      }
+    }
   }
 
   // Function to delete a post by its index
@@ -41,21 +66,21 @@ export class PostService {
 
   // Function to format the contact number (same logic as before)
   formatContact(contact: string): string {
-    return contact.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+    return contact.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
   }
 
   // Function to get the crop icon URL based on crop type
   getCropIcon(cropType: string): string {
     switch (cropType.toLowerCase()) {
-      case 'corn':
+      case "corn":
         return cornIcon;
-      case 'tomato':
+      case "tomato":
         return tomatoIcon;
-      case 'wheat':
+      case "wheat":
         return wheatIcon;
-      case 'carrot':
+      case "carrot":
         return carrotIcon;
-      case 'potato':
+      case "potato":
         return potatoIcon;
       default:
         return cropIcon;
@@ -63,57 +88,57 @@ export class PostService {
   }
 }
 
-export const postSer= new PostService([
-    {
-        title: 'Fresh Potatoes for Sale. Organic and Locally Grown.',
-        price: 100,
-        crop_type: 'Potato',
-        amount: 100,
-        location: 'Spokane, WA, USA',
-        contact: '8496554654',
-        vendor_name: 'Red Barn Farms',
-        email: 'nowhere@somewhere.com',
-        extra_info: 'Extra Info',
-        date: '2021-09-01',
-        expiry_date: '2021-09-30',
-      },  
-      {
-        title: 'Carrots for Sale. Fresh and Organic.',
-        price: 200,
-        crop_type: 'Carrot',
-        amount: 200,
-        location: 'Seattle, WA, USA',
-        contact: '2156548231',
-        vendor_name: 'Blue Barn Farms',
-        email: 'somewhere@nowhere.com',
-        extra_info: 'Extra Info 2',
-        date: '2021-09-02',
-        expiry_date: '2021-09-29',
-      },
-      {
-        title: 'Rotten Tomatoes for Sale. Cheap and Expired.',
-        price: 10,
-        crop_type: 'Tomato',
-        amount: 200,
-        location: 'Seattle, WA, USA',
-        contact: '2424548231',
-        vendor_name: 'Brown Barn Farms',
-        email: 'somewhere2@nowhere.com',
-        extra_info: 'Extra Info 2',
-        date: '2021-09-02',
-        expiry_date: '2021-09-29',
-      },
-      {
-        title: 'Unripe Corn for Sale. Fresh and Raw.',
-        price: 900,
-        crop_type: 'Corn',
-        amount: 1,
-        location: 'Seattle, WA, USA',
-        contact: '9999999999',
-        vendor_name: 'Yellow Barn Farms',
-        email: 'nowhere2@nowhere.com',
-        extra_info: 'Extra Info 2',
-        date: '2021-09-02',
-        expiry_date: '2021-09-29',
-      },
+export const postSer = new PostService([
+  {
+    title: "Fresh Potatoes for Sale. Organic and Locally Grown.",
+    price: 100,
+    crop_type: "Potato",
+    amount: 100,
+    location: "Spokane, WA, USA",
+    contact: "8496554654",
+    vendor_name: "Red Barn Farms",
+    email: "nowhere@somewhere.com",
+    extra_info: "Extra Info",
+    date: "2021-09-01",
+    expiry_date: "2021-09-30",
+  },
+  {
+    title: "Carrots for Sale. Fresh and Organic.",
+    price: 200,
+    crop_type: "Carrot",
+    amount: 200,
+    location: "Seattle, WA, USA",
+    contact: "2156548231",
+    vendor_name: "Blue Barn Farms",
+    email: "somewhere@nowhere.com",
+    extra_info: "Extra Info 2",
+    date: "2021-09-02",
+    expiry_date: "2021-09-29",
+  },
+  {
+    title: "Rotten Tomatoes for Sale. Cheap and Expired.",
+    price: 10,
+    crop_type: "Tomato",
+    amount: 200,
+    location: "Seattle, WA, USA",
+    contact: "2424548231",
+    vendor_name: "Brown Barn Farms",
+    email: "somewhere2@nowhere.com",
+    extra_info: "Extra Info 2",
+    date: "2021-09-02",
+    expiry_date: "2021-09-29",
+  },
+  {
+    title: "Unripe Corn for Sale. Fresh and Raw.",
+    price: 900,
+    crop_type: "Corn",
+    amount: 1,
+    location: "Seattle, WA, USA",
+    contact: "9999999999",
+    vendor_name: "Yellow Barn Farms",
+    email: "nowhere2@nowhere.com",
+    extra_info: "Extra Info 2",
+    date: "2021-09-02",
+    expiry_date: "2021-09-29",
+  },
 ]);

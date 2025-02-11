@@ -52,11 +52,6 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Email</ion-label>
-          <ion-input type="email" v-model="newPost.email" required></ion-input>
-        </ion-item>
-
-        <ion-item>
           <ion-label position="stacked">Extra Info</ion-label>
           <ion-input v-model="newPost.extra_info"></ion-input>
         </ion-item>
@@ -113,7 +108,7 @@ const handleClose = () => {
   emit("update:isOpen", false);
 };
 
-const newPost = ref({
+const newPost : any = ref({
   //placeholder so i dont have to retype everything a million times
   title: "Placeholder",
   price: 1000,
@@ -121,11 +116,11 @@ const newPost = ref({
   amount: 3424,
   location: "My House",
   contact: "0000000000",
-  email: "nowhere@somewhere.com", //should be autofill from database or not? idk
+  email: sessionStorage.getItem('Email'), //should be autofill from database or not? idk
   extra_info: "qwe",
   date: new Date().toISOString().split("T")[0],
   expiry_date: "",
-  vendor_name: "John Doe", //this should be replace by database info but cant leave blank for now
+  vendor_name: sessionStorage.getItem('Id'), //this should be replace by database info but cant leave blank for now
 });
 
 const handleSubmit = () => {

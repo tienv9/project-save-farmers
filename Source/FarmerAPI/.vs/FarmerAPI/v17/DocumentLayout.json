@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\domain\\contracts\\postrequestandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\domain\\contracts\\postrequestandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -29,14 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\domain\\entities\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\domain\\entities\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|solutionrelative:farmerapi\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9AC6EF23-7A77-4F33-9DDC-D84716FF0C34}|FarmerAPI\\FarmerAPI.csproj|c:\\users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\source\\farmerapi\\farmerapi\\extensions\\globalexceptionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -78,7 +78,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -90,20 +90,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserRequestAndResponse.cs",
-              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
-              "RelativeDocumentMoniker": "FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
-              "ToolTip": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
-              "RelativeToolTip": "FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAcwCEAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T04:09:57.222Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "TokenService.cs",
               "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\TokenService.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Service\\TokenService.cs",
@@ -115,19 +102,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
               "Title": "PostController.cs",
               "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\PostController.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Controllers\\PostController.cs",
               "ToolTip": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\PostController.cs",
               "RelativeToolTip": "FarmerAPI\\Controllers\\PostController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAgwAkAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-01T10:32:15.361Z"
+              "WhenOpened": "2025-02-01T10:32:15.361Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PostRequestAndResponse.cs",
               "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Domain\\Contracts\\PostRequestAndResponse.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Domain\\Contracts\\PostRequestAndResponse.cs",
@@ -140,7 +128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Post.cs",
               "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Domain\\Entities\\Post.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Domain\\Entities\\Post.cs",
@@ -176,7 +164,32 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "FarmerAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAswDAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T03:27:52.049Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "UserRequestAndResponse.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
+              "RelativeToolTip": "FarmerAPI\\Domain\\Contracts\\UserRequestAndResponse.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAcwCEAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-11T04:09:57.222Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "PostService.cs",
               "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\PostService.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Service\\PostService.cs",
@@ -188,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Domain\\Entities\\User.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Domain\\Entities\\User.cs",
@@ -200,7 +213,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Service\\UserService.cs",
@@ -209,18 +222,6 @@
               "ViewState": "AgIAAJoAAAAAAAAAAAAAALwAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-01T06:36:56.972Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "FarmerAPI\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\vocon\\source\\repos\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "FarmerAPI\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAQwDAAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T03:27:52.049Z"
             },
             {
               "$type": "Document",
