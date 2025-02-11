@@ -43,7 +43,7 @@ namespace FarmerAPI.Controllers
 
 
         [HttpPost("refresh-token")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             var response = await _userService.RefreshTokenAsync(request);

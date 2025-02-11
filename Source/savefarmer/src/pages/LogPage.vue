@@ -14,7 +14,7 @@
             <ion-input
               v-model="email"
               type="text"
-              placeholder="Email"
+              placeholder="Enter your Email"
             ></ion-input>
           </ion-item>
           <ion-item>
@@ -24,7 +24,7 @@
             <ion-input
               v-model="password"
               type="text"
-              placeholder="password"
+              placeholder="Enter your Password"
             ></ion-input>
           </ion-item>
 
@@ -66,11 +66,14 @@ const handleLogin = async () => {
       password: password.value
     });
     if (response.status === 200) {
-      // Fixed string concatenation and missing parenthesis
-      alert('Login successful! Your ID is: ' + response.data.id + "\n" + 
-            'Your name is: ' + response.data.firstName + ' ' + response.data.lastName + "\n" +
-            'Your email is: ' + response.data.email + "\n" + 
-            'Your role is: ' + response.data.role);
+      localStorage.setItem('RefreshToken', JSON.stringify(response.data.RefreshToken));
+      
+      sessionStorage.setItem('AccessToken', response.data.AccessToken);
+      sessionStorage.setItem('Id', response.data.Id);
+      sessionStorage.setItem('FirstName', JSON.stringify(response.data.FirstName));
+      sessionStorage.setItem('Email', JSON.stringify(response.data.Email));
+      sessionStorage.setItem('Role', JSON.stringify(response.data.Role));
+
       window.location.href = '/Home';
     }
   } catch (error : any) {

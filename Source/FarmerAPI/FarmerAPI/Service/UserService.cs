@@ -43,11 +43,6 @@ namespace FarmerAPI.Service
             var newUser = _mapper.Map<User>(request);
 
             // Generate a unique username
-            if (string.IsNullOrWhiteSpace(newUser.UserName) || !newUser.UserName.All(char.IsLetterOrDigit))
-            {
-                _logger.LogError("Invalid username generated from First Name or Last Name");
-                throw new Exception("First Name or Last Name is empty.");
-            }
             newUser.UserName = GenerateUserName(request.FirstName, request.LastName);
             var result = await _userManager.CreateAsync(newUser, request.Password);
             if (!result.Succeeded)
@@ -69,6 +64,11 @@ namespace FarmerAPI.Service
 
         private string GenerateUserName(string firstName, string lastName)
         {
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+            {
+                _logger.LogError("Invalid username generated from First Name or Last Name");
+                throw new Exception("First Name or Last Name is empty.");
+            }
             var baseUsername = $"{firstName}{lastName}".ToLower();
 
             // Check if the username already exists
@@ -115,7 +115,7 @@ namespace FarmerAPI.Service
             using var sha256 = SHA256.Create();
             var refreshTokenHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(refreshToken));
             user.RefreshToken = Convert.ToBase64String(refreshTokenHash);
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(2);
+            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(30);
             // Update user information in database
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
