@@ -28,6 +28,12 @@
             <ion-buttons shape="round" slot="end" @click="openModal"> 
               <ion-icon size="large" :icon="addCircleOutline"></ion-icon>
             </ion-buttons>
+            <ion-buttons shape="round" slot="end" @click="checkAuth">
+              <ion-icon size="large" :icon="bagCheckOutline"></ion-icon>
+            </ion-buttons>
+            <ion-buttons shape="round" slot="end" @click="checkUser">
+              <ion-icon size="large" :icon="personCircleOutline"></ion-icon>
+            </ion-buttons>
           </ion-toolbar>
         </ion-header>
 
@@ -72,11 +78,29 @@ import {
   homeOutline,
   homeSharp,
   addCircleOutline,
+  bagCheckOutline
 } from 'ionicons/icons';
 
 import CreatePostModal from '@/components/CreatePost.vue';
-  
-  
+
+const checkAuth = () => {
+  const token = sessionStorage.getItem('AccessToken');
+  if (token != null || token != undefined) {
+    alert('You are login');
+  } else {
+    alert('You are not login');
+  }
+};
+
+const checkUser = () => {
+  const id = sessionStorage.getItem('Id');
+  if (id != null || id != undefined) {
+    alert("Your user ID is: " + sessionStorage.getItem('Id'));
+  } else {
+    alert("No ID found");
+  }
+};
+
 
   const isModalOpen = ref(false);
 

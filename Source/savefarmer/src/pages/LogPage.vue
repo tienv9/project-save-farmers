@@ -14,7 +14,7 @@
             <ion-input
               v-model="email"
               type="text"
-              placeholder="Email"
+              placeholder="Enter your Email"
             ></ion-input>
           </ion-item>
           <ion-item>
@@ -24,7 +24,7 @@
             <ion-input
               v-model="password"
               type="text"
-              placeholder="password"
+              placeholder="Enter your Password"
             ></ion-input>
           </ion-item>
 
@@ -53,7 +53,7 @@ import {
   IonLabel,
   IonInput,
 } from "@ionic/vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import axios from "axios";
 
 const email = ref("");
@@ -66,11 +66,18 @@ const handleLogin = async () => {
       password: password.value
     });
     if (response.status === 200) {
-      // Fixed string concatenation and missing parenthesis
-      alert('Login successful! Your ID is: ' + response.data.id + "\n" + 
-            'Your name is: ' + response.data.firstName + ' ' + response.data.lastName + "\n" +
-            'Your email is: ' + response.data.email + "\n" + 
-            'Your role is: ' + response.data.role);
+      localStorage.setItem('RefreshToken', response.data.refreshToken);
+      alert(response.data.refreshToken);
+      sessionStorage.setItem('AccessToken', response.data.accessToken);
+      sessionStorage.setItem('Id', response.data.id);
+      sessionStorage.setItem('FirstName', response.data.firstName);
+      sessionStorage.setItem('LastName', response.data.lastName);
+      sessionStorage.setItem('Email', response.data.email);
+      sessionStorage.setItem('Role', response.data.role);
+
+      // set the authorization header for all axios requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.AccessToken}`;
+
       window.location.href = '/Home';
     }
   } catch (error : any) {
@@ -84,6 +91,12 @@ const handleLogin = async () => {
     }
 };
 
+onMounted(() => {
+  const token = sessionStorage.getItem('AccessToken');
+  if (token != null || token != undefined) {
+    window.location.href = '/Home';
+  }
+});
 
 </script>
 
