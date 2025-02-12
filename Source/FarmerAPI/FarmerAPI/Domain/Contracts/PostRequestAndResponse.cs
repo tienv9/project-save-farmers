@@ -11,6 +11,8 @@
         public string? Description { get; set; }
         public DateTime ExpireDate { get; set; }
         public string Name { get; set; }
+
+        public string Status { get; set; } // Active, Inactive, expired
         public Guid UserId { get; set; } // User who created the post
     }
 
@@ -28,6 +30,8 @@
         public DateTime UpdateDate { get; set; }
         public DateTime ExpireDate { get; set; }
         public string Name { get; set; }
+
+        public string Status { get; set; } // Active, Inactive, expired
         public Guid UserId { get; set; } // User who created the post
     }
 }

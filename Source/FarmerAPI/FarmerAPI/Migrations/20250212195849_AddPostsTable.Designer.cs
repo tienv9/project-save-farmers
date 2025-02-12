@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250203225516_AddPostsTable")]
+    [Migration("20250212195849_AddPostsTable")]
     partial class AddPostsTable
     {
         /// <inheritdoc />
@@ -61,6 +61,10 @@ namespace FarmerAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Price")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
