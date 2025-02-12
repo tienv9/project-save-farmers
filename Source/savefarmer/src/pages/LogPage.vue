@@ -27,6 +27,10 @@
               placeholder="Enter your Password"
             ></ion-input>
           </ion-item>
+          <ion-item lines="none">
+            <ion-checkbox slot="start" v-model="rememberMe"></ion-checkbox>
+            <ion-label>Remember me?</ion-label>
+          </ion-item>
 
           <ion-button expand="block" class="login-button" @click="handleLogin">Login</ion-button>
           <div class="misc">
@@ -52,12 +56,14 @@ import {
   IonItem,
   IonLabel,
   IonInput,
+  IonCheckbox,
 } from "@ionic/vue";
 import { ref } from "vue";
 import axios from "axios";
 
 const email = ref("");
 const password = ref("");
+const rememberMe = ref(false);
 
 const handleLogin = async () => {
   try {
@@ -66,8 +72,11 @@ const handleLogin = async () => {
       password: password.value
     });
     if (response.status === 200) {
-      localStorage.setItem('RefreshToken', response.data.refreshToken);
-      alert(response.data.refreshToken);
+      if (rememberMe.value) {
+        localStorage.setItem('RefreshToken', response.data.refreshToken);
+      } else {
+        sessionStorage.setItem('RefreshToken', response.data.refreshToken);
+      }
       sessionStorage.setItem('AccessToken', response.data.accessToken);
       sessionStorage.setItem('Id', response.data.id);
       sessionStorage.setItem('FirstName', response.data.firstName);
