@@ -223,6 +223,58 @@ const initializeChart = () => {
 onMounted(() => {
   initializeChart();
 });
+
+//-------------------------fetching data from the server----------------------------
+
+import axios from 'axios';
+
+interface DataType {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  accessToken: string;
+  createAt: string;
+  updateA: string;
+}
+
+async function getData(): Promise<DataType[]> {
+  try {
+    const response = await axios.get<DataType[]>('https://localhost:7170/api/current-user'); 
+    // Axios automatically parses the JSON response
+    return response.data;
+  } catch (error: any) {
+    // Handle errors appropriately
+    console.error('Error fetching data:', error.message);
+    throw error; // Re-throw to allow handling by the caller if necessary
+  }
+}
+
+// Example usage
+async function main() {
+  try {
+    const data = await getData();
+    console.log('Data from API:', data);
+  } catch (error) {
+     console.error('An error occurred:', error);
+  }
+}
+
+// const checkUser = () => {
+//   const id = sessionStorage.getItem('Id');
+//   if (id != null || id != undefined) {
+//     return sessionStorage.getItem('Id');
+//   } else {
+//     alert("No ID found");
+//   }
+// };
+
+main();
+
+
+
+
 </script>
 
 <style scoped>
