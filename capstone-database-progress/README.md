@@ -5,7 +5,7 @@
 ├── ER_Diagram_SaveFarmers021425.pdf           # Entity-Relationship diagram of the database.
 ├── ER_Diagram_SaveFarmers021425.png           # Image version of the ER diagram for reference.
 ├── Database_Justification.pdf                 # Document explaining the rationale behind database design choices.
-├── DatabaseExpliantionVideo_021425.mp4        # Video explanation of the database implementation.
+├── DatabaseExpliantionVideo_021425.txt        # Link to video explanation of the database implementation.
 ├── schema/                                    # Directory containing database schema definitions.
 │   ├── dbo.AspNetUsers                        # Table schema for user.
 │   ├── dbo.Posts                              # Table schema for posts.
@@ -37,13 +37,13 @@ The database structure includes relationships such as:
 - **One-to-Many** (User to Post)
 - **Many-to-Many** (Post to TransactionHistory) TransactionHistory is not yet implemented into the back-end (not core feature)
 - **One-to-Many** (User to TransactionHistory) TransactionHistory is not yet implemented into the back-end (not core feature)
-- 
+
 ### Entity-Relationship Structure
 The database structure is modeled based on the following entities:
 - **User**: Stores user authentication and profile data, including fields like `Id`, `RefreshToken`, `Email`, `PasswordHash`, and timestamps for tracking user activity.
 - **Post**: Contains details of crop sales posts, including `PostId`, `Title`, `Price`, `CropType`, `Amount`, `Location`, and `Contact`.
 - **TransactionHistory**: Tracks transactions between users, linking `userId` and `postId` with timestamps and transaction amounts.
-- 
+
 ### API Endpoints
 - **User Management**
   - `POST /api/register()`: Allows a new user to register.
