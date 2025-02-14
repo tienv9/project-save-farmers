@@ -3,7 +3,6 @@
 ## Directory Structure
 ```
 ├── ER_Diagram_SaveFarmers021425.pdf           # Entity-Relationship diagram of the database.
-├── ER_Diagram_SaveFarmers021425.png           # Image version of the ER diagram for reference.
 ├── Database_Justification.pdf                 # Document explaining the rationale behind database design choices.
 ├── DatabaseExpliantionVideo_021425.txt        # Link to video explanation of the database implementation.
 ├── schema/                                    # Directory containing database schema definitions.
