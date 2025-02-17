@@ -1,82 +1,102 @@
 <template>
   <ion-page>
     <ion-content>
-    <div class="board">
-      <ion-card v-for="(post, index) in posts" :key="index" class="board-card">
-        <ion-card-header>
-          <ion-card-title>
-            <img :src="postSer.getCropIcon(post.crop_type)" alt="Crop Icon" class="crop-icon" />
-            {{ post.title }}
-          </ion-card-title>
-        </ion-card-header>
-        <div v-if="isMobileWidth">
-        <ion-card-content>
-          <div class="info-header">
-            <span><strong>Price: ${{ post.price }}</strong></span>
-            <span><strong>Produce: {{ post.crop_type }}</strong></span>
-            <span><strong>Amount: {{ post.amount }}</strong></span>
-            <span><strong>Vendor: {{ post.vendor_name }}</strong></span>
-            <span><strong>Location: {{ post.location }}</strong></span>
-            <span><strong>Contact: {{ postSer.formatContact(post.contact) }}</strong></span>
-            <span><strong>Email: {{ post.email }}</strong></span>
-            <span><strong>Date Listed: {{ post.date }}</strong></span>
+      <div class="board">
+        
+        <!-- Search Bar -->
+        <ion-searchbar v-model="searchQuery" @ionInput="filterPosts" placeholder="Search posts..."></ion-searchbar>
+
+        <ion-card v-for="(post, index) in filteredPosts" :key="index" class="board-card">
+          <ion-card-header>
+            <ion-card-title>
+              <img :src="postSer.getCropIcon(post.crop_type)" alt="Crop Icon" class="crop-icon" />
+              {{ post.title }}
+            </ion-card-title>
+          </ion-card-header>
+
+          <div v-if="isMobileWidth">
+            <ion-card-content>
+              <div class="info-header">
+                <span><strong>Price: ${{ post.price }}</strong></span>
+                <span><strong>Produce: {{ post.crop_type }}</strong></span>
+                <span><strong>Amount: {{ post.amount }}</strong></span>
+                <span><strong>Vendor: {{ post.vendor_name }}</strong></span>
+                <span><strong>Location: {{ post.location }}</strong></span>
+                <span><strong>Contact: {{ postSer.formatContact(post.contact) }}</strong></span>
+                <span><strong>Email: {{ post.email }}</strong></span>
+                <span><strong>Date Listed: {{ post.date }}</strong></span>
+              </div>
+              <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
+            </ion-card-content>
           </div>
-          <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
-        </ion-card-content>
+          <div v-else>
+            <ion-card-content>
+              <div class="info-header">
+                <span><strong>Price:</strong></span>
+                <span><strong>Produce:</strong></span>
+                <span><strong>Location:</strong></span>
+                <span><strong>Contact:</strong></span>
+              </div>
+              <div class="info-details">
+                <span>${{ post.price }}</span>
+                <span>{{ post.crop_type }}</span>
+                <span>{{ post.vendor_name }}</span>
+                <span>{{ postSer.formatContact(post.contact) }}</span>
+              </div>
+              <div class="info-2details">
+                <span class="date-column">
+                  <div>Date Listed:</div>
+                  <div>{{ post.date }}</div>
+                </span>
+                <span>{{ post.amount }}</span>
+                <span>{{ post.location }}</span>
+                <span>{{ post.email }}</span>
+              </div>
+              <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
+            </ion-card-content>
+          </div>
+        </ion-card>
       </div>
-      <div v-else>
-        <ion-card-content>
-          <!-- first line -->
-          <div class="info-header">
-            <span><strong>Price:</strong></span>
-            <span><strong>Produce:</strong></span>
-            <span><strong>Location:</strong></span>
-            <span><strong>Contact:</strong></span>
-          </div>
-          <!-- second line -->
-          <div class="info-details">
-            <span>${{ post.price }}</span>
-            <span>{{ post.crop_type }}</span>
-            <span>{{ post.vendor_name }}</span>
-            <span>{{ postSer.formatContact(post.contact) }}</span>
-          </div>
-          <!-- third line -->
-          <div class="info-2details">
-            <span class="date-column">
-              <div>Date Listed:</div>
-              <div>{{ post.date }}</div>
-            </span>
-            <span>{{ post.amount }}</span>
-            <span>{{ post.location }}</span>
-            <span>{{ post.email }}</span>
-          </div>
-          <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
-        </ion-card-content>
-      </div>
-      </ion-card>
-    </div>
-  </ion-content>
+    </ion-content>
   </ion-page>
 </template>
 
+
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent, IonContent } from '@ionic/vue';
-import { postSer} from '@/scripts/PostService';
-const posts = computed(() => postSer.posts.value);
+import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent, IonContent, IonSearchbar } from '@ionic/vue';
+import { postSer } from '@/scripts/PostService';
 
+const posts = computed(() => postSer.posts.value); // Keep this from the old script
+
+// Search logic
+const searchQuery = ref('');
+const filteredPosts = ref(posts.value);
+
+const filterPosts = () => {
+  const query = searchQuery.value.toLowerCase();
+  filteredPosts.value = posts.value.filter(post =>
+    post.title.toLowerCase().includes(query) ||
+    post.crop_type.toLowerCase().includes(query) ||
+    post.vendor_name.toLowerCase().includes(query) ||
+    post.location.toLowerCase().includes(query)
+  );
+};
+
+// Handle screen size detection (Keep this from the old script)
 const isMobileWidth = ref(false);
-
 const checkScreenWidth = () => {
   isMobileWidth.value = window.innerWidth < 850;
 };
 
+// Initialize on component mount
 onMounted(() => {
   checkScreenWidth();
   window.addEventListener('resize', checkScreenWidth);
+  filteredPosts.value = posts.value; // Ensure filtered list is initialized
 });
-
 </script>
+
 
 
 <style scoped>
