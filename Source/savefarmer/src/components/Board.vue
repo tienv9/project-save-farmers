@@ -97,10 +97,7 @@ onMounted(() => {
 });
 </script>
 
-
-
 <style scoped>
-
 
 .board {
   display: flex;
