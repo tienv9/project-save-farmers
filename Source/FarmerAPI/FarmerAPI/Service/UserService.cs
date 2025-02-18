@@ -273,5 +273,11 @@ namespace FarmerAPI.Service
             await _userManager.DeleteAsync(user);
         }
 
+        public async Task<IEnumerable<UserResponse>> GetAllUsersAsync()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return _mapper.Map<IEnumerable<UserResponse>>(users);
+        }
+
     }
 }

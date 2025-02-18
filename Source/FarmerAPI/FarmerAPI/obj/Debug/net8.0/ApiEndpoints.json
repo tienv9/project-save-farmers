@@ -11,6 +11,16 @@
   },
   {
     "ContainingType": "FarmerAPI.Controllers.AuthController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/GetAllUsers",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FarmerAPI.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/login",
     "HttpMethod": "POST",
