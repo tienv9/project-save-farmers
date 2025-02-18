@@ -63,7 +63,7 @@ const refreshAccessToken = async () => {
       sessionStorage.setItem('Email', response.data.email);
       sessionStorage.setItem('Role', response.data.role);
       
-      Axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.AccessToken}`;
+      Axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
     }
   } catch (error : any) {
     if (error.response) {

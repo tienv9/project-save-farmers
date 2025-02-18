@@ -55,7 +55,7 @@
         <ion-card v-for="(post, index) in filteredPosts" :key="index" class="board-card">
           <ion-card-header>
             <ion-card-title>
-              <img :src="postSer.getCropIcon(post.crop_type)" alt="Crop Icon" class="crop-icon" />
+              <img :src="postSer.getCropIcon(post.cropType)" alt="Crop Icon" class="crop-icon" />
               {{ post.title }}
             </ion-card-title>
           </ion-card-header>
@@ -64,15 +64,15 @@
             <ion-card-content>
               <div class="info-header">
                 <span><strong>Price: ${{ post.price }}</strong></span>
-                <span><strong>Produce: {{ post.crop_type }}</strong></span>
+                <span><strong>Produce: {{ post.cropType }}</strong></span>
                 <span><strong>Amount: {{ post.amount }}</strong></span>
-                <span><strong>Vendor: {{ post.vendor_name }}</strong></span>
+                <span><strong>Vendor: {{ post.userId }}</strong></span>
                 <span><strong>Location: {{ post.location }}</strong></span>
                 <span><strong>Contact: {{ postSer.formatContact(post.contact) }}</strong></span>
-                <span><strong>Email: {{ post.email }}</strong></span>
-                <span><strong>Date Listed: {{ post.date }}</strong></span>
+                <span><strong>Email: {{ post.name }}</strong></span>
+                <span><strong>Date Listed: {{ post.createDate }}</strong></span>
               </div>
-              <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
+              <p class="expiry-date"><strong>Expires:</strong> {{ post.expireDate }}</p>
             </ion-card-content>
           </div>
           <div v-else>
@@ -85,20 +85,20 @@
               </div>
               <div class="info-details">
                 <span>${{ post.price }}</span>
-                <span>{{ post.crop_type }}</span>
-                <span>{{ post.vendor_name }}</span>
+                <span>{{ post.cropType }}</span>
+                <span>{{ post.userId }}</span>
                 <span>{{ postSer.formatContact(post.contact) }}</span>
               </div>
               <div class="info-2details">
                 <span class="date-column">
                   <div>Date Listed:</div>
-                  <div>{{ post.date }}</div>
+                  <div>{{ post.createDate }}</div>
                 </span>
                 <span>{{ post.amount }}</span>
                 <span>{{ post.location }}</span>
-                <span>{{ post.email }}</span>
+                <span>{{ post.name }}</span>
               </div>
-              <p class="expiry-date"><strong>Expires:</strong> {{ post.expiry_date }}</p>
+              <p class="expiry-date"><strong>Expires:</strong> {{ post.expireDate }}</p>
             </ion-card-content>
           </div>
         </ion-card>
@@ -124,7 +124,7 @@ const sortExpiry = ref<string>('');
 const filteredPosts = ref(posts.value);
 
 const locations = computed(() => [...new Set(posts.value.map(post => post.location))]);
-const cropTypes = computed(() => [...new Set(posts.value.map(post => post.crop_type))]);
+const cropTypes = computed(() => [...new Set(posts.value.map(post => post.cropType))]);
 
 watch(selectedCropTypes, (newValue) => {
   if (newValue.includes("")) {
@@ -139,8 +139,8 @@ const filterPosts = () => {
   if (searchQuery.value) {
     filtered = filtered.filter(post =>
       post.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      post.crop_type.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      post.vendor_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      post.cropType.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+      post.userId.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
       post.location.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   }
@@ -154,13 +154,13 @@ const filterPosts = () => {
   }
 
   if (selectedCropTypes.value.length > 0 && !selectedCropTypes.value.includes("")) {
-    filtered = filtered.filter(post => selectedCropTypes.value.includes(post.crop_type));
+    filtered = filtered.filter(post => selectedCropTypes.value.includes(post.cropType));
   }
 
   if (sortExpiry.value) {
     filtered = filtered.sort((a, b) => {
-      const dateA = new Date(a.expiry_date).getTime();
-      const dateB = new Date(b.expiry_date).getTime();
+      const dateA = new Date(a.expireDate).getTime();
+      const dateB = new Date(b.expireDate).getTime();
       return sortExpiry.value === 'asc' ? dateA - dateB : dateB - dateA;
     });
   }
@@ -175,9 +175,10 @@ const checkScreenWidth = () => {
 };
 
 // Initialize on component mount
-onMounted(() => {
+onMounted(async () => {
   checkScreenWidth();
   window.addEventListener('resize', checkScreenWidth);
+  await postSer.fetchPosts();
   filteredPosts.value = posts.value; // Initialize with all posts
 });
 </script>

@@ -10,18 +10,20 @@ import axios from "axios";
 export interface Post {
   title: string;
   price: number;
-  crop_type: string;
+  cropType: string;
   amount: number;
   location: string;
   contact: string;
-  extra_info: string;
-  date: string;
-  expiry_date: string;
-  email: string;
-  vendor_name: string;
+  description: string;
+  createDate: string;
+  expireDate: string;
+  name: string;
+  status: string;
+  userId: string;
 }
 
-export class PostService {
+
+export default class PostService {
   // Post list is stored as a reactive reference to ensure reactivity in the view
   posts = ref<Post[]>([]);
 
@@ -29,32 +31,51 @@ export class PostService {
     this.posts.value = initialPosts;
   }
 
+  async fetchPosts(): Promise<void> {
+    try {
+      const response = await axios.get("https://localhost:7170/api/posts");
+      if (response.status === 200) {
+        this.posts.value = response.data;
+      }
+    } catch (error: any) {
+      if (error.response) {
+        alert(`Error: ${error.response.data.message}`);
+      } else if (error.request) {
+        alert("No response from server. Please check your connection.");
+      } else {
+        alert("An unexpected error occurred.");
+      }
+    }
+  }
+
+
   // Function to create a new post
   async createPost(post: Post): Promise<void> {
     try {
       const response = await axios.post("https://localhost:7170/api/posts", {
         title: post.title,
         price: post.price,
-        cropType: post.crop_type,
+        cropType: post.cropType,
         amount: post.amount,
         location: post.location,
         contact: post.contact,
-        description: post.extra_info,
-        date: post.date,
-        expiry_date: post.expiry_date,
-        name: post.email,
-        userId: post.vendor_name,
-      });
-      if (response.status === 201) {
-        this.posts.value.push(post);
+        description: post.description,
+        expiry_date: post.expireDate,
+        name: post.name,
+        status: post.status,
+        userId: post.userId,
       }
-    } catch (error: any) {
+    );
+      if (response.status === 201) {
+        this.posts.value.push(response.data);
+      }
+    } catch (error : any) {
       if (error.response) {
         alert(error.response.data.title);
       } else if (error.request) {
-        alert("No response from server. Please try again.");
+        alert('No response from server. Please try again.');
       } else {
-        alert("An unexpected error occurred.");
+        alert('An unexpected error occurred.');
       }
     }
   }
@@ -70,7 +91,8 @@ export class PostService {
   }
 
   // Function to get the crop icon URL based on crop type
-  getCropIcon(cropType: string): string {
+  getCropIcon(cropType: string | undefined | null): string {
+    if (!cropType) return cropIcon; // handle post enter with swagger
     switch (cropType.toLowerCase()) {
       case "corn":
         return cornIcon;
@@ -88,57 +110,4 @@ export class PostService {
   }
 }
 
-export const postSer = new PostService([
-  {
-    title: "Fresh Potatoes for Sale. Organic and Locally Grown.",
-    price: 100,
-    crop_type: "Potato",
-    amount: 100,
-    location: "Spokane, WA, USA",
-    contact: "8496554654",
-    vendor_name: "Red Barn Farms",
-    email: "nowhere@somewhere.com",
-    extra_info: "Extra Info",
-    date: "2021-09-01",
-    expiry_date: "2021-09-30",
-  },
-  {
-    title: "Carrots for Sale. Fresh and Organic.",
-    price: 200,
-    crop_type: "Carrot",
-    amount: 200,
-    location: "Seattle, WA, USA",
-    contact: "2156548231",
-    vendor_name: "Blue Barn Farms",
-    email: "somewhere@nowhere.com",
-    extra_info: "Extra Info 2",
-    date: "2021-09-02",
-    expiry_date: "2021-09-29",
-  },
-  {
-    title: "Rotten Tomatoes for Sale. Cheap and Expired.",
-    price: 10,
-    crop_type: "Tomato",
-    amount: 200,
-    location: "Seattle, WA, USA",
-    contact: "2424548231",
-    vendor_name: "Brown Barn Farms",
-    email: "somewhere2@nowhere.com",
-    extra_info: "Extra Info 2",
-    date: "2021-09-02",
-    expiry_date: "2021-09-29",
-  },
-  {
-    title: "Unripe Corn for Sale. Fresh and Raw.",
-    price: 900,
-    crop_type: "Corn",
-    amount: 1,
-    location: "Seattle, WA, USA",
-    contact: "9999999999",
-    vendor_name: "Yellow Barn Farms",
-    email: "nowhere2@nowhere.com",
-    extra_info: "Extra Info 2",
-    date: "2021-09-02",
-    expiry_date: "2021-09-29",
-  },
-]);
+export const postSer = new PostService();

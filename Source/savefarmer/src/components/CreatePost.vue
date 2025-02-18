@@ -57,11 +57,6 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Date</ion-label>
-          <ion-datetime v-model="newPost.date" required></ion-datetime>
-        </ion-item>
-
-        <ion-item>
           <ion-label position="stacked">Expiry Date</ion-label>
           <ion-datetime v-model="newPost.expiry_date" required></ion-datetime>
         </ion-item>
@@ -111,15 +106,15 @@ const handleClose = () => {
 const newPost : any = ref({
   //placeholder so i dont have to retype everything a million times
   title: "Placeholder",
-  price: 1000,
+  price: "1000",
   crop_type: "Corn",
-  amount: 3424,
+  amount: "3424",
   location: "My House",
   contact: "0000000000",
   email: sessionStorage.getItem('Email'), //should be autofill from database or not? idk
   extra_info: "qwe",
-  date: new Date().toISOString().split("T")[0],
   expiry_date: "",
+  status: "Active",
   vendor_name: sessionStorage.getItem('Id'), //this should be replace by database info but cant leave blank for now
 });
 

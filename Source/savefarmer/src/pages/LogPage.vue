@@ -85,7 +85,7 @@ const handleLogin = async () => {
       sessionStorage.setItem('Role', response.data.role);
 
       // set the authorization header for all axios requests
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.AccessToken}`;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
 
       window.location.href = '/Home';
     }
