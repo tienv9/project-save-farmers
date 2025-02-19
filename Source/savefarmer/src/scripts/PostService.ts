@@ -52,6 +52,13 @@ export default class PostService {
   // Function to create a new post
   async createPost(post: Post): Promise<void> {
     try {
+
+      // getting the access token from the session storage
+      // const acTo = await checkUser();
+      // console.log(acTo);
+      // axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+      console.log(post);
+
       const response = await axios.post("https://localhost:7170/api/posts", {
         title: post.title,
         price: post.price,
@@ -111,3 +118,22 @@ export default class PostService {
 }
 
 export const postSer = new PostService();
+
+
+
+
+const checkUser = () => {
+  const aT = sessionStorage.getItem('AccessToken');
+  if (aT != null || aT != undefined) {
+    return sessionStorage.getItem('AccessToken');
+  } else {
+    alert("No AccessToken found in session storage");
+    const rT = localStorage.getItem('AccessToken');
+    if (rT != null || rT != undefined) {
+    return localStorage.getItem('AccessToken');
+  } else {
+    alert("No AccessToken found in local storage");
+    
+  }
+  }
+};

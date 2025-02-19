@@ -34,10 +34,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/:id',
     component: () => import ('@/pages/FolderPage.vue')
   },
-  {
-    path: '/database',
-    component: () => import ('@/pages/database.vue')
-  },
+  // {
+  //   path: '/database',
+  //   component: () => import ('@/pages/database.vue')
+  // },
   {
     path: '/AdminPage',
     component: () => import ('@/pages/AdminPage.vue')

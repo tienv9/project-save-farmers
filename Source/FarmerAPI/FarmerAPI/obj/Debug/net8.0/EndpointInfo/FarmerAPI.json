@@ -186,6 +186,18 @@
         }
       }
     },
+    "/api/GetAllUsers": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
     "/api/posts": {
       "post": {
         "tags": [

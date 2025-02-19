@@ -11,11 +11,11 @@
           <!-- Price Filter (Range) -->
           <ion-range
             v-model="priceRange"
-            min="0"
-            max="1000"
-            step="1"
-            snaps="true"
-            pin="true"
+            :min="0"
+            :max="1000"
+            :step="1"
+            :snaps="true"
+            :pin="true"
             @ionChange="filterPosts"
           >
             <ion-label slot="start">Min Price: 0$</ion-label>
