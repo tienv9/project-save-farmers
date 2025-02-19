@@ -23,7 +23,7 @@
 
         <ion-item>
           <ion-label position="stacked">Crop Type</ion-label>
-          <ion-select value="Potato" v-model="newPost.crop_type" required>
+          <ion-select value="Potato" v-model="newPost.cropType" required>
             <ion-select-option value="Corn">Corn</ion-select-option>
             <ion-select-option value="Tomato">Tomato</ion-select-option>
             <ion-select-option value="Wheat">Wheat</ion-select-option>
@@ -53,12 +53,12 @@
 
         <ion-item>
           <ion-label position="stacked">Extra Info</ion-label>
-          <ion-input v-model="newPost.extra_info"></ion-input>
+          <ion-input v-model="newPost.description"></ion-input>
         </ion-item>
 
         <ion-item>
           <ion-label position="stacked">Expiry Date</ion-label>
-          <ion-datetime v-model="newPost.expiry_date" required></ion-datetime>
+          <ion-datetime v-model="newPost.expireDate" required></ion-datetime>
         </ion-item>
 
         <ion-button expand="full" type="submit" class="ion-margin-top"
@@ -107,15 +107,15 @@ const newPost : any = ref({
   //placeholder so i dont have to retype everything a million times
   title: "Placeholder",
   price: "1000",
-  crop_type: "Corn",
+  cropType: "Corn",
   amount: "3424",
   location: "My House",
   contact: "0000000000",
-  email: sessionStorage.getItem('Email'), //should be autofill from database or not? idk
-  extra_info: "qwe",
-  expiry_date: "",
+  description: "qwe",
+  expireDate: "2025-02-19T21:37:00",
+  name: sessionStorage.getItem('Email'), //should be autofill from database or not? idk
   status: "Active",
-  vendor_name: sessionStorage.getItem('Id'), //this should be replace by database info but cant leave blank for now
+  userId: sessionStorage.getItem('Id'), //this should be replace by database info but cant leave blank for now
 });
 
 const handleSubmit = () => {

@@ -67,7 +67,7 @@ export default class PostService {
         location: post.location,
         contact: post.contact,
         description: post.description,
-        expiry_date: post.expireDate,
+        expireDate: post.expireDate,
         name: post.name,
         status: post.status,
         userId: post.userId,

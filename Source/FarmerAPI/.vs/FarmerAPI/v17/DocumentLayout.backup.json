@@ -26,7 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< Updated upstream
           "SelectedChildIndex": 2,
+=======
+          "SelectedChildIndex": 3,
+>>>>>>> Stashed changes
           "Children": [
             {
               "$type": "Bookmark",
@@ -68,6 +72,43 @@
               "DocumentMoniker": "C:\\Users\\dillo\\Desktop\\488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\UserService.cs",
               "RelativeDocumentMoniker": "FarmerAPI\\Service\\UserService.cs",
               "ToolTip": "C:\\Users\\dillo\\Desktop\\488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\UserService.cs",
+              "RelativeToolTip": "FarmerAPI\\Service\\UserService.cs",
+              "ViewState": "AgIAAPMAAAAAAAAAAAAYwBMBAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-18T06:00:29.114Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "FarmerAPI\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAA0wFMAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-18T06:02:40.501Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\IUserService.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Service\\IUserService.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\IUserService.cs",
+              "RelativeToolTip": "FarmerAPI\\Service\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-18T06:01:19.174Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\UserService.cs",
+              "RelativeDocumentMoniker": "FarmerAPI\\Service\\UserService.cs",
+              "ToolTip": "C:\\Users\\vocon\\source\\repos\\CSCD488-490\\cscd-488-490-project-save-farmers\\Source\\FarmerAPI\\FarmerAPI\\Service\\UserService.cs",
               "RelativeToolTip": "FarmerAPI\\Service\\UserService.cs",
               "ViewState": "AgIAAPMAAAAAAAAAAAAYwBMBAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
