@@ -34,15 +34,30 @@ const routes: Array<RouteRecordRaw> = [
     path: '/:id',
     component: () => import ('@/pages/FolderPage.vue')
   },
-  {
-    path: '/database',
-    component: () => import ('@/pages/database.vue')
-  },
+  // {
+  //   path: '/database',
+  //   component: () => import ('@/pages/database.vue')
+  // },
   {
     path: '/AdminPage',
     component: () => import ('@/pages/AdminPage.vue')
-  }
-
+  },
+  {
+    path: '/ManageUsers',
+    name: 'ManageUsers',
+    component: () => import ('@/pages/ManageUsers.vue')
+  },
+  {
+    path: '/Transactions',
+    name: 'Transactions',
+    component: () => import ('@/pages/Transactions.vue')
+  },
+  {
+    path: '/AppSettings',
+    name: 'AppSettings',
+    component: () => import ('@/pages/AppSettings.vue')
+  },
+  
 ]
 
 const router = createRouter({

@@ -1,3 +1,5 @@
+<!-- this can be delete later but leaving to show only code/ideas that we had -->
+
 <template>
   <ion-page>
     <ion-header :translucent="true">

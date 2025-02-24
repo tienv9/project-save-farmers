@@ -80,5 +80,13 @@ namespace FarmerAPI.Controllers
             await _userService.DeleteAsync(id);
             return Ok();
         }
+
+        [HttpGet("GetAllUsers")]
+        [Authorize]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var response = await _userService.GetAllUsersAsync();
+            return Ok(response);
+        }
     }
 }

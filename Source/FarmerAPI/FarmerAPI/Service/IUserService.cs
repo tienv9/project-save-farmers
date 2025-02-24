@@ -12,5 +12,7 @@ namespace FarmerAPI.Service
         Task<RevokeRefreshTokenResponse> RevokeRefreshToken(RefreshTokenRequest refreshTokenRemoveRequest);
         Task<CurrentUserResponse> RefreshTokenAsync(RefreshTokenRequest request);
         Task<UserResponse> LoginAsync(UserLoginRequest request);
+
+        Task<IEnumerable<UserResponse>> GetAllUsersAsync();
     }
 }

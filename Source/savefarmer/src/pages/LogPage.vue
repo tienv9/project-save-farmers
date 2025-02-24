@@ -74,6 +74,8 @@ const handleLogin = async () => {
     if (response.status === 200) {
       if (rememberMe.value) {
         localStorage.setItem('RefreshToken', response.data.refreshToken);
+        // store the access token in local storage (NOT CORRECT NEED FIX)
+        localStorage.setItem('AccessToken', response.data.accessToken);
       } else {
         sessionStorage.setItem('RefreshToken', response.data.refreshToken);
       }
@@ -85,9 +87,9 @@ const handleLogin = async () => {
       sessionStorage.setItem('Role', response.data.role);
 
       // set the authorization header for all axios requests
-      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.AccessToken}`;
+      axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.accessToken}`;
 
-      window.location.href = '/Home';
+      window.location.href = '/Profile';
     }
   } catch (error : any) {
       if (error.response) {

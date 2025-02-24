@@ -16,18 +16,18 @@
 
             <!-- Username and Bio -->
             <div class="profile-details">
-              <h2 class="profile-username">John Doe</h2>
-              <p class="profile-bio">sdqwefhhejfqefqhfbqwfqkfqwfb</p>
+            <h2 class="profile-username">{{firstname}} {{lastname}}</h2> 
+              <p class="profile-bio">{{ role }}</p>
             </div>
 
             <!-- Additional Profile Information -->
             <ion-item>
               <ion-label>Email</ion-label>
-              <ion-text>johndoe@example.com</ion-text>
+              <ion-text>{{ email }}</ion-text>
             </ion-item>
             <ion-item>
-              <ion-label>Location</ion-label>
-              <ion-text>New York, USA</ion-text>
+              <ion-label>User Since</ion-label>
+              <ion-text>{{ created }}</ion-text>
             </ion-item>
           </ion-card-content>
 
@@ -69,14 +69,15 @@
             <ion-card-content>
               <ion-card-title>Post History</ion-card-title>
               <ion-card-subtitle>Recent Posts</ion-card-subtitle>
-              <ion-card v-for="(post, index) in PostList" :key="index" class="post-card">
+              <!-- posts is busted right now -->
+              <!-- <ion-card v-for="(post, index) in PostList" :key="index" class="post-card">
                 <ion-card-title class="post-text"><img :src="postSer.getCropIcon(post.crop_type)" alt="Crop Icon" class="crop-icon" /> {{post.title}}</ion-card-title>
                 <div class="post-text">
                 <ion-text>Amount: {{ post.amount}}</ion-text>
                 <ion-text>Price: {{ post.price }}</ion-text>
                 <ion-text>Location: {{ post.location }}</ion-text>
                 </div>
-              </ion-card>
+              </ion-card> -->
             </ion-card-content>
           </ion-card>
         </div>
@@ -227,6 +228,8 @@ onMounted(() => {
 //-------------------------fetching data from the server----------------------------
 
 import axios from 'axios';
+import { c } from "vite/dist/node/types.d-aGj9QkWt";
+import { data } from "cypress/types/jquery";
 
 interface DataType {
   id: string;
@@ -239,9 +242,23 @@ interface DataType {
   updateA: string;
 }
 
-async function getData(): Promise<DataType[]> {
+const firstname = ref("");
+const lastname = ref("");
+const email = ref("");
+const role = ref("");
+const created = ref("");
+
+
+async function getData(): Promise<DataType> {
   try {
-    const response = await axios.get<DataType[]>('https://localhost:7170/api/current-user'); 
+
+    // getting the access token from the session storage
+    const acTo = await checkUser();
+    // console.log(acTo);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+
+
+    const response = await axios.get<DataType>('https://localhost:7170/api/current-user'); 
     // Axios automatically parses the JSON response
     return response.data;
   } catch (error: any) {
@@ -255,24 +272,36 @@ async function getData(): Promise<DataType[]> {
 async function main() {
   try {
     const data = await getData();
-    console.log('Data from API:', data);
+    // console.log('Data from API:', data);
+    firstname.value = data.firstName;
+    lastname.value = data.lastName;
+    email.value = data.email;
+    role.value = data.role;
+    created.value = data.createAt;
+
   } catch (error) {
      console.error('An error occurred:', error);
   }
 }
 
-// const checkUser = () => {
-//   const id = sessionStorage.getItem('Id');
-//   if (id != null || id != undefined) {
-//     return sessionStorage.getItem('Id');
-//   } else {
-//     alert("No ID found");
-//   }
-// };
+// get access token from session storage (NOT CORRECT NEED FIX) should be refresh token.
+const checkUser = () => {
+  const aT = sessionStorage.getItem('AccessToken');
+  if (aT != null || aT != undefined) {
+    return sessionStorage.getItem('AccessToken');
+  } else {
+    alert("No AccessToken found in session storage");
+    const rT = localStorage.getItem('AccessToken');
+    if (rT != null || rT != undefined) {
+    return localStorage.getItem('AccessToken');
+  } else {
+    alert("No AccessToken found in local storage");
+    
+  }
+  }
+};
 
 main();
-
-
 
 
 </script>
