@@ -254,7 +254,7 @@ async function getData(): Promise<DataType> {
 
     // getting the access token from the session storage
     const acTo = await checkUser();
-    // console.log(acTo);
+    console.log(acTo);
     axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
 

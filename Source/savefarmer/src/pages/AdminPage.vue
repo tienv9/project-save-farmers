@@ -9,8 +9,8 @@
 
           <ion-card-content>
             <div class="admin-actions">
-              <ion-button expand="block" @click="manageUsers">Manage Users</ion-button>
-              <ion-button expand="block" @click="ViewTransactions">View Transactions</ion-button>
+              <ion-button expand="block" @click="ManageUsers">Manage Users</ion-button>
+              <ion-button expand="block" @click="viewTransactions">View Transactions</ion-button>
               <ion-button expand="block" @click="viewAppSettings">App Settings</ion-button>
             </div>
 
@@ -33,30 +33,29 @@
 <script lang="ts" setup>
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonPage, IonContent } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 Chart.register(...registerables, ChartDataLabels);
 
+import { useRouter } from 'vue-router';
+
 const router = useRouter();
 
-const manageUsers = () => {
-  console.log("Navigating to ManageUsers");
-  router.push({ name: 'ManageUsers' }).catch(err => console.error(err));
-};
+function ManageUsers() {
+  console.log('Navigating to Manage Users');
+  router.push('/ManageUsers');
+}
 
-const ViewTransactions = () => {
-  console.log("Navigating to Transactions");
-  router.push({ name: 'Transactions' }).catch(err => console.error(err));
-};
+function viewTransactions() {
+  console.log('Navigating to Transactions');
+  router.push('/Transactions');
+}
 
-const viewAppSettings = () => {
-  console.log("Viewing reports");
-  router.push({ name: 'AppSettings' }).catch(err => console.error(err));
-
-};
-
+function viewAppSettings() {
+  console.log('Navigating to App Settings');
+  router.push('/AppSettings');
+}
 
 
 onMounted(() => {
