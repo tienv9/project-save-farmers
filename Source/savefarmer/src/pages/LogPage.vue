@@ -23,7 +23,7 @@
             >
             <ion-input
               v-model="password"
-              type="text"
+              type="password"
               placeholder="Enter your Password"
             ></ion-input>
           </ion-item>
