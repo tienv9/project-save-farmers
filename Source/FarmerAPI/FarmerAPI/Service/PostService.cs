@@ -32,9 +32,24 @@ namespace FarmerAPI.Service
         }
 
         public async Task<IEnumerable<PostResponse>> GetAllPostsAsync()
-        { //need to filter out post that status is not active
+        {
             var posts = await _context.Posts.ToListAsync();
-            return _mapper.Map<IEnumerable<PostResponse>>(posts);
+
+            foreach (var post in posts)
+            {
+                if (post.ExpireDate < DateTime.UtcNow && post.Status == "Active")
+                {
+                    post.Status = "Expired";
+                    post.UpdateDate = DateTime.UtcNow;
+                    _context.Posts.Update(post);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            var activePosts = posts.Where(p => p.Status == "Active").ToList();
+
+            return _mapper.Map<IEnumerable<PostResponse>>(activePosts);
         }
 
         public async Task<IEnumerable<PostResponse>> GetAllPostsByUserIdAsync(Guid userId)
