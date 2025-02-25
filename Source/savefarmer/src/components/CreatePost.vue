@@ -121,5 +121,6 @@ const newPost : any = ref({
 const handleSubmit = () => {
   postSer.createPost(newPost.value);
   handleClose();
+  window.location.reload();
 };
 </script>

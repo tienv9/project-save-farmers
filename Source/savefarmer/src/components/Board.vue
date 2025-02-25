@@ -86,7 +86,7 @@
               <div class="info-details">
                 <span>${{ post.price }}</span>
                 <span>{{ post.cropType }}</span>
-                <span>{{ post.userId }}</span>
+                <span></span>
                 <span>{{ postSer.formatContact(post.contact) }}</span>
               </div>
               <div class="info-2details">

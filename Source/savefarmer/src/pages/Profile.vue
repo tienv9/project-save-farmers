@@ -9,11 +9,6 @@
           </ion-card-header>
 
           <ion-card-content>
-            <!-- Profile image (avatar) -->
-            <ion-avatar class="profile-avatar">
-              <img src="../images/farmer-stock.jpg" alt="Profile Image" />
-            </ion-avatar>
-
             <!-- Username and Bio -->
             <div class="profile-details">
             <h2 class="profile-username">{{firstname}} {{lastname}}</h2> 
@@ -31,15 +26,9 @@
             </ion-item>
           </ion-card-content>
 
-          <!-- Edit button, Ideally this should open up a card with edit functionality -->
-          <ion-button expand="block" class="edit-button"
-            >Edit Profile</ion-button
-          >
-          <ion-button expand="block" class="edit-button" @click="openPostModal"
-            >Create Post
-            </ion-button>
+          <div class="data-container"> <!-- need this to avoid weird inconsistent spacing with absolute -->
+              
 
-            <div class="data-container"> <!-- need this to avoid weird inconsistent spacing with absolute -->
           <ion-card class="UserData">
             <ion-card-content>
             <ion-card-title style="justify-self: center;">Your weekly Data</ion-card-title>
@@ -64,7 +53,7 @@
               <ion-text class="chartTitle">Types sold</ion-text>
             </ion-card>
           </ion-card>
-
+          <span></span>
           <ion-card class="PostHistory">
             <ion-card-content>
               <ion-card-title>Post History</ion-card-title>
@@ -83,10 +72,6 @@
         </div>
         </ion-card>
       </div>
-      <CreatePostModal
-        :isOpen="isModalOpen"
-        @update:isOpen="isModalOpen = $event"
-      />
     </ion-content>
   </ion-page>
 </template>
@@ -101,14 +86,12 @@ import {
   IonLabel,
   IonText,
   IonButton,
-  IonAvatar,
   IonPage,
   IonContent,
   IonCardSubtitle,
   IonList,
 } from "@ionic/vue";
 import { ref, onMounted, computed } from "vue";
-import CreatePostModal from "@/components/CreatePost.vue";
 import { Chart, registerables } from "chart.js";
 import { postSer } from '../scripts/PostService';
 
@@ -117,12 +100,6 @@ const PostList = computed(() => postSer.posts.value);
 Chart.register(...registerables);
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
 const cropPieChart =  ref<HTMLCanvasElement | null>(null);
-
-const isModalOpen = ref(false);
-
-const openPostModal = () => {
-  isModalOpen.value = true;
-};
 
 const CropPieChart = () => {
   if (cropPieChart.value) {
@@ -450,6 +427,7 @@ main();
   color: rgba(75, 192, 192, 1);
   font-size: 1rem;
   font-weight: bold;
+  text-align: center;
 }
 
 .chartSubtitle {
@@ -458,36 +436,24 @@ main();
   font-weight: bold;
   margin-left: -6%;
 }
-.data-container {
-  display: flex;
-  justify-content: space-between; 
-  width: 100%;
-}
+
 
 .PostHistory {
   font-family:'Courier New', Courier, monospace;
-  position: absolute;
   background-color: rgba(34, 34, 37, 0.959);
-  bottom: 8%;
-  right: 1%;
-  width: 40%;
-  height: 35%;
-  z-index: 1;
+  width: 100%;
+  height: 250%;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
 }
 
 .UserData {
-  position: absolute;
   font-family:'Courier New', Courier, monospace;
   background-color: rgba(34, 34, 37, 0.959);
-  bottom: 8%;
-  left: 1%;
-  width: 40%;
-  height: 35%;
-  z-index: 1;
-}
+  width: 100%;
+  height: 200%;
+  display: flex;}
 
 .crop-icon {
   width: 1.5rem; 

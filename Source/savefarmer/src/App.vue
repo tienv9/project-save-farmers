@@ -24,7 +24,6 @@
             <ion-buttons slot="start">
               <ion-menu-button></ion-menu-button>
             </ion-buttons>
-            <ion-title>My Farmer</ion-title>
             <ion-buttons slot="primary">
             <ion-button fill="outline" @click="openModal"> 
               Create Post <ion-icon size="large" :icon="addOutline"></ion-icon>
