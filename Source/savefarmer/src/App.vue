@@ -24,26 +24,25 @@
               <ion-menu-button></ion-menu-button>
             </ion-buttons>
             <ion-buttons slot="primary">
+            <div v-if = "!checkAuth()">
             <ion-button fill="outline" href="/Login">
               Login <ion-icon size="large" :icon="logInOutline"></ion-icon>
             </ion-button>
             <ion-button fill="outline" href="/SignUp">
               Sign Up <ion-icon size="large" :icon="personAddOutline"></ion-icon>
             </ion-button>
+          </div>
+          <div v-else>
             <ion-button fill="outline" @click="openModal"> 
               Create Post <ion-icon size="large" :icon="addOutline"></ion-icon>
             </ion-button>
-            </ion-buttons>
-
-            
-            <ion-buttons shape="round" slot="end" @click="checkAuth">
-              <ion-icon size="large" :icon="bagCheckOutline"></ion-icon>
-            </ion-buttons>
-            <ion-buttons shape="round" slot="end" @click="checkUser">
+            <ion-button shape="round" slot="end" @click="checkUser">
               <ion-icon size="large" :icon="personCircleOutline"></ion-icon>
-            </ion-buttons>
-            <ion-buttons shape="round" slot="end" @click="logOut">
+            </ion-button>
+            <ion-button shape="round" slot="end" @click="logOut">
               <ion-icon size="large" :icon="logOutOutline"></ion-icon>
+            </ion-button>
+          </div>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -77,8 +76,6 @@ import {
   IonMenu,
   IonMenuToggle,
   IonRouterOutlet,
-  IonSplitPane,
-  IonTitle,
   IonToolbar,
   IonHeader,
   IonButtons,
@@ -92,31 +89,23 @@ import {
   logInSharp,
   personCircleOutline,
   personCircleSharp,
-  heartOutline,
-  heartSharp,
   archiveOutline,
   archiveSharp,
   trashOutline,
   trashSharp,
   homeOutline,
   homeSharp,
-  bagCheckOutline,
   logOutOutline,
   addOutline,
   personAdd,
   personAddOutline,
-  personCircle
 } from 'ionicons/icons';
 
 import CreatePostModal from '@/components/CreatePost.vue';
 
 const checkAuth = () => {
   const token = sessionStorage.getItem('AccessToken');
-  if (token != null || token != undefined) {
-    alert('You are login');
-  } else {
-    alert('You are not login');
-  }
+  return token != null && token !== undefined;
 };
 
 const checkUser = () => {
@@ -129,6 +118,7 @@ const checkUser = () => {
 };
 
 const logOut = () => {
+  
   sessionStorage.clear();
   localStorage.clear();
   window.location.reload();
