@@ -40,6 +40,7 @@ import { Capacitor } from '@capacitor/core';
 import { CapacitorSQLite, SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { JeepSqlite } from 'jeep-sqlite/dist/components/jeep-sqlite';
 import Axios from 'axios';
+import { reload } from 'ionicons/icons';
 
 customElements.define('jeep-sqlite', JeepSqlite);
 console.log(`after customElements.define`);
@@ -68,10 +69,16 @@ const refreshAccessToken = async () => {
   } catch (error : any) {
     if (error.response) {
       alert(error.response.data.title);
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.reload();
     } else if (error.request) {
       alert('No response from server. Please try again.');
     } else {
       alert('An unexpected error occurred.');
+      sessionStorage.clear();
+      localStorage.clear();
+      window.location.reload();
     }
   }
 };

@@ -74,10 +74,6 @@ const handleLogin = async () => {
     if (response.status === 200) {
       if (rememberMe.value) {
         localStorage.setItem('RefreshToken', response.data.refreshToken);
-        // store the access token in local storage (NOT CORRECT NEED FIX)
-        localStorage.setItem('AccessToken', response.data.accessToken);
-      } else {
-        sessionStorage.setItem('RefreshToken', response.data.refreshToken);
       }
       sessionStorage.setItem('AccessToken', response.data.accessToken);
       sessionStorage.setItem('Id', response.data.id);
