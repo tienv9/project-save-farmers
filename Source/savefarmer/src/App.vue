@@ -24,6 +24,12 @@
               <ion-menu-button></ion-menu-button>
             </ion-buttons>
             <ion-buttons slot="primary">
+            <ion-button fill="outline" href="/Login">
+              Login <ion-icon size="large" :icon="logInOutline"></ion-icon>
+            </ion-button>
+            <ion-button fill="outline" href="/SignUp">
+              Sign Up <ion-icon size="large" :icon="personAddOutline"></ion-icon>
+            </ion-button>
             <ion-button fill="outline" @click="openModal"> 
               Create Post <ion-icon size="large" :icon="addOutline"></ion-icon>
             </ion-button>
@@ -97,6 +103,9 @@ import {
   bagCheckOutline,
   logOutOutline,
   addOutline,
+  personAdd,
+  personAddOutline,
+  personCircle
 } from 'ionicons/icons';
 
 import CreatePostModal from '@/components/CreatePost.vue';
@@ -170,8 +179,8 @@ const appPages = [
   {
     title: 'Sign Up',
     url: '/SignUp',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp,
+    iosIcon: personAdd,
+    mdIcon: personAddOutline,
   },
   {
     title: 'About',
