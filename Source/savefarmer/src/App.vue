@@ -1,6 +1,5 @@
 <template>
   <ion-app>
-    <ion-split-pane content-id="main-content">
       <!-- Side Menu -->
       <ion-menu content-id="main-content" type="reveal">
         <ion-content>
@@ -45,8 +44,7 @@
 
         <ion-router-outlet id="main-content"></ion-router-outlet>
       </ion-content>
-    </ion-split-pane>
-    <CreatePostModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" />
+      <CreatePostModal :isOpen="isModalOpen" @update:isOpen="isModalOpen = $event" />
 
     <ion-toast
       :is-open="showToast"
