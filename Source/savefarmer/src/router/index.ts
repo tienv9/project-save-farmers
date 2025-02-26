@@ -4,7 +4,11 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '',
-    redirect: '/Login'
+    redirect: '/SignUp'
+  }, 
+  {
+    path: '/SignUp',
+    component: () => import ('@/pages/SignUp.vue')
   },
   {
     path: '/Login',
@@ -18,10 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/About',
     component: () => import ('@/pages/AboutPage.vue')
   },
-  {
-    path: '/SignUp',
-    component: () => import ('@/pages/SignUp.vue')
-  },
+
   {
     path: '/Home',
     component: () => import ('@/pages/Home.vue')

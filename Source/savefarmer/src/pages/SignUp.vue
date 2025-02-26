@@ -44,7 +44,7 @@
             <ion-button expand="block" class="login-button" @click="handleLogin">Create Account <ion-icon color="white" icon="arrow-forward-outline"></ion-icon></ion-button>
             <div class="misc">
               <p>
-                Already have an account? <a href="/Login" class="link">Log in</a>
+                Already have an account? <a href="/login" class="link">Log in</a>
               </p>
             </div>
           </ion-card-content>

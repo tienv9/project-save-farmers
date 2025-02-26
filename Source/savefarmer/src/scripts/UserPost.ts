@@ -6,8 +6,10 @@ import carrotIcon from "@/images/icons/carrot.png";
 import cropIcon from "@/images/icons/crop.png";
 import potatoIcon from "@/images/icons/potato.png";
 import axios from "axios";
+import { c } from "vite/dist/node/types.d-aGj9QkWt";
 
 export interface Post {
+  postId: string;
   title: string;
   price: number;
   cropType: string;
@@ -23,19 +25,34 @@ export interface Post {
 }
 
 
-export default class PostService {
+
+export default class GetUserPostService {
   // Post list is stored as a reactive reference to ensure reactivity in the view
   posts = ref<Post[]>([]);
+
 
   constructor(initialPosts: Post[] = []) {
     this.posts.value = initialPosts;
   }
 
+  
+
   async fetchPosts(): Promise<void> {
     try {
-      const response = await axios.get("https://localhost:7170/api/posts");
+      const acTo = await checkUser();
+      console.log(acTo);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+
+
+      const uIds = await getUser();
+      console.log(uIds);
+      const uIdurl = `https://localhost:7170/api/posts/user/${uIds}`;
+      console.log(uIdurl);
+
+      const response = await axios.get(uIdurl);
       if (response.status === 200) {
         this.posts.value = response.data;
+        console.log(response.data);
       }
     } catch (error: any) {
       if (error.response) {
@@ -47,6 +64,10 @@ export default class PostService {
       }
     }
   }
+
+
+
+
 
 
   // Function to create a new post
@@ -87,10 +108,10 @@ export default class PostService {
     }
   }
 
-  
   // Function to delete a post by its index
   deletePost(index: number): void {
     this.posts.value.splice(index, 1);
+    console.log(index);
   }
 
   // Function to format the contact number (same logic as before)
@@ -118,7 +139,8 @@ export default class PostService {
   }
 }
 
-export const postSer = new PostService();
+
+export const usersPost = new GetUserPostService();
 
 
 
@@ -136,5 +158,14 @@ const checkUser = () => {
     alert("No AccessToken found in local storage");
     
   }
+  }
+};
+
+const getUser = () => {
+  const uId = sessionStorage.getItem('Id');
+  if (uId != null || uId != undefined) {
+    return sessionStorage.getItem('Id');
+  } else {
+    alert("No uId found in session storage");
   }
 };

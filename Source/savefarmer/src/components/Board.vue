@@ -112,7 +112,9 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent, IonContent, IonSearchbar, IonRange, IonSelect, IonSelectOption, IonLabel } from '@ionic/vue';
 import { postSer } from '@/scripts/PostService';
 
+
 const posts = computed(() => postSer.posts.value);
+
 
 // Filter logic
 const searchQuery = ref('');

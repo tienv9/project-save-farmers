@@ -96,11 +96,12 @@ const refreshAccessToken = async () => {
   }
 };
 
-if (token) {
-  refreshAccessToken();
-} else {
-  router.push("/login");
-}
+// fixed login or signup buttons on there pages for going backl tot he other
+// if (token) {
+//   refreshAccessToken();
+// } else {
+//   router.push("/signup");
+// }
 
 window.addEventListener("DOMContentLoaded", async () => {
   try {

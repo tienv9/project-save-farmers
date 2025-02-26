@@ -26,8 +26,57 @@
             </ion-item>
           </ion-card-content>
 
+
+          <!-- <div class="data-container">
+            
+            <ion-card class="PostHistory">
+            <ion-card-content>
+              <ion-card-title>Post History</ion-card-title>
+              <ion-card-subtitle>Recent Posts</ion-card-subtitle>
+              <ion-card v-for="(post, index) in PostList" :key="index" class="post-card">
+                <ion-card-title class="post-text"><img :src="postSer.getCropIcon(post.cropType)" alt="Crop Icon" class="crop-icon" /> {{post.title}}</ion-card-title>
+                <div class="post-text">
+                <ion-text>Amount: {{ post.amount}}</ion-text>
+                <ion-text>Price: {{ post.price }}</ion-text>
+                <ion-text>Location: {{ post.location }}</ion-text>
+                </div>
+              </ion-card>
+            </ion-card-content>
+          </ion-card>
+
+          
+        
+        </div> -->
+
+        <div class="data-container">
+            
+            <ion-card class="PostHistory">
+            <ion-card-content>
+              <ion-card-title>Post History</ion-card-title>
+              <ion-card-subtitle>Recent Posts</ion-card-subtitle>
+              <ion-card v-for="(post, index) in PostListUser" :key="index" class="post-card">
+              <ion-card-title class="post-text"><img :src="usersPost.getCropIcon(post.cropType)" alt="Crop Icon" class="crop-icon" /> {{post.title}}</ion-card-title>
+                
+                <div class="post-text">
+                <ion-text>Amount: {{ post.amount}}</ion-text>
+                <ion-text>Price: {{ post.price }}</ion-text>
+                <ion-text>Location: {{ post.location }}</ion-text>
+                <ion-text>Post ID: {{ post.postId }}</ion-text>
+                <ion-card-title><ion-button>Edit</ion-button><ion-button @click=deletePost(post.postId)>Delete</ion-button></ion-card-title>
+                </div>
+              </ion-card>
+            </ion-card-content>
+          </ion-card>
+
+          
+        
+        </div>
+
+      
+
           <div class="data-container"> <!-- need this to avoid weird inconsistent spacing with absolute -->
-              
+          
+            
 
           <ion-card class="UserData">
             <ion-card-content>
@@ -54,26 +103,12 @@
             </ion-card>
           </ion-card>
           <span></span>
-          <ion-card class="PostHistory">
-            <ion-card-content>
-              <ion-card-title>Post History</ion-card-title>
-              <ion-card-subtitle>Recent Posts</ion-card-subtitle>
-              <!-- posts is busted right now -->
-              <!-- <ion-card v-for="(post, index) in PostList" :key="index" class="post-card">
-                <ion-card-title class="post-text"><img :src="postSer.getCropIcon(post.crop_type)" alt="Crop Icon" class="crop-icon" /> {{post.title}}</ion-card-title>
-                <div class="post-text">
-                <ion-text>Amount: {{ post.amount}}</ion-text>
-                <ion-text>Price: {{ post.price }}</ion-text>
-                <ion-text>Location: {{ post.location }}</ion-text>
-                </div>
-              </ion-card> -->
-            </ion-card-content>
-          </ion-card>
         </div>
         </ion-card>
       </div>
     </ion-content>
   </ion-page>
+  
 </template>
 
 <script lang="ts" setup>
@@ -93,9 +128,62 @@ import {
 } from "@ionic/vue";
 import { ref, onMounted, computed } from "vue";
 import { Chart, registerables } from "chart.js";
+
 import { postSer } from '../scripts/PostService';
+import { usersPost } from '../scripts/UserPost';
+
+
+
+
 
 const PostList = computed(() => postSer.posts.value);
+const PostListUser = computed(() => usersPost.posts.value);
+
+onMounted(async () => {
+  await postSer.fetchPosts();
+  await usersPost.fetchPosts();
+});
+
+
+async function deletePost(postID: string) {
+  try {
+      const acTo = await checkUser();
+      console.log(acTo);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+
+
+      
+      console.log(postID);
+      const postIDurl = `https://localhost:7170/api/posts/${postID}`;
+
+      const response = await axios.delete(postIDurl);
+        alert("Post Deleted Successfully");
+        window.location.reload();
+
+      
+    } catch (error: any) {
+      if (error.response) {
+        alert(`Error: ${error.response.data.message}`);
+      } else if (error.request) {
+        alert("No response from server. Please check your connection.");
+      } else {
+        alert("An unexpected error occurred.");
+      }
+    }
+
+  }
+
+  
+
+
+
+  
+
+
+
+  
+
+
 
 Chart.register(...registerables);
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
@@ -245,6 +333,60 @@ async function getData(): Promise<DataType> {
   }
 }
 
+// interface Post {
+//   title: string;
+//   price: number;
+//   cropType: string;
+//   amount: number;
+//   location: string;
+//   contact: string;
+//   description: string;
+//   createDate: string;
+//   expireDate: string;
+//   name: string;
+//   status: string;
+//   userId: string;
+// }
+
+// const title = ref("");
+// const price = ref(0);
+// const cropType = ref("");
+// const amount = ref(0);
+// const location = ref("");
+// const contact = ref("");
+// const description = ref("");
+// const createDate = ref("");   
+// const expireDate = ref("");
+// const name = ref("");
+// const status = ref("");
+// const userId = ref("");
+
+// async function getUsersPosts(): Promise<Post> {
+//   try {
+
+//     // getting the access token from the session storage
+//     const acTo = await checkUser();
+//     console.log(acTo);
+//     axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+
+
+//     const uIds = await getUser();
+//     console.log(uIds);
+//     const uIdurl = `https://localhost:7170/api/posts/user/${uIds}`;
+//     console.log(uIdurl);
+
+//     const response = await axios.get<Post>(uIdurl); 
+//     // Axios automatically parses the JSON response
+//     return response.data;
+//   } catch (error: any) {
+//     // Handle errors appropriately
+//     console.error('Error fetching data:', error.message);
+//     throw error; // Re-throw to allow handling by the caller if necessary
+//   }
+// }
+
+
+
 // Example usage
 async function main() {
   try {
@@ -255,6 +397,22 @@ async function main() {
     email.value = data.email;
     role.value = data.role;
     created.value = data.createAt;
+    
+    // const postData = await getUsersPosts();
+    // console.log('Data from API:', postData);
+    // title.value = postData.title;
+    // price.value = postData.price;
+    // cropType.value = postData.cropType;
+    // amount.value = postData.amount;
+    // location.value = postData.location;
+    // contact.value = postData.contact;
+    // description.value = postData.description;
+    // createDate.value = postData.createDate;
+    // expireDate.value = postData.expireDate;
+    // name.value = postData.name;
+    // status.value = postData.status;
+    // userId.value = postData.userId;
+
 
   } catch (error) {
      console.error('An error occurred:', error);
@@ -275,6 +433,15 @@ const checkUser = () => {
     alert("No AccessToken found in local storage");
     
   }
+  }
+};
+
+const getUser = () => {
+  const uId = sessionStorage.getItem('Id');
+  if (uId != null || uId != undefined) {
+    return sessionStorage.getItem('Id');
+  } else {
+    alert("No uId found in session storage");
   }
 };
 
