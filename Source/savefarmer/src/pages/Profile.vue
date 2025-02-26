@@ -619,7 +619,7 @@ main();
   font-family:'Courier New', Courier, monospace;
   background-color: rgba(34, 34, 37, 0.959);
   width: 100%;
-  height: 200%;
+  height: 350%;
   display: flex;}
 
 .crop-icon {
