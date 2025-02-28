@@ -50,26 +50,52 @@
 
         <div class="data-container">
             
-            <ion-card class="PostHistory">
-            <ion-card-content>
-              <ion-card-title>Post History</ion-card-title>
-              <ion-card-subtitle>Recent Posts</ion-card-subtitle>
-              <ion-card v-for="(post, index) in PostListUser" :key="index" class="post-card">
-              <ion-card-title class="post-text"><img :src="usersPost.getCropIcon(post.cropType)" alt="Crop Icon" class="crop-icon" /> {{post.title}}</ion-card-title>
-                
-                <div class="post-text">
-                <ion-text>Amount: {{ post.amount}}</ion-text>
-                <ion-text>Price: {{ post.price }}</ion-text>
-                <ion-text>Location: {{ post.location }}</ion-text>
-                <ion-text>Post ID: {{ post.postId }}</ion-text>
-                <ion-card-title><ion-button>Edit</ion-button><ion-button @click=deletePost(post.postId)>Delete</ion-button></ion-card-title>
-                </div>
-              </ion-card>
-            </ion-card-content>
+          <ion-card 
+              v-for="(post, index) in PostListUser" 
+              :key="index" 
+              class="post-card" 
+              :class="{'active-post': post.status === 'Active', 'inactive-post': post.status === 'Inactive', 'expired-post': post.status === 'Expired'}">
+              <ion-card-title class="post-text">
+                  <img :src="usersPost.getCropIcon(post.cropType)" alt="Crop Icon" class="crop-icon" />
+                  {{ post.title }}
+              </ion-card-title>
+
+              <div class="post-text">
+                  <ion-text>Amount: {{ post.amount }}</ion-text>
+                  <ion-text>Price: {{ post.price }}</ion-text>
+                  <ion-text>Location: {{ post.location }}</ion-text>
+                  <ion-text>Post ID: {{ post.postId }}</ion-text>
+                  <ion-text>Activity: {{ post.status }}</ion-text>
+                  <ion-card-title>
+                      <ion-button>Edit</ion-button>
+                      <ion-button @click="deletePost(post.postId)">Delete</ion-button>
+
+                      <!-- Conditional Buttons for Activate/Deactivate -->
+                      <ion-button 
+                          v-if="post.status === 'Inactive'" 
+                          @click="postActivity(post.title, post.price, post.cropType, post.amount, post.location, post.contact, post.description, post.expireDate, post.name, post.status, post.userId, post.postId)"
+                          color="success">
+                          Activate
+                      </ion-button>
+
+                      <ion-button 
+                          v-else-if="post.status === 'Active'" 
+                          @click="postActivity(post.title, post.price, post.cropType, post.amount, post.location, post.contact, post.description, post.expireDate, post.name, post.status, post.userId, post.postId)"
+                          color="danger">
+                          Deactivate
+                      </ion-button>
+
+                      <ion-button 
+                          v-else-if="post.status === 'Expired'" 
+                          @click="postActivity(post.title, post.price, post.cropType, post.amount, post.location, post.contact, post.description, post.expireDate, post.name, post.status, post.userId, post.postId)"
+                          color="danger">
+                          Reactivate
+                      </ion-button>
+
+                  </ion-card-title>
+              </div>
           </ion-card>
 
-          
-        
         </div>
 
       
@@ -174,14 +200,96 @@ async function deletePost(postID: string) {
   }
 
   
+async function postActivity(title: string, price: number, cropType: string, amount: number, location: string, contact: string, description: string, expireDate: string, name: string, status: string, userId: string, postID: string) {
+  console.log(status);  
+  if (status === "Active") {
+      try {
+        const acTo = await checkUser();
+        console.log(acTo);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
 
+        
+        console.log(postID);
+        const postIDurl = `https://localhost:7170/api/posts/${postID}`;
 
-  
+        await axios.put(postIDurl, {
+          title: title,
+          price: price,
+          cropType: cropType,
+          amount: amount,
+          location: location,
+          contact: contact,
+          description: description,
+          expireDate: expireDate,
+          name: name,
+          status: "Inactive",
+          userId: userId
+        }
+        );
+          alert("Post Deactivated Successfully"
+      );
+          
+          window.location.reload();
+
+        
+      } catch (error: any) {
+        if (error.response) {
+          alert(`Error: ${error.response.data.message}`);
+        } else if (error.request) {
+          alert("No response from server. Please check your connection.");
+        } else {
+          alert("An unexpected error occurred.");
+        }
+      }
+    
+    } else if (status === "Inactive") {
+      try {
+        const acTo = await checkUser();
+        console.log(acTo);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
 
+        
+        console.log(postID);
+        const postIDurl = `https://localhost:7170/api/posts/${postID}`;
 
-  
+        await axios.put(postIDurl, {
+          title: title,
+          price: price,
+          cropType: cropType,
+          amount: amount,
+          location: location,
+          contact: contact,
+          description: description,
+          expireDate: expireDate,
+          name: name,
+          status: "Active",
+          userId: userId
+        }
+        );
+          alert("Post Deactivated Successfully"
+      );
+          
+          window.location.reload();
+
+        
+      } catch (error: any) {
+        if (error.response) {
+          alert(`Error: ${error.response.data.message}`);
+        } else if (error.request) {
+          alert("No response from server. Please check your connection.");
+        } else {
+          alert("An unexpected error occurred.");
+        }
+      }
+      
+    } else {
+      alert("Post Expired");
+      //make later to repost after edit is figured out
+    }
+
+  }
 
 
 
@@ -451,6 +559,22 @@ main();
 </script>
 
 <style scoped>
+
+.post-card.active-post {
+    background-color: #1f3a25; /* Dark green */
+    border-left: 5px solid #28a745; /* Green border */
+}
+
+.post-card.inactive-post {
+    background-color: #3f2124; /* Dark red */
+    border-left: 5px solid #dc3545; /* Red border */
+}
+
+.post-card.expired-post {
+    background-color: #3c351f; /* Dark yellow */
+    border-left: 5px solid #ffc107; /* Yellow border */
+}
+
 /* Profile container should take full height minus the header */
 .profile-container {
   display: flex;
