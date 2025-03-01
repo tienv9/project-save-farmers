@@ -32,6 +32,14 @@ namespace FarmerAPI.Controllers
             return Ok(response);
         }
 
+        [HttpGet("analytic")]
+        [Authorize]
+        public async Task<IActionResult> GetAllPostsAnalytic()
+        {
+            var response = await _postService.GetAllPostsAnalytic();
+            return Ok(response);
+        }
+
         [HttpGet("user/{userId}")]
         [Authorize]
         public async Task<IActionResult> GetAllPostsByUserId(Guid userId)

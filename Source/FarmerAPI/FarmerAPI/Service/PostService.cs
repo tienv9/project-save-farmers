@@ -52,6 +52,13 @@ namespace FarmerAPI.Service
             return _mapper.Map<IEnumerable<PostResponse>>(activePosts);
         }
 
+        public async Task<IEnumerable<PostResponse>> GetAllPostsAnalytic()
+        {
+            var posts = await _context.Posts.ToListAsync();
+            return _mapper.Map<IEnumerable<PostResponse>>(posts);
+        }
+
+
         public async Task<IEnumerable<PostResponse>> GetAllPostsByUserIdAsync(Guid userId)
         {
             var posts = await _context.Posts
