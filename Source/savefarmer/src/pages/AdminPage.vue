@@ -71,7 +71,7 @@ onMounted(async () => {
   console.log(userAmount);
 
   // Fetching the post amount
-  const postResponse = await axios.get('https://localhost:7170/api/posts');
+  const postResponse = await axios.get('https://localhost:7170/api/posts/analytic');
   const postAmount = postResponse.data.length;
   console.log(postAmount);
 
