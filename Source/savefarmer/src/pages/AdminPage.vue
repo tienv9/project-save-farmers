@@ -33,7 +33,8 @@
     <ion-content class="scrollable-content">
       <div class="unauthorized-container">
         <h2>Access Denied</h2>
-        <p>You do not have permission to view this page.</p>
+        <p>You must be a Farmer or Admin to access the Admin Dashboard.</p>
+        <p>Non-Farmer users are not authorized to view or manage the admin features.</p>
       </div>
     </ion-content>
   </ion-page>
@@ -182,5 +183,9 @@ onMounted(async () => {
 
 .unauthorized-container h2 {
   color: #f44336;
+}
+
+.unauthorized-container p {
+  color: #e0e0e0;
 }
 </style>
