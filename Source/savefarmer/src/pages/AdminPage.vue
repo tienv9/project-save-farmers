@@ -15,12 +15,12 @@
             </div>
 
             <div class="admin-stats">
-              <h3>Users Statistics</h3>
+              <h3>Users</h3>
               <canvas id="usersChart"></canvas>
             </div>
 
             <div class="admin-stats">
-              <h3>Transactions Statistics</h3>
+              <h3>Posts</h3>
               <canvas id="transactionsChart"></canvas>
             </div>
           </ion-card-content>
@@ -58,16 +58,34 @@ function viewAppSettings() {
 }
 
 
-onMounted(() => {
+onMounted(async () => {
+
+  // getting the access token from the session storage
+  const acTo = checkUser();
+  // console.log(acTo);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+
+  // Fetching the user amount
+  const userResponse = await axios.get('https://localhost:7170/api/GetAllUsers'); 
+  const userAmount = userResponse.data.length;
+  console.log(userAmount);
+
+  // Fetching the post amount
+  const postResponse = await axios.get('https://localhost:7170/api/posts');
+  const postAmount = postResponse.data.length;
+  console.log(postAmount);
+
+
+
   const usersCtx = document.getElementById('usersChart') as HTMLCanvasElement;
   new Chart(usersCtx, {
     type: 'bar',
     data: {
-      labels: ['Active Users', 'New Users', 'Inactive Users'],
+      labels: ['Active Users'],
       datasets: [
         {
           label: 'Users Data',
-          data: [120, 45, 30],
+          data: [userAmount],
           backgroundColor: ['#4caf50', '#ff9800', '#f44336'],
         },
       ],
@@ -95,12 +113,12 @@ onMounted(() => {
   new Chart(transactionsCtx, {
     type: 'pie',
     data: {
-      labels: ['Completed (200)', 'Pending (50)', 'Failed (15)'],
+      labels: ['All','Active', 'Inactive', 'Expired'],
       datasets: [
         {
-          label: 'Transactions Data',
-          data: [200, 50, 15],
-          backgroundColor: ['#4caf50', '#ff9800', '#f44336'],
+          label: 'Post Data',
+          data: [postAmount, 0, 0, 0],
+          backgroundColor: ['#4caf50', '#2196f3', '#f44336', '#ff9800'],
         },
       ],
     },
@@ -127,6 +145,52 @@ onMounted(() => {
     },
   });
 });
+
+import axios from 'axios';
+
+
+async function amountOfUsers() {
+  try {
+
+    // getting the access token from the session storage
+    const acTo = await checkUser();
+    console.log(acTo);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+
+
+    const response = await axios.get('https://localhost:7170/api/GetAllUsers'); 
+    return response.data.length;
+
+  } catch (error: any) {
+
+    // Handle errors appropriately
+    console.error('Error fetching data:', error.message);
+    throw error; // Re-throw to allow handling by the caller if necessary
+  }
+}
+
+
+
+
+
+const checkUser = () => {
+  const aT = sessionStorage.getItem('AccessToken');
+  if (aT != null || aT != undefined) {
+    return sessionStorage.getItem('AccessToken');
+  } else {
+    alert("No AccessToken found in session storage");
+    const rT = localStorage.getItem('AccessToken');
+    if (rT != null || rT != undefined) {
+    return localStorage.getItem('AccessToken');
+  } else {
+    alert("No AccessToken found in local storage");
+    
+  }
+  }
+};
+
+
+
 </script>
 
 <style scoped>
