@@ -1,5 +1,5 @@
 <template>
-  <ion-page>
+  <ion-page v-if="isAuthorized">
     <ion-content class="scrollable-content">
       <div class="admin-container">
         <ion-card class="admin-card">
@@ -28,6 +28,15 @@
       </div>
     </ion-content>
   </ion-page>
+  
+  <ion-page v-else>
+    <ion-content class="scrollable-content">
+      <div class="unauthorized-container">
+        <h2>Access Denied</h2>
+        <p>You do not have permission to view this page.</p>
+      </div>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts" setup>
@@ -35,162 +44,93 @@ import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonPag
 import { ref, onMounted } from 'vue';
 import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 Chart.register(...registerables, ChartDataLabels);
 
-import { useRouter } from 'vue-router';
-
 const router = useRouter();
+const isAuthorized = ref(false);
+
+async function checkUserAccess() {
+  try {
+    const userData = await getData();
+    console.log("User Data:", userData);
+
+    if (userData.role === "Farmer" || userData.role === "Admin") {
+      isAuthorized.value = true;
+    } else {
+      isAuthorized.value = false;
+    }
+  } catch (error) {
+    console.error("Error checking user access:", error);
+    isAuthorized.value = false;
+  }
+}
+
+async function getData() {
+  try {
+    const acTo = checkUser();
+    axios.defaults.headers.common["Authorization"] = `Bearer ${acTo}`;
+
+    const response = await axios.get("https://localhost:7170/api/current-user");
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+}
+
+const checkUser = () => {
+  return sessionStorage.getItem("AccessToken") || localStorage.getItem("AccessToken") || "";
+};
 
 function ManageUsers() {
-  console.log('Navigating to Manage Users');
-  router.push('/ManageUsers');
+  router.push("/ManageUsers");
 }
 
 function viewTransactions() {
-  console.log('Navigating to Transactions');
-  router.push('/Transactions');
+  router.push("/Transactions");
 }
 
 function viewAppSettings() {
-  console.log('Navigating to App Settings');
-  router.push('/AppSettings');
+  router.push("/AppSettings");
 }
-
 
 onMounted(async () => {
+  await checkUserAccess();
 
-  // getting the access token from the session storage
+  if (!isAuthorized.value) return;
+
   const acTo = checkUser();
-  // console.log(acTo);
-  axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${acTo}`;
 
-  // Fetching the user amount
-  const userResponse = await axios.get('https://localhost:7170/api/GetAllUsers'); 
+  const userResponse = await axios.get("https://localhost:7170/api/GetAllUsers");
   const userAmount = userResponse.data.length;
-  console.log(userAmount);
 
-  // Fetching the post amount
-  const postResponse = await axios.get('https://localhost:7170/api/posts/analytic');
+  const postResponse = await axios.get("https://localhost:7170/api/posts/analytic");
   const postAmount = postResponse.data.length;
-  console.log(postAmount);
 
-
-
-  const usersCtx = document.getElementById('usersChart') as HTMLCanvasElement;
+  const usersCtx = document.getElementById("usersChart") as HTMLCanvasElement;
   new Chart(usersCtx, {
-    type: 'bar',
+    type: "bar",
     data: {
-      labels: ['Active Users'],
-      datasets: [
-        {
-          label: 'Users Data',
-          data: [userAmount],
-          backgroundColor: ['#4caf50', '#ff9800', '#f44336'],
-        },
-      ],
+      labels: ["Active Users"],
+      datasets: [{ label: "Users Data", data: [userAmount], backgroundColor: ["#4caf50"] }],
     },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-      scales: {
-        x: {
-          ticks: { color: '#e0e0e0' },
-        },
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#e0e0e0' },
-        },
-      },
-    },
+    options: { responsive: true, plugins: { legend: { display: false } } },
   });
 
-  const transactionsCtx = document.getElementById('transactionsChart') as HTMLCanvasElement;
+  const transactionsCtx = document.getElementById("transactionsChart") as HTMLCanvasElement;
   new Chart(transactionsCtx, {
-    type: 'pie',
+    type: "pie",
     data: {
-      labels: ['All','Active', 'Inactive', 'Expired'],
-      datasets: [
-        {
-          label: 'Post Data',
-          data: [postAmount, 0, 0, 0],
-          backgroundColor: ['#4caf50', '#2196f3', '#f44336', '#ff9800'],
-        },
-      ],
+      labels: ["All", "Active", "Inactive", "Expired"],
+      datasets: [{ label: "Post Data", data: [postAmount, 0, 0, 0], backgroundColor: ["#4caf50", "#2196f3", "#f44336", "#ff9800"] }],
     },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            font: {
-              size: 14,
-              weight: 'bold',
-            },
-          },
-        },
-        datalabels: {
-          color: '#fff',
-          font: {
-            weight: 'bold',
-          },
-          formatter: () => '',
-        },
-      },
-    },
+    options: { responsive: true, plugins: { legend: { display: true } } },
   });
 });
-
-import axios from 'axios';
-
-
-async function amountOfUsers() {
-  try {
-
-    // getting the access token from the session storage
-    const acTo = await checkUser();
-    console.log(acTo);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
-
-
-    const response = await axios.get('https://localhost:7170/api/GetAllUsers'); 
-    return response.data.length;
-
-  } catch (error: any) {
-
-    // Handle errors appropriately
-    console.error('Error fetching data:', error.message);
-    throw error; // Re-throw to allow handling by the caller if necessary
-  }
-}
-
-
-
-
-
-const checkUser = () => {
-  const aT = sessionStorage.getItem('AccessToken');
-  if (aT != null || aT != undefined) {
-    return sessionStorage.getItem('AccessToken');
-  } else {
-    alert("No AccessToken found in session storage");
-    const rT = localStorage.getItem('AccessToken');
-    if (rT != null || rT != undefined) {
-    return localStorage.getItem('AccessToken');
-  } else {
-    alert("No AccessToken found in local storage");
-    
-  }
-  }
-};
-
-
-
 </script>
 
 <style scoped>
@@ -201,7 +141,6 @@ const checkUser = () => {
   flex-direction: column;
   padding: 70px 20px 20px;
   background: linear-gradient(to bottom, #1e1e1e, #121212);
-  box-sizing: border-box;
 }
 
 .scrollable-content {
@@ -212,9 +151,6 @@ const checkUser = () => {
 .admin-card {
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-  overflow: hidden;
   background: #2a2a2a;
   color: #e0e0e0;
 }
@@ -232,10 +168,19 @@ const checkUser = () => {
 
 .admin-stats h3 {
   color: #4caf50;
-  margin-bottom: 10px;
 }
 
-ion-content {
-  --background: #121212;
+.unauthorized-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+  color: white;
+}
+
+.unauthorized-container h2 {
+  color: #f44336;
 }
 </style>
