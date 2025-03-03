@@ -23,7 +23,7 @@
 
         <ion-item>
           <ion-label position="stacked">Crop Type</ion-label>
-          <ion-select value="Potato" v-model="newPost.cropType" required>
+          <ion-select value="Corn" interface="popover" v-model="newPost.cropType" required>
             <ion-select-option value="Corn">Corn</ion-select-option>
             <ion-select-option value="Tomato">Tomato</ion-select-option>
             <ion-select-option value="Wheat">Wheat</ion-select-option>
@@ -57,8 +57,13 @@
         </ion-item>
 
         <ion-item>
-          <ion-label position="stacked">Expiry Date</ion-label>
-          <ion-datetime v-model="newPost.expireDate" required></ion-datetime>
+          <ion-label position="stacked">Post duration (Expire at 12AM GMT Time)</ion-label>
+          <ion-select :value="7" interface="popover" v-model="newPost.expireDate" required>
+            <ion-select-option :value="3">3 days</ion-select-option>
+            <ion-select-option :value="7">7 days</ion-select-option>
+            <ion-select-option :value="12">12 days</ion-select-option>
+            <ion-select-option :value="30">30 days</ion-select-option>
+          </ion-select>
         </ion-item>
 
         <ion-button expand="full" type="submit" class="ion-margin-top"
@@ -112,7 +117,7 @@ const newPost : any = ref({
   location: "My House",
   contact: "0000000000",
   description: "qwe",
-  expireDate: "2025-02-19T21:37:00",
+  expireDate: 7,
   name: sessionStorage.getItem('Email'), //should be autofill from database or not? idk
   status: "Active",
   userId: sessionStorage.getItem('Id'), //this should be replace by database info but cant leave blank for now

@@ -22,8 +22,8 @@ namespace FarmerAPI.Service
         {
             var post = _mapper.Map<Post>(request);
             post.PostId = Guid.NewGuid();
-            post.CreateDate = DateTime.UtcNow;
-            post.UpdateDate = DateTime.UtcNow;
+            post.CreateDate = DateTime.Now;
+            post.UpdateDate = DateTime.Now;
 
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
@@ -37,10 +37,10 @@ namespace FarmerAPI.Service
 
             foreach (var post in posts)
             {
-                if (post.ExpireDate < DateTime.UtcNow && post.Status == "Active")
+                if (post.ExpireDate < DateTime.Now && post.Status == "Active")
                 {
                     post.Status = "Expired";
-                    post.UpdateDate = DateTime.UtcNow;
+                    post.UpdateDate = DateTime.Now;
                     _context.Posts.Update(post);
                 }
             }
@@ -82,7 +82,7 @@ namespace FarmerAPI.Service
             post.ExpireDate = request.ExpireDate;
             post.Name = request.Name;
             post.Status = request.Status;
-            post.UpdateDate = DateTime.UtcNow;
+            post.UpdateDate = DateTime.Now;
 
             await _context.SaveChangesAsync();
             return _mapper.Map<PostResponse>(post);

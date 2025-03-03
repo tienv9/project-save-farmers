@@ -737,6 +737,7 @@ main();
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  margin: 0px;
 }
 
 .UserData {
@@ -744,7 +745,9 @@ main();
   background-color: rgba(34, 34, 37, 0.959);
   width: 100%;
   height: 350%;
-  display: flex;}
+  display: flex;
+  margin: 0px;
+}
 
 .crop-icon {
   width: 1.5rem; 

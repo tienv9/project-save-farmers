@@ -70,9 +70,9 @@
                 <span><strong>Location: {{ post.location }}</strong></span>
                 <span><strong>Contact: {{ postSer.formatContact(post.contact) }}</strong></span>
                 <span><strong>Email: {{ post.name }}</strong></span>
-                <span><strong>Date Listed: {{ post.createDate }}</strong></span>
+                <span><strong>Date Listed: {{ formatDate(post.createDate) }}</strong></span>
               </div>
-              <p class="expiry-date"><strong>Expires:</strong> {{ post.expireDate }}</p>
+              <p class="expiry-date"><strong>Expires:</strong> {{ formatDate(post.expireDate) }}</p>
             </ion-card-content>
           </div>
           <div v-else>
@@ -92,13 +92,13 @@
               <div class="info-2details">
                 <span class="date-column">
                   <div>Date Listed:</div>
-                  <div>{{ post.createDate }}</div>
+                  <div>{{ formatDate(post.createDate) }}</div>
                 </span>
                 <span>{{ post.amount }}</span>
                 <span>{{ post.location }}</span>
                 <span>{{ post.name }}</span>
               </div>
-              <p class="expiry-date"><strong>Expires:</strong> {{ post.expireDate }}</p>
+              <p class="expiry-date"><strong>Expires:</strong> {{ formatDate(post.expireDate) }}</p>
             </ion-card-content>
           </div>
         </ion-card>
@@ -134,6 +134,18 @@ watch(selectedCropTypes, (newValue) => {
     filterPosts(); 
   }
 });
+
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const year = date.getFullYear();
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12 || 12;
+  return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
+};
 
 const filterPosts = () => {
   let filtered = posts.value;
@@ -183,6 +195,8 @@ onMounted(async () => {
   await postSer.fetchPosts();
   filteredPosts.value = posts.value; // Initialize with all posts
 });
+
+
 </script>
 
 
