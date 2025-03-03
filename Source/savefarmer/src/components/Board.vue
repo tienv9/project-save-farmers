@@ -4,7 +4,7 @@
       <div class="board">
         
         <!-- Search Bar -->
-        <ion-searchbar v-model="searchQuery" @ionInput="filterPosts" placeholder="Search posts..."></ion-searchbar>
+        <ion-searchbar v-model="searchQuery" @ionInput="updateSearchQuery" placeholder="Search posts..."></ion-searchbar>
 
         <!-- Filter Bar -->
         <div class="filter-bar">
@@ -22,7 +22,7 @@
             <ion-label slot="end">Max Price: 1000$</ion-label>
           </ion-range>
 
-          <!-- Location Filter (Select Dropdown) -->
+          <!-- Location Filter -->
           <ion-select v-model="selectedLocation" @ionChange="filterPosts" placeholder="Filter by Location">
             <ion-select-option value="">Filter By Location</ion-select-option>
             <ion-select-option v-for="location in locations" :key="location" :value="location">
@@ -30,13 +30,8 @@
             </ion-select-option>
           </ion-select>
 
-          <!-- Crop Type Filter (Multi-Select) -->
-          <ion-select 
-            v-model="selectedCropTypes" 
-            @ionChange="filterPosts" 
-            multiple
-            placeholder="Filter by Crop Type"
-          >
+          <!-- Crop Type Filter -->
+          <ion-select v-model="selectedCropTypes" @ionChange="filterPosts" multiple placeholder="Filter by Crop Type">
             <ion-select-option value="">All Crop Types</ion-select-option>
             <ion-select-option v-for="crop in cropTypes" :key="crop" :value="crop">
               {{ crop }}
@@ -86,7 +81,7 @@
               <div class="info-details">
                 <span>${{ post.price }}</span>
                 <span>{{ post.cropType }}</span>
-                <span></span>
+                <span>{{ post.location }}</span>
                 <span>{{ postSer.formatContact(post.contact) }}</span>
               </div>
               <div class="info-2details">
@@ -95,7 +90,6 @@
                   <div>{{ formatDate(post.createDate) }}</div>
                 </span>
                 <span>{{ post.amount }}</span>
-                <span>{{ post.location }}</span>
                 <span>{{ post.name }}</span>
               </div>
               <p class="expiry-date"><strong>Expires:</strong> {{ formatDate(post.expireDate) }}</p>
@@ -112,9 +106,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent, IonContent, IonSearchbar, IonRange, IonSelect, IonSelectOption, IonLabel } from '@ionic/vue';
 import { postSer } from '@/scripts/PostService';
 
-
 const posts = computed(() => postSer.posts.value);
-
 
 // Filter logic
 const searchQuery = ref('');
@@ -122,40 +114,42 @@ const priceRange = ref(1000); // Max price
 const selectedLocation = ref('');
 const selectedCropTypes = ref<string[]>([]);
 const sortExpiry = ref<string>(''); 
-
 const filteredPosts = ref(posts.value);
 
 const locations = computed(() => [...new Set(posts.value.map(post => post.location))]);
 const cropTypes = computed(() => [...new Set(posts.value.map(post => post.cropType))]);
 
-watch(selectedCropTypes, (newValue) => {
-  if (newValue.includes("")) {
-    selectedCropTypes.value = [];
-    filterPosts(); 
-  }
-});
-
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const year = date.getFullYear();
-  let hours = date.getHours();
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12 || 12;
-  return `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
+// Update search query function
+const updateSearchQuery = (event: CustomEvent) => {
+  searchQuery.value = event.detail.value;
 };
 
+// Watcher to trigger filtering when search query changes
+watch(searchQuery, () => {
+  filterPosts();
+});
+
+// Date formatting function
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleString();
+};
+
+// Filtering function
 const filterPosts = () => {
   let filtered = posts.value;
 
   if (searchQuery.value) {
-    filtered = filtered.filter(post =>
-      post.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      post.cropType.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      post.userId.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      post.location.toLowerCase().includes(searchQuery.value.toLowerCase())
+    const query = searchQuery.value.toLowerCase();
+
+    filtered = filtered.filter(post => 
+      post.title.toLowerCase().includes(query) ||
+      post.cropType.toLowerCase().includes(query) ||
+      post.userId.toLowerCase().includes(query) ||
+      post.location.toLowerCase().includes(query) ||
+      postSer.formatContact(post.contact).toLowerCase().includes(query) ||
+      post.price.toString().includes(query) ||
+      post.amount.toString().includes(query)
     );
   }
 
@@ -195,9 +189,8 @@ onMounted(async () => {
   await postSer.fetchPosts();
   filteredPosts.value = posts.value; // Initialize with all posts
 });
-
-
 </script>
+
 
 
 <style scoped>
