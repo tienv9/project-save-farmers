@@ -67,7 +67,7 @@
                   <ion-text>Post ID: {{ post.postId }}</ion-text>
                   <ion-text>Activity: {{ post.status }}</ion-text>
                   <ion-card-title>
-                      <ion-button>Edit</ion-button>
+                      <ion-button @click="openEditModal(post)">Edit</ion-button>
                       <ion-button @click="deletePost(post.postId)">Delete</ion-button>
 
                       <!-- Conditional Buttons for Activate/Deactivate -->
@@ -133,6 +133,7 @@
         </ion-card>
       </div>
     </ion-content>
+    <OpenEditModal :isOpen="isModalOpen" :editPost="selectedPost" @update:isOpen="isModalOpen = $event" />
   </ion-page>
   
 </template>
@@ -157,6 +158,7 @@ import { Chart, registerables } from "chart.js";
 
 import { postSer } from '../scripts/PostService';
 import { usersPost } from '../scripts/UserPost';
+import OpenEditModal from '../components/EditPost.vue';
 
 
 
@@ -169,6 +171,14 @@ onMounted(async () => {
   await postSer.fetchPosts();
   await usersPost.fetchPosts();
 });
+
+const isModalOpen = ref(false); 
+const selectedPost = ref({});
+
+const openEditModal = (post: any) => {
+  selectedPost.value = { ...post };  // Clone the post data to prevent mutating original data
+  isModalOpen.value = true; // Open the modal
+};
 
 
 async function deletePost(postID: string) {

@@ -6,7 +6,6 @@ import carrotIcon from "@/images/icons/carrot.png";
 import cropIcon from "@/images/icons/crop.png";
 import potatoIcon from "@/images/icons/potato.png";
 import axios from "axios";
-import { c } from "vite/dist/node/types.d-aGj9QkWt";
 
 export interface Post {
   postId: string;
@@ -41,8 +40,6 @@ export default class GetUserPostService {
     try {
       const acTo = await checkUser();
       console.log(acTo);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
-
 
       const uIds = await getUser();
       console.log(uIds);
@@ -65,8 +62,47 @@ export default class GetUserPostService {
     }
   }
 
+  async EditCurrentPost(post : any): Promise<void> {
+    try {
+      const response = await axios.put(`https://localhost:7170/api/posts/${post.postID}`, {
+        title: post.title,
+        price: post.price,
+        cropType: post.cropType,
+        amount: post.amount,
+        location: post.location,
+        contact: post.contact,
+        description: post.description,
+        expireDate: this.convertExpireDate(post.expireDate, post.currentExpireDate),
+        name: post.name,
+        status: post.status,
+        userId: post.userId,
+      });
+      if (response.status === 200) {
+        alert("Post updated successfully");
+      }
+    } catch (error: any) {
+      if (error.response) {
+        alert(`Error: ${error.response.data.message}`);
+      } else if (error.request) {
+        alert("No response from server. Please check your connection.");
+      } else {
+        alert("An unexpected error occurred.");
+      }
+    }
+  }
 
-
+  convertExpireDate = (expireValue: any, currentExpireDate: any): string => {
+    if (expireValue === 0) {
+      return currentExpireDate;
+    }
+    if (typeof expireValue === 'number') {
+      const newDate = new Date();
+      newDate.setDate(newDate.getDate() + expireValue);
+      newDate.setHours(0, 0, 0, 0);
+      return newDate.toISOString();
+    }
+    return expireValue;
+  };
 
 
 
