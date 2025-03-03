@@ -27,26 +27,52 @@
           </ion-card-content>
 
 
-          <!-- <div class="data-container">
-            
-            <ion-card class="PostHistory">
-            <ion-card-content>
-              <ion-card-title>Post History</ion-card-title>
-              <ion-card-subtitle>Recent Posts</ion-card-subtitle>
-              <ion-card v-for="(post, index) in PostList" :key="index" class="post-card">
-                <ion-card-title class="post-text"><img :src="postSer.getCropIcon(post.cropType)" alt="Crop Icon" class="crop-icon" /> {{post.title}}</ion-card-title>
-                <div class="post-text">
-                <ion-text>Amount: {{ post.amount}}</ion-text>
-                <ion-text>Price: {{ post.price }}</ion-text>
-                <ion-text>Location: {{ post.location }}</ion-text>
-                </div>
-              </ion-card>
-            </ion-card-content>
-          </ion-card>
-
-          
-        
-        </div> -->
+          <ion-card-content v-if="isFarmer">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6" size-md="3">
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>Posts</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <h2>{{ postAmount }}</h2>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col size="6" size-md="3">
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>Active</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <h2>{{ activeAmount }}</h2>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col size="6" size-md="3">
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>Inactive</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <h2>{{ inactiveAmount }}</h2>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+                <ion-col size="6" size-md="3">
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>Expired</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <h2>{{ expiredAmount }}</h2>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
 
         <div class="data-container">
             
@@ -98,41 +124,21 @@
 
         </div>
 
-      
 
-          <div class="data-container"> <!-- need this to avoid weird inconsistent spacing with absolute -->
-          
-            
 
-          <ion-card class="UserData">
-            <ion-card-content>
-            <ion-card-title style="justify-self: center;">Your weekly Data</ion-card-title>
-            </ion-card-content>
-            <ion-card class="chart-container-top-1">
-              <canvas ref="chartCanvas"></canvas>
-            </ion-card>
-            <ion-card class="chart-container-bottom-1">
-              <ion-text class="chartTitle">Earnings</ion-text>
-              <ion-text class="chartSubtitle">$2000</ion-text>
-            </ion-card>
-            <ion-card class="chart-container-top-2">
-              <ion-text>20</ion-text>
-            </ion-card>
-            <ion-card class="chart-container-bottom-2">
-              <ion-text class="chartTitle">Active Posts</ion-text>
-            </ion-card>
-            <ion-card class="chart-container-top-3">
-              <canvas ref="cropPieChart"></canvas>
-            </ion-card>
-            <ion-card class="chart-container-bottom-3">
-              <ion-text class="chartTitle">Types sold</ion-text>
-            </ion-card>
-          </ion-card>
-          <span></span>
-        </div>
+
+
         </ion-card>
       </div>
+
+
+
+      
     </ion-content>
+
+      
+
+
     <OpenEditModal :isOpen="isModalOpen" :editPost="selectedPost" @update:isOpen="isModalOpen = $event" />
   </ion-page>
   
@@ -167,7 +173,10 @@ import OpenEditModal from '../components/EditPost.vue';
 const PostList = computed(() => postSer.posts.value);
 const PostListUser = computed(() => usersPost.posts.value);
 
+const isFarmer = ref(false);
+
 onMounted(async () => {
+  isFarmer.value = await farmerUser();
   await postSer.fetchPosts();
   await usersPost.fetchPosts();
 });
@@ -179,6 +188,22 @@ const openEditModal = (post: any) => {
   selectedPost.value = { ...post };  // Clone the post data to prevent mutating original data
   isModalOpen.value = true; // Open the modal
 };
+
+async function farmerUser() {
+  const acTo = await checkUser();
+  console.log(acTo);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+
+  const userData = await axios.get("https://localhost:7170/api/current-user");
+  console.log(userData.data.role);
+  if (userData.data.role === "Farmer") {
+    return true;
+  } else {
+    return false;
+  }
+
+  
+}
 
 
 async function deletePost(postID: string) {
@@ -302,22 +327,92 @@ async function postActivity(title: string, price: number, cropType: string, amou
   }
 
 
+  const CUforANALYISIS = () => {
+  return sessionStorage.getItem("AccessToken") || localStorage.getItem("AccessToken") || "";
+};
+
 
 Chart.register(...registerables);
 const chartCanvas = ref<HTMLCanvasElement | null>(null);
 const cropPieChart =  ref<HTMLCanvasElement | null>(null);
 
-const CropPieChart = () => {
+async function postAnalysis() {
+
+    // amount of all the users posts
+  const acTo = CUforANALYISIS();
+    axios.defaults.headers.common["Authorization"] = `Bearer ${acTo}`;
+
+    const thisUsersID = sessionStorage.getItem('Id');
+    console.log(thisUsersID);
+
+    const postResponse = await axios.get("https://localhost:7170/api/posts/user/" + thisUsersID);
+    console.log("Post Data:", postResponse.data);
+     postAmount = postResponse.data.length;
+    
+    console.log("Post Amount:", postAmount);
+
+    // all posts that are active
+    const activePosts = postResponse.data.filter((post: any) => post.status === "Active");
+     activeAmount = activePosts.length;
+    console.log("Active Posts:", activeAmount);
+
+    // all posts that are inactive
+    const inactivePosts = postResponse.data.filter((post: any) => post.status === "Inactive");
+     inactiveAmount = inactivePosts.length;
+    console.log("Inactive Posts:", inactiveAmount);
+
+    // all posts that are expired
+    const expiredPosts = postResponse.data.filter((post: any) => post.status === "Expired");
+     expiredAmount = expiredPosts.length;
+    console.log("Expired Posts:", expiredAmount);
+
+}
+
+let postAmount = 0
+let activeAmount =  0
+let inactiveAmount = 0
+let expiredAmount = 0
+
+const CropPieChart = async () => {
+
+  // amount of all the users posts
+  const acTo = CUforANALYISIS();
+    axios.defaults.headers.common["Authorization"] = `Bearer ${acTo}`;
+
+    const thisUsersID = sessionStorage.getItem('Id');
+    console.log(thisUsersID);
+
+    const postResponse = await axios.get("https://localhost:7170/api/posts/user/" + thisUsersID);
+    console.log("Post Data:", postResponse.data);
+     postAmount = postResponse.data.length;
+    
+    console.log("Post Amount:", postAmount);
+
+    // all posts that are active
+    const activePosts = postResponse.data.filter((post: any) => post.status === "Active");
+     activeAmount = activePosts.length;
+    console.log("Active Posts:", activeAmount);
+
+    // all posts that are inactive
+    const inactivePosts = postResponse.data.filter((post: any) => post.status === "Inactive");
+     inactiveAmount = inactivePosts.length;
+    console.log("Inactive Posts:", inactiveAmount);
+
+    // all posts that are expired
+    const expiredPosts = postResponse.data.filter((post: any) => post.status === "Expired");
+     expiredAmount = expiredPosts.length;
+    console.log("Expired Posts:", expiredAmount);
+
   if (cropPieChart.value) {
     const ctx = cropPieChart.value.getContext("2d");
     if (ctx) {
       new Chart(ctx, {
         type: "pie", // Pie chart
         data: {
-          labels: ["Potato", "Carrot", "Wheat", "Tomato", "Corn", "Mixes"], // Labels for the crops
+          labels: ["All Posts", "Active", "Inactive", "Expired"], // Labels for the crops
           datasets: [
             {
-              data: [27, 10, 17, 24, 17, 5], // Values for each crop
+              data: [postAmount, activeAmount, inactiveAmount, expiredAmount], // Values for each crop
               backgroundColor: ["#D2B48C", "#FFA500", "#F5DEB3", "#FF6347", "#FFD700", "#8A2BE2"], // Background colors
               borderColor: ["#D2B48C", "#FFA500", "#F5DEB3", "#FF6347", "#FFD700", "#8A2BE2"], // Border colors
               borderWidth: 1,
@@ -344,6 +439,25 @@ const CropPieChart = () => {
     }
   }
 };
+
+
+
+// <!-- DELETE Later NOT REALLY NEEDED -->
+//           <div class="data-container" v-if="isFarmer" > <!-- need this to avoid weird inconsistent spacing with absolute -->
+          
+//           <ion-card class="UserData">
+//             <ion-card-content>
+//             <ion-card-title style="justify-self: center;">Post Data</ion-card-title>
+//             </ion-card-content>
+//             <ion-card class="chart-container-bottom-2">
+//               <ion-text class="chartTitle">Types of Posts</ion-text>
+//             </ion-card>
+//             <ion-card class="chart-container-top-2">
+//               <canvas ref="cropPieChart"></canvas>
+//             </ion-card>
+//           </ion-card>
+//           <span></span>
+//         </div>
 
 const EarningChart = () => {
   if (chartCanvas.value) {
@@ -399,8 +513,9 @@ const EarningChart = () => {
 
 
 const initializeChart = () => {
-  EarningChart();
-  CropPieChart();
+  // EarningChart();
+  // CropPieChart();
+  postAnalysis();
 
 };
 
@@ -537,6 +652,7 @@ async function main() {
   }
 }
 
+
 // get access token from session storage (NOT CORRECT NEED FIX) should be refresh token.
 const checkUser = () => {
   const aT = sessionStorage.getItem('AccessToken');
@@ -667,9 +783,10 @@ main();
   justify-content: center; 
   align-items: center;
   font-size: 3.5rem;
-  background-color: rgb(56, 142, 212);
   color: rgb(254, 255, 255); 
   box-shadow: none; 
+  background-color: transparent;
+
 }
 .chart-container-top-3 {
   position: absolute;
