@@ -1,3 +1,4 @@
+import Analytics from '@/pages/Analytics.vue';
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 
@@ -57,6 +58,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/AppSettings',
     name: 'AppSettings',
     component: () => import ('@/pages/AppSettings.vue')
+  },
+  {
+    path: '/analytics/:id',
+    name: 'Analytics',
+    component: Analytics,
+    props: true, // Allow passing params to the page
   },
   
 ]

@@ -9,7 +9,7 @@
 
           <ion-card-content v-if="users.length">
             <ion-list>
-              <ion-item v-for="user in users" :key="user.id" class="user-item">
+              <ion-item v-for="user in users" :key="user.id" class="user-item" @click="goToAnalytics(user.id)">
                 <ion-avatar slot="start">
                   <ion-icon :icon="personOutline" class="user-icon"></ion-icon>
                 </ion-avatar>
@@ -19,8 +19,9 @@
                   <p><ion-icon :icon="briefcase" class="icon"></ion-icon> Role: {{ user.role }}</p>
                   <p><ion-icon :icon="calendar" class="icon"></ion-icon> Joined: {{ formatDate(user.createAt) }}</p>
                 </ion-label>
-                <ion-button @click="deleteUser(user.id)">Delete</ion-button>
+                <ion-button @click="deleteUser(user.id)" color="danger">Delete</ion-button>
               </ion-item>
+
             </ion-list>
           </ion-card-content>
 
@@ -79,6 +80,12 @@ async function getData(): Promise<void> {
     console.error('Error fetching data:', error.message);
   }
 }
+
+//Analyse user function
+async function goToAnalytics(userId: string) {
+  router.push({ name: 'Analytics', params: { id: userId } });
+}
+
 
 // Format date function
 const formatDate = (dateString: string): string => {
