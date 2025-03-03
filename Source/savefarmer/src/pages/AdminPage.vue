@@ -20,6 +20,16 @@
             </div>
 
             <div class="admin-stats">
+              <h3>Total Posts</h3>
+              <canvas id="userTypes"></canvas>
+            </div>
+
+            <div class="admin-stats">
+              <h3>Total Posts</h3>
+              <canvas id="totalPostsChart"></canvas>
+            </div>
+
+            <div class="admin-stats">
               <h3>Posts</h3>
               <canvas id="transactionsChart"></canvas>
             </div>
@@ -47,6 +57,7 @@ import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 Chart.register(...registerables, ChartDataLabels);
 
@@ -107,10 +118,40 @@ onMounted(async () => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${acTo}`;
 
   const userResponse = await axios.get("https://localhost:7170/api/GetAllUsers");
+  console.log("User Data:", userResponse.data);
   const userAmount = userResponse.data.length;
 
+  // all farmers
+  const farmers = userResponse.data.filter((user: any) => user.role === "Farmer");
+  const farmerAmount = farmers.length;
+  console.log("Farmers:", farmerAmount);
+
+  // all buyers
+  const buyers = userResponse.data.filter((user: any) => user.role === "Buyer");
+  const buyerAmount = buyers.length;
+  console.log("Buyers:", buyerAmount);
+
   const postResponse = await axios.get("https://localhost:7170/api/posts/analytic");
+  console.log("Post Data:", postResponse.data);
   const postAmount = postResponse.data.length;
+
+  // all posts that are active
+  const activePosts = postResponse.data.filter((post: any) => post.status === "Active");
+  const activeAmount = activePosts.length;
+  console.log("Active Posts:", activeAmount);
+
+  // all posts that are inactive
+  const inactivePosts = postResponse.data.filter((post: any) => post.status === "Inactive");
+  const inactiveAmount = inactivePosts.length;
+  console.log("Inactive Posts:", inactiveAmount);
+
+  // all posts that are expired
+  const expiredPosts = postResponse.data.filter((post: any) => post.status === "Expired");
+  const expiredAmount = expiredPosts.length;
+  console.log("Expired Posts:", expiredAmount);
+
+  
+
 
   const usersCtx = document.getElementById("usersChart") as HTMLCanvasElement;
   new Chart(usersCtx, {
@@ -122,12 +163,33 @@ onMounted(async () => {
     options: { responsive: true, plugins: { legend: { display: false } } },
   });
 
+  const userTypes = document.getElementById("userTypes") as HTMLCanvasElement;
+  new Chart(userTypes, {
+    type: "pie",
+    data: {
+      labels: ["Farmer", "Buyer"],
+      datasets: [{ label: "User", data: [farmerAmount, buyerAmount], backgroundColor: ["#ff9800", "#f44336"] }],
+    },
+    options: { responsive: true, plugins: { legend: { display: true } } },
+  });
+
+  const postsChart = document.getElementById("totalPostsChart") as HTMLCanvasElement;
+  new Chart(postsChart, {
+    type: "bar",
+    data: {
+      labels: ["Total Posts"],
+      datasets: [{ label: "All Posts", data: [postAmount], backgroundColor: ["#4c96af"] }],
+    },
+    options: { responsive: true, plugins: { legend: { display: false } } },
+  });
+
+
   const transactionsCtx = document.getElementById("transactionsChart") as HTMLCanvasElement;
   new Chart(transactionsCtx, {
     type: "pie",
     data: {
-      labels: ["All", "Active", "Inactive", "Expired"],
-      datasets: [{ label: "Post Data", data: [postAmount, 0, 0, 0], backgroundColor: ["#4caf50", "#2196f3", "#f44336", "#ff9800"] }],
+      labels: ["Active", "Inactive", "Expired"],
+      datasets: [{ label: "Post Data", data: [ activeAmount, inactiveAmount, expiredAmount], backgroundColor: [ "#4caf50", "#f44336", "#ff9800"] }],
     },
     options: { responsive: true, plugins: { legend: { display: true } } },
   });
