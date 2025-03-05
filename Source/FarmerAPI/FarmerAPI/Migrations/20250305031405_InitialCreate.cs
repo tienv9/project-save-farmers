@@ -190,17 +190,17 @@ namespace FarmerAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "772cfe63-ce5f-46a3-9fa3-746a15b07870", null, "Admin", "ADMIN" });
+                values: new object[] { "3089d4ae-271a-4e7a-ba81-03bff129e47c", null, "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreateAt", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "Role", "SecurityStamp", "TwoFactorEnabled", "UpdateAt", "UserName" },
-                values: new object[] { "2b7b9799-6248-481b-b2f3-2374c153ce53", 0, "22e227a4-85b8-411b-9b4c-3cf9c8724b4f", new DateTime(2025, 3, 5, 2, 56, 12, 879, DateTimeKind.Utc).AddTicks(2993), "admin@admin.com", true, "System", "Administrator", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEHoFfaasOTY3QIhurch4QZpxnR0VOdq+4YVMMGWTZm8+hgiGqW+QoTPfuhFPrPc8rg==", null, false, null, null, "Admin", "57ed5f66-0386-46d1-a0f7-3e8563dfa700", false, new DateTime(2025, 3, 5, 2, 56, 12, 879, DateTimeKind.Utc).AddTicks(2995), "admin" });
+                values: new object[] { "05b83e24-e6bc-4213-9891-46881d3dee56", 0, "f9bb6c9c-6b93-4453-a472-8d2acd326d92", new DateTime(2025, 3, 5, 3, 14, 5, 223, DateTimeKind.Utc).AddTicks(2612), "admin@admin.com", true, "System", "Administrator", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEKtbTzdUtxONbpplE834CgLCFMRBeiIIea77nTOEux1v9YTczhsKpZIS4TjXFMx8EQ==", null, false, null, null, "Admin", "94bcdb0b-1772-4e65-8218-5fa1933c0f6d", false, new DateTime(2025, 3, 5, 3, 14, 5, 223, DateTimeKind.Utc).AddTicks(2614), "admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[] { "772cfe63-ce5f-46a3-9fa3-746a15b07870", "2b7b9799-6248-481b-b2f3-2374c153ce53" });
+                values: new object[] { "3089d4ae-271a-4e7a-ba81-03bff129e47c", "05b83e24-e6bc-4213-9891-46881d3dee56" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

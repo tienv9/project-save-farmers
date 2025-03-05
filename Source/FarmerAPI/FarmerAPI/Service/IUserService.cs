@@ -13,6 +13,7 @@ namespace FarmerAPI.Service
         Task<CurrentUserResponse> RefreshTokenAsync(RefreshTokenRequest request);
         Task<UserResponse> LoginAsync(UserLoginRequest request);
 
+        Task<bool> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword);
         Task<IEnumerable<UserResponse>> GetAllUsersAsync();
     }
 }

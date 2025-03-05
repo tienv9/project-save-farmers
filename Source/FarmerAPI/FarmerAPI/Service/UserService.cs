@@ -82,6 +82,30 @@ namespace FarmerAPI.Service
             return username;
         }
 
+        public async Task<bool> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                _logger.LogError("User not found");
+                throw new Exception("User not found");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                _logger.LogError("Failed to change password: {errors}", errors);
+                throw new Exception($"Failed to change password: {errors}");
+            }
+
+            _logger.LogInformation("Password changed successfully for user ID: {UserId}", userId);
+            user.UpdateAt = DateTime.UtcNow;
+            await _userManager.UpdateAsync(user);
+
+            return true;
+        }
+
         public async Task<UserResponse> LoginAsync(UserLoginRequest request)
         {
             if (request == null)

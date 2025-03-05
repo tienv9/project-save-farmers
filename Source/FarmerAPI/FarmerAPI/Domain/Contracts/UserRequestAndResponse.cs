@@ -60,4 +60,11 @@
     {
         public string RefreshToken { get; set; }
     }
+
+    public class ChangePasswordRequest
+    {
+        public Guid Id { get; set; }
+        public string CurrentPassword { get; set; }
+        public string NewPassword { get; set; }
+    }
 }

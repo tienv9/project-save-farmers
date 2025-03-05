@@ -88,5 +88,13 @@ namespace FarmerAPI.Controllers
             var response = await _userService.GetAllUsersAsync();
             return Ok(response);
         }
+
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            var response = await _userService.ChangePasswordAsync(request.Id, request.CurrentPassword, request.NewPassword);
+            return Ok(response);
+        }
     }
 }
