@@ -167,6 +167,29 @@ namespace FarmerAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2b7b9799-6248-481b-b2f3-2374c153ce53",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "22e227a4-85b8-411b-9b4c-3cf9c8724b4f",
+                            CreateAt = new DateTime(2025, 3, 5, 2, 56, 12, 879, DateTimeKind.Utc).AddTicks(2993),
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            FirstName = "System",
+                            LastName = "Administrator",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHoFfaasOTY3QIhurch4QZpxnR0VOdq+4YVMMGWTZm8+hgiGqW+QoTPfuhFPrPc8rg==",
+                            PhoneNumberConfirmed = false,
+                            Role = "Admin",
+                            SecurityStamp = "57ed5f66-0386-46d1-a0f7-3e8563dfa700",
+                            TwoFactorEnabled = false,
+                            UpdateAt = new DateTime(2025, 3, 5, 2, 56, 12, 879, DateTimeKind.Utc).AddTicks(2995),
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -194,6 +217,14 @@ namespace FarmerAPI.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "772cfe63-ce5f-46a3-9fa3-746a15b07870",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -281,6 +312,13 @@ namespace FarmerAPI.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "2b7b9799-6248-481b-b2f3-2374c153ce53",
+                            RoleId = "772cfe63-ce5f-46a3-9fa3-746a15b07870"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

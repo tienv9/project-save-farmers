@@ -187,6 +187,21 @@ namespace FarmerAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "772cfe63-ce5f-46a3-9fa3-746a15b07870", null, "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreateAt", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "Role", "SecurityStamp", "TwoFactorEnabled", "UpdateAt", "UserName" },
+                values: new object[] { "2b7b9799-6248-481b-b2f3-2374c153ce53", 0, "22e227a4-85b8-411b-9b4c-3cf9c8724b4f", new DateTime(2025, 3, 5, 2, 56, 12, 879, DateTimeKind.Utc).AddTicks(2993), "admin@admin.com", true, "System", "Administrator", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEHoFfaasOTY3QIhurch4QZpxnR0VOdq+4YVMMGWTZm8+hgiGqW+QoTPfuhFPrPc8rg==", null, false, null, null, "Admin", "57ed5f66-0386-46d1-a0f7-3e8563dfa700", false, new DateTime(2025, 3, 5, 2, 56, 12, 879, DateTimeKind.Utc).AddTicks(2995), "admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "772cfe63-ce5f-46a3-9fa3-746a15b07870", "2b7b9799-6248-481b-b2f3-2374c153ce53" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
