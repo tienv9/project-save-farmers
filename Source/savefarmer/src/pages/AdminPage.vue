@@ -20,7 +20,7 @@
             </div>
 
             <div class="admin-stats">
-              <h3>Total Posts</h3>
+              <h3>User Types</h3>
               <canvas id="userTypes"></canvas>
             </div>
 
@@ -43,8 +43,7 @@
     <ion-content class="scrollable-content">
       <div class="unauthorized-container">
         <h2>Access Denied</h2>
-        <p>You must be a Farmer or Admin to access the Admin Dashboard.</p>
-        <p>Non-Farmer users are not authorized to view or manage the admin features.</p>
+        <p>Only users with the Admin role can access the Admin Dashboard.</p>
       </div>
     </ion-content>
   </ion-page>
@@ -57,19 +56,20 @@ import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 Chart.register(...registerables, ChartDataLabels);
 
 const router = useRouter();
 const isAuthorized = ref(false);
 
+// Function to check user access
 async function checkUserAccess() {
   try {
     const userData = await getData();
     console.log("User Data:", userData);
 
-    if (userData.role === "Farmer" || userData.role === "Admin") {
+    // Only allow users with the Admin role
+    if (userData.role === "Admin") {
       isAuthorized.value = true;
     } else {
       isAuthorized.value = false;
@@ -80,6 +80,7 @@ async function checkUserAccess() {
   }
 }
 
+// Function to fetch user data
 async function getData() {
   try {
     const acTo = checkUser();
@@ -93,10 +94,12 @@ async function getData() {
   }
 }
 
+// Function to check stored user token
 const checkUser = () => {
   return sessionStorage.getItem("AccessToken") || localStorage.getItem("AccessToken") || "";
 };
 
+// Navigation functions
 function ManageUsers() {
   router.push("/ManageUsers");
 }
@@ -109,9 +112,10 @@ function viewAppSettings() {
   router.push("/AppSettings");
 }
 
+// Fetch data and restrict access when component is mounted
 onMounted(async () => {
   await checkUserAccess();
-
+  
   if (!isAuthorized.value) return;
 
   const acTo = checkUser();
@@ -121,38 +125,18 @@ onMounted(async () => {
   console.log("User Data:", userResponse.data);
   const userAmount = userResponse.data.length;
 
-  // all farmers
-  const farmers = userResponse.data.filter((user: any) => user.role === "Farmer");
-  const farmerAmount = farmers.length;
-  console.log("Farmers:", farmerAmount);
-
-  // all buyers
-  const buyers = userResponse.data.filter((user: any) => user.role === "Buyer");
-  const buyerAmount = buyers.length;
-  console.log("Buyers:", buyerAmount);
+  const farmers = userResponse.data.filter((user: any) => user.role === "Farmer").length;
+  const buyers = userResponse.data.filter((user: any) => user.role === "Buyer").length;
 
   const postResponse = await axios.get("https://localhost:7170/api/posts/analytic");
   console.log("Post Data:", postResponse.data);
   const postAmount = postResponse.data.length;
 
-  // all posts that are active
-  const activePosts = postResponse.data.filter((post: any) => post.status === "Active");
-  const activeAmount = activePosts.length;
-  console.log("Active Posts:", activeAmount);
+  const activeAmount = postResponse.data.filter((post: any) => post.status === "Active").length;
+  const inactiveAmount = postResponse.data.filter((post: any) => post.status === "Inactive").length;
+  const expiredAmount = postResponse.data.filter((post: any) => post.status === "Expired").length;
 
-  // all posts that are inactive
-  const inactivePosts = postResponse.data.filter((post: any) => post.status === "Inactive");
-  const inactiveAmount = inactivePosts.length;
-  console.log("Inactive Posts:", inactiveAmount);
-
-  // all posts that are expired
-  const expiredPosts = postResponse.data.filter((post: any) => post.status === "Expired");
-  const expiredAmount = expiredPosts.length;
-  console.log("Expired Posts:", expiredAmount);
-
-  
-
-
+  // Render charts
   const usersCtx = document.getElementById("usersChart") as HTMLCanvasElement;
   new Chart(usersCtx, {
     type: "bar",
@@ -168,7 +152,7 @@ onMounted(async () => {
     type: "pie",
     data: {
       labels: ["Farmer", "Buyer"],
-      datasets: [{ label: "User", data: [farmerAmount, buyerAmount], backgroundColor: ["#ff9800", "#f44336"] }],
+      datasets: [{ label: "User", data: [farmers, buyers], backgroundColor: ["#ff9800", "#f44336"] }],
     },
     options: { responsive: true, plugins: { legend: { display: true } } },
   });
@@ -183,13 +167,12 @@ onMounted(async () => {
     options: { responsive: true, plugins: { legend: { display: false } } },
   });
 
-
   const transactionsCtx = document.getElementById("transactionsChart") as HTMLCanvasElement;
   new Chart(transactionsCtx, {
     type: "pie",
     data: {
       labels: ["Active", "Inactive", "Expired"],
-      datasets: [{ label: "Post Data", data: [ activeAmount, inactiveAmount, expiredAmount], backgroundColor: [ "#4caf50", "#f44336", "#ff9800"] }],
+      datasets: [{ label: "Post Data", data: [activeAmount, inactiveAmount, expiredAmount], backgroundColor: ["#4caf50", "#f44336", "#ff9800"] }],
     },
     options: { responsive: true, plugins: { legend: { display: true } } },
   });
