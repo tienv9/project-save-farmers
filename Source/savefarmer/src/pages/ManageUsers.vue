@@ -9,7 +9,12 @@
 
           <ion-card-content v-if="users.length">
             <ion-list>
-              <ion-item v-for="user in users" :key="user.id" class="user-item" @click="goToAnalytics(user.id)">
+              <ion-item 
+                v-for="user in users" 
+                :key="user.id" 
+                class="user-item" 
+                @click="selectUser(user)"
+              >
                 <ion-avatar slot="start">
                   <ion-icon :icon="personOutline" class="user-icon"></ion-icon>
                 </ion-avatar>
@@ -19,27 +24,74 @@
                   <p><ion-icon :icon="briefcase" class="icon"></ion-icon> Role: {{ user.role }}</p>
                   <p><ion-icon :icon="calendar" class="icon"></ion-icon> Joined: {{ formatDate(user.createAt) }}</p>
                 </ion-label>
-                <ion-button @click="deleteUser(user.id)" color="danger">Delete</ion-button>
+                <ion-button @click.stop="deleteUser(user.id)" color="danger">Delete</ion-button>
               </ion-item>
-
             </ion-list>
           </ion-card-content>
 
           <ion-button expand="block" @click="AdminPage">Back to Admin</ion-button>
         </ion-card>
+
+        <!-- Selected User Details -->
+        <ion-card v-if="selectedUser" class="user-details-card">
+          <ion-card-header>
+            <ion-card-title>{{ selectedUser.firstName }}'s Profile</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="user-info">
+              <ion-avatar class="large-avatar">
+                <ion-icon :icon="personOutline"></ion-icon>
+              </ion-avatar>
+              <div class="user-text">
+                <h2>{{ selectedUser.firstName }} {{ selectedUser.lastName }}</h2>
+                <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+                <p><strong>ID:</strong> {{ selectedUser.id }}</p>
+              </div>
+            </div>
+
+            <h3>User Post History:</h3>
+            <ion-list v-if="userPosts.length">
+              <ion-item v-for="post in userPosts" :key="post.postId">
+                <ion-label>
+                  <h2>{{ post.title }}</h2>
+                  <ion-button fill="outline" color="secondary" @click="togglePostDetails(post.postId)">
+                    {{ expandedPosts.has(post.postId) ? "Hide Details" : "Show Details" }}
+                  </ion-button>
+
+                  <div v-if="expandedPosts.has(post.postId)" class="post-details">
+                    <p><strong>Price:</strong> ${{ post.price }}</p>
+                    <p><strong>Crop Type:</strong> {{ post.cropType }}</p>
+                    <p><strong>Amount:</strong> {{ post.amount }} units</p>
+                    <p><strong>Location:</strong> {{ post.location }}</p>
+                    <p><strong>Contact:</strong> {{ post.contact }}</p>
+                    <p><strong>Description:</strong> {{ post.description }}</p>
+                    <p><strong>Created On:</strong> {{ formatDate(post.createDate) }}</p>
+                    <p><strong>Expires On:</strong> {{ formatDate(post.expireDate) }}</p>
+                    <p><strong>Status:</strong> <span :class="post.status === 'Active' ? 'active-status' : 'inactive-status'">{{ post.status }}</span></p>
+                  </div>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+            <p v-else>No posts found for this user.</p>
+          </ion-card-content>
+        </ion-card>
+
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonPage, IonContent, IonList, IonItem, IonLabel, IonAvatar, IonIcon } from '@ionic/vue';
+import { 
+  IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, 
+  IonPage, IonContent, IonList, IonItem, IonLabel, IonAvatar, IonIcon 
+} from '@ionic/vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { personOutline, mail, briefcase, calendar } from 'ionicons/icons';
 
-interface DataType {
+interface UserType {
   id: string;
   firstName: string;
   lastName: string;
@@ -48,23 +100,34 @@ interface DataType {
   createAt: string;
 }
 
-// Reactive users list
-const users = ref<DataType[]>([]);
+interface PostType {
+  postId: string;
+  title: string;
+  price: string;
+  cropType: string;
+  amount: string;
+  location: string;
+  contact: string;
+  description: string;
+  createDate: string;
+  expireDate: string;
+  status: string;
+}
 
-// Router instance
+const users = ref<UserType[]>([]);
+const selectedUser = ref<UserType | null>(null);
+const userPosts = ref<PostType[]>([]);
+const expandedPosts = ref<Set<string>>(new Set()); // Tracks expanded posts
 const router = useRouter();
 
-// Function to navigate to AdminPage
 function AdminPage() {
   router.push('/AdminPage');
 }
 
-// Function to retrieve access token
 const checkUser = (): string | null => {
   return sessionStorage.getItem('AccessToken') || localStorage.getItem('AccessToken');
 };
 
-// Function to fetch user data
 async function getData(): Promise<void> {
   try {
     const token = checkUser();
@@ -74,98 +137,104 @@ async function getData(): Promise<void> {
     }
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get<DataType[]>('https://localhost:7170/api/GetAllUsers');
+    const response = await axios.get<UserType[]>('https://localhost:7170/api/GetAllUsers');
     users.value = response.data;
   } catch (error: any) {
     console.error('Error fetching data:', error.message);
   }
 }
 
-//Analyse user function
-async function goToAnalytics(userId: string) {
-  router.push({ name: 'Analytics', params: { id: userId } });
+async function selectUser(user: UserType) {
+  selectedUser.value = user;
+  await fetchUserPosts(user.id);
 }
 
+async function fetchUserPosts(userId: string) {
+  try {
+    const token = checkUser();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-// Format date function
+    const response = await axios.get<PostType[]>(`https://localhost:7170/api/posts/user/${userId}`);
+    userPosts.value = response.data;
+  } catch (error: any) {
+    console.error('Error fetching user posts:', error.message);
+    userPosts.value = [];
+  }
+}
+
+function togglePostDetails(postId: string) {
+  if (expandedPosts.value.has(postId)) {
+    expandedPosts.value.delete(postId);
+  } else {
+    expandedPosts.value.add(postId);
+  }
+}
+
+// Format date
 const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString();
 };
 
 async function deleteUser(userID: string) {
   try {
-      const acTo = await checkUser();
-      console.log(acTo);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
+    const acTo = checkUser();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
+    await axios.delete(`https://localhost:7170/api/user/${userID}`);
+    alert("User Deleted Successfully");
 
-      
-      console.log(userID);
-      const userIDurl = `https://localhost:7170/api/user/${userID}`;
-
-      await axios.delete(userIDurl);
-      
-      alert("User Deleted Successfully");
-      window.location.reload();
-
-      
-    } catch (error: any) {
-      if (error.response) {
-        alert(`Error: ${error.response.data.message}`);
-      } else if (error.request) {
-        alert("No response from server. Please check your connection.");
-      } else {
-        alert("An unexpected error occurred.");
-      }
+    users.value = users.value.filter(user => user.id !== userID);
+    if (selectedUser.value?.id === userID) {
+      selectedUser.value = null;
+      userPosts.value = [];
     }
-
+  } catch (error: any) {
+    alert("An error occurred while deleting the user.");
   }
+}
 
-
-
-
-
-// Fetch user data when component is mounted
 onMounted(getData);
 </script>
 
 <style scoped>
 .manage-users-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
   padding: 70px 20px 20px;
   background: linear-gradient(to bottom, #1e1e1e, #121212);
-  box-sizing: border-box;
 }
 
-.manage-users-card {
+.user-details-card {
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
-  border-radius: 12px;
-  overflow: hidden;
-  background: #2a2a2a;
-  color: #e0e0e0;
+  max-width: 500px;
+  text-align: center;
 }
 
-.user-item {
-  border-bottom: 1px solid #444;
-  padding: 10px 0;
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.user-icon {
-  font-size: 2rem;
+.large-avatar {
+  font-size: 4rem;
   color: #4caf50;
 }
 
-.icon {
-  color: #bbb;
-  margin-right: 5px;
+.post-details {
+  margin-top: 10px;
+  padding: 10px;
+  border-left: 3px solid #4caf50;
 }
 
-ion-content {
-  --background: #121212;
+.active-status {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.inactive-status {
+  color: #ff5252;
+  font-weight: bold;
 }
 </style>
