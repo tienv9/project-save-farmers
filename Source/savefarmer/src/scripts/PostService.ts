@@ -33,7 +33,7 @@ export default class PostService {
 
   async fetchPosts(): Promise<void> {
     try {
-      const response = await axios.get("https://localhost:7170/api/posts");
+      const response = await axios.get("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts");
       if (response.status === 200) {
         this.posts.value = response.data;
       }
@@ -60,7 +60,7 @@ export default class PostService {
       console.log(post);
 
       
-      const response = await axios.post("https://localhost:7170/api/posts", {
+      const response = await axios.post("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts", {
         title: post.title,
         price: post.price,
         cropType: post.cropType,
