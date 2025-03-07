@@ -4,6 +4,7 @@ using FarmerAPI.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FarmerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250307034252_SeedAdmin2")]
+    partial class SeedAdmin2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,10 +174,10 @@ namespace FarmerAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "62270ef0-206d-48fc-8eb5-e05a5b09cf8d",
+                            Id = "1629169b-055e-4355-8e32-1d518ef6e59d",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f333ca7c-00a6-4273-b1b5-e4900cb5aa18",
-                            CreateAt = new DateTime(2025, 3, 7, 9, 12, 33, 329, DateTimeKind.Utc).AddTicks(8321),
+                            ConcurrencyStamp = "33157981-d0d5-4a5b-bb79-4138e358d8f6",
+                            CreateAt = new DateTime(2025, 3, 7, 3, 42, 52, 262, DateTimeKind.Utc).AddTicks(3714),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "System",
@@ -182,12 +185,12 @@ namespace FarmerAPI.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFJrHqww3/sc87bnqXbsxuPgPlEQo+DHaozAwmfunfjBTJR74EdZk+YgsQaxHpTq8w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMzLuSHZTwcs55FuJyvFFtQjXhqisiroMleutmJGBppQx3C0kyZ+d0y9MjGl+3C0Dw==",
                             PhoneNumberConfirmed = false,
                             Role = "Admin",
-                            SecurityStamp = "085f99dd-7fb7-4c64-a324-b69c7dd630c9",
+                            SecurityStamp = "5eeeeeeb-9ce4-4c53-8d1b-7bf363440adc",
                             TwoFactorEnabled = false,
-                            UpdateAt = new DateTime(2025, 3, 7, 9, 12, 33, 329, DateTimeKind.Utc).AddTicks(8323),
+                            UpdateAt = new DateTime(2025, 3, 7, 3, 42, 52, 262, DateTimeKind.Utc).AddTicks(3715),
                             UserName = "admin"
                         });
                 });
@@ -221,7 +224,7 @@ namespace FarmerAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2dc0e929-d7c0-4cd9-a73f-fe71b5b1d04c",
+                            Id = "8ff81eff-3b0d-4301-aa88-011ec397e3a3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -316,8 +319,8 @@ namespace FarmerAPI.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "62270ef0-206d-48fc-8eb5-e05a5b09cf8d",
-                            RoleId = "2dc0e929-d7c0-4cd9-a73f-fe71b5b1d04c"
+                            UserId = "1629169b-055e-4355-8e32-1d518ef6e59d",
+                            RoleId = "8ff81eff-3b0d-4301-aa88-011ec397e3a3"
                         });
                 });
 

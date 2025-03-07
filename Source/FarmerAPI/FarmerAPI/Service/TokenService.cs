@@ -29,8 +29,9 @@ namespace FarmerAPI.Service
             }
 
             _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
-            _validIssuer = jwtSettings.ValidIssuer;
-            _validAudience = jwtSettings.ValidAudience;
+            _validIssuer = jwtSettings.Issuer;
+            _validAudience = jwtSettings.Audience;
+            _expires = jwtSettings.Expires;
         }
 
         public async Task<string> GenerateToken(User user)
@@ -77,6 +78,11 @@ namespace FarmerAPI.Service
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             return claims;
+        }
+
+        public Task GenerateToken(IdentityUser user)
+        {
+            throw new NotImplementedException();
         }
     }
 }
