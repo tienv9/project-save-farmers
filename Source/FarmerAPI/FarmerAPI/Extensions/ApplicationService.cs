@@ -59,7 +59,7 @@ namespace FarmerAPI.Extensions
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true,
+                    ValidateLifetime = false,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtSettings.ValidIssuer,
                     ValidAudience = jwtSettings.ValidAudience,

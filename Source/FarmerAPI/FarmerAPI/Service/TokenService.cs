@@ -31,7 +31,6 @@ namespace FarmerAPI.Service
             _secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key));
             _validIssuer = jwtSettings.ValidIssuer;
             _validAudience = jwtSettings.ValidAudience;
-            _expires = jwtSettings.Expires;
         }
 
         public async Task<string> GenerateToken(User user)
