@@ -138,60 +138,54 @@ const logOut = () => {
   }
 };
 
+const role = sessionStorage.getItem('Role');
 
 const selectedIndex = ref(0);
 // Temporary and can be moved later
 const appPages = [
-{
+  {
     title: 'Home',
     url: '/Home',
     iosIcon: homeOutline,
     mdIcon: homeSharp,
   },
-  {
-    title: 'Login',
-    url: '/Login',
-    iosIcon: logInOutline,
-    mdIcon: logInSharp,
-  },
-  {
-    title: 'Profile',
-    url: '/Profile',
-    iosIcon: personCircleOutline,
-    mdIcon: personCircleSharp,
-  },
-  // {
-  //   title: 'database',
-  //   url: '/database',
-  //   iosIcon: personCircleOutline,
-  //   mdIcon: personCircleSharp,
-  // },
-  {
-    title: 'Sign Up',
-    url: '/SignUp',
-    iosIcon: personAdd,
-    mdIcon: personAddOutline,
-  },
+  ...(role ? [
+    {
+      title: 'Profile',
+      url: '/Profile',
+      iosIcon: personCircleOutline,
+      mdIcon: personCircleSharp,
+    },
+    ...(role === 'Admin' ? [
+      {
+        title: 'Admin',
+        url: '/AdminPage',
+        iosIcon: trashOutline,
+        mdIcon: trashSharp,
+      }
+    ] : []),
+  ] : [
+    {
+      title: 'Login',
+      url: '/Login',
+      iosIcon: logInOutline,
+      mdIcon: logInSharp,
+    },
+    {
+      title: 'Sign Up',
+      url: '/SignUp',
+      iosIcon: personAdd,
+      mdIcon: personAddOutline,
+    }
+  ]),
   {
     title: 'About',
     url: '/About',
     iosIcon: archiveOutline,
     mdIcon: archiveSharp,
   },
-  // {
-  //   title: 'Trash',
-  //   url: '/Trash',
-  //   iosIcon: trashOutline,
-  //   mdIcon: trashSharp,
-  // },
-  {
-    title: 'Admin',
-    url: '/AdminPage',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp,
-  }
-  
 ];
+
 
 const path = window.location.pathname.split('/')[1];
 if (path !== undefined) {
