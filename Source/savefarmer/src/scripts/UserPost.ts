@@ -77,9 +77,9 @@ export default class GetUserPostService {
         status: post.status,
         userId: post.userId,
       });
-      if (response.status === 200) {
-        alert("Post updated successfully");
-      }
+      // if (response.status === 200) {
+      //   alert("Post updated successfully");
+      // }
     } catch (error: any) {
       if (error.response) {
         alert(`Error: ${error.response.data.message}`);
