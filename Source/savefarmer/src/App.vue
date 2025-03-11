@@ -180,6 +180,12 @@ const appPages = [
     ] : []),
   ] : [
     {
+      title: 'Home',
+      url: '/Home',
+      iosIcon: homeOutline,
+      mdIcon: homeSharp,
+    },
+    {
       title: 'Login',
       url: '/Login',
       iosIcon: logInOutline,

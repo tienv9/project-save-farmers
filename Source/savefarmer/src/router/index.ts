@@ -80,7 +80,7 @@ const router = createRouter({
     const token = sessionStorage.getItem('AccessToken');
     const role = sessionStorage.getItem('Role');
     
-    if (!token && !['/Login', '/SignUp', '/About'].includes(to.path)) {
+    if (!token && !['/Login', '/SignUp', '/About', '/Home'].includes(to.path)) {
       next('/Login');
     }
     else if (token && ['/Login', '/SignUp'].includes(to.path)) {
