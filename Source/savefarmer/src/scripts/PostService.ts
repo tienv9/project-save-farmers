@@ -68,7 +68,7 @@ export default class PostService {
         location: post.location,
         contact: post.contact,
         description: post.description,
-        expireDate: this.convertExpireDate(post.expireDate),
+        expireDate: post.expireDate,
         name: post.name,
         status: post.status,
         userId: post.userId,
@@ -102,16 +102,6 @@ export default class PostService {
   formatContact(contact: string): string {
     return contact.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
   }
-
-  convertExpireDate = (expireValue: any): string => {
-    if (typeof expireValue === 'number') {
-      const newDate = new Date();
-      newDate.setDate(newDate.getDate() + expireValue);
-      newDate.setHours(0, 0, 0, 0);
-      return newDate.toISOString();
-    }
-    return expireValue;
-  };
 
   // Function to get the crop icon URL based on crop type
   getCropIcon(cropType: string | undefined | null): string {
