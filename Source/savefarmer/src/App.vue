@@ -32,7 +32,7 @@
               Sign Up <ion-icon size="large" :icon="personAddOutline"></ion-icon>
             </ion-button>
           </div>
-          <div v-else>
+          <div v-else-if="whatUser()">
             <ion-button fill="outline" @click="openModal"> 
               Create Post <ion-icon size="large" :icon="addOutline"></ion-icon>
             </ion-button>
@@ -43,6 +43,15 @@
               <ion-icon size="large" :icon="logOutOutline"></ion-icon>
             </ion-button>
           </div>
+          <div v-else>
+            <ion-button shape="round" slot="end" @click="checkUser">
+              <ion-icon size="large" :icon="personCircleOutline"></ion-icon>
+            </ion-button>
+            <ion-button shape="round" slot="end" @click="logOut">
+              <ion-icon size="large" :icon="logOutOutline"></ion-icon>
+            </ion-button>
+          </div>
+
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -106,6 +115,11 @@ import CreatePostModal from '@/components/CreatePost.vue';
 const checkAuth = () => {
   const token = sessionStorage.getItem('AccessToken');
   return token != null && token !== undefined;
+};
+
+const whatUser = () => {
+  const roles = sessionStorage.getItem('Role');
+  return roles != null && roles !== undefined && roles === 'Farmer' || roles === 'Admin';
 };
 
 const checkUser = () => {
