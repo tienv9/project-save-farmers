@@ -4,7 +4,7 @@
       <ion-menu content-id="main-content" type="reveal">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Button list</ion-list-header>
+            <ion-list-header>Save Farmer Menu</ion-list-header>
 
             <ion-menu-toggle aria-hidden="true" :auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
@@ -143,13 +143,13 @@ const role = sessionStorage.getItem('Role');
 const selectedIndex = ref(0);
 // Temporary and can be moved later
 const appPages = [
-  {
-    title: 'Home',
-    url: '/Home',
-    iosIcon: homeOutline,
-    mdIcon: homeSharp,
-  },
   ...(role ? [
+    {
+      title: 'Home',
+      url: '/Home',
+      iosIcon: homeOutline,
+      mdIcon: homeSharp,
+    },
     {
       title: 'Profile',
       url: '/Profile',
@@ -198,6 +198,12 @@ if (path !== undefined) {
 .PostButton {
   background: antiquewhite;
   color: red;
+}
+
+ion-list-header {
+  font-size: 1.1rem;
+  font-weight: lighter;
+  color: #777e85;
 }
 
 ion-menu ion-content {

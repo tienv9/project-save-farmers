@@ -72,8 +72,11 @@ export default class PostService {
         name: post.name,
         status: post.status,
         userId: post.userId,
-      }
-    );
+      });
+
+      
+
+
       if (response.status === 201) {
         this.posts.value.push(response.data);
       }
@@ -87,6 +90,7 @@ export default class PostService {
       }
     }
   }
+
 
   
   // Function to delete a post by its index

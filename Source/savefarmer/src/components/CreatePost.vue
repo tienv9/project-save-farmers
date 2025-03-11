@@ -92,6 +92,7 @@ import {
 } from "@ionic/vue";
 import { ref } from "vue";
 import { postSer } from "@/scripts/PostService";
+import { time } from "ionicons/icons";
 
 // Props to control modal open state from parent component
 const props = defineProps({
@@ -123,8 +124,8 @@ const newPost : any = ref({
   userId: sessionStorage.getItem('Id'), //this should be replace by database info but cant leave blank for now
 });
 
-const handleSubmit = () => {
-  postSer.createPost(newPost.value);
+const handleSubmit = async () => {
+  await postSer.createPost(newPost.value);
   handleClose();
   window.location.reload();
 };

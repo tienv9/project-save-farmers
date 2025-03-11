@@ -80,7 +80,7 @@ const router = createRouter({
     const token = sessionStorage.getItem('AccessToken');
     const role = sessionStorage.getItem('Role');
     
-    if (!token && !['/Login', '/SignUp', '/Home', '/About'].includes(to.path)) {
+    if (!token && !['/Login', '/SignUp', '/About'].includes(to.path)) {
       next('/Login');
     }
     else if (token && ['/Login', '/SignUp'].includes(to.path)) {
@@ -89,7 +89,7 @@ const router = createRouter({
     else if (!role && to.path === '/Profile') {
       next('/Login');
     }
-    else if (role !== 'admin' && to.path === '/AdminPage') {
+    else if (role !== 'Admin' && to.path === '/AdminPage') {
       next('/Home');
     }
     else {
