@@ -305,7 +305,7 @@ async function postActivity(title: string, price: number, cropType: string, amou
           userId: userId
         }
         );
-          alert("Post Deactivated Successfully"
+          alert("Post Activated Successfully"
       );
           
           window.location.reload();
