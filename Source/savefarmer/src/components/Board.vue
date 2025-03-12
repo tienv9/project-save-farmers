@@ -90,8 +90,8 @@
                   <div>Date Listed:</div>
                   <div>{{ formatDate(post.createDate) }}</div>
                 </span>
-                <span>{{ post.name }}</span>
                 <span></span>
+                <span>{{ post.name }}</span>
               </div>
               <p class="expiry-date"><strong>Expires:</strong> {{ formatDate(post.expireDate) }}</p>
             </ion-card-content>
