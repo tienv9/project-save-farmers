@@ -528,7 +528,7 @@ onMounted(() => {
 //-------------------------fetching data from the server----------------------------
 
 import axios from 'axios';
-import { c } from "vite/dist/node/types.d-aGj9QkWt";
+//import { c } from "vite/dist/node/types.d-aGj9QkWt";
 // import { data } from "cypress/types/jquery";
 
 interface DataType {
