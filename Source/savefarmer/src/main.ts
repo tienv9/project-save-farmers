@@ -44,6 +44,7 @@ import {
 import { JeepSqlite } from "jeep-sqlite/dist/components/jeep-sqlite";
 import Axios from "axios";
 import { reload } from "ionicons/icons";
+import { API_BASE_URL } from "./config/api";
 
 customElements.define("jeep-sqlite", JeepSqlite);
 console.log(`after customElements.define`);
@@ -61,7 +62,7 @@ const refreshAccessToken = async () => {
   if (token) {
     try {
       const response = await Axios.post(
-        "https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/refresh-token",
+        `${API_BASE_URL}/api/refresh-token`,
         {
           refreshToken: token,
         }

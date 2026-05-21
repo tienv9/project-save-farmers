@@ -88,6 +88,7 @@ import {
 } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { API_BASE_URL } from '@/config/api';
 import { useRouter } from 'vue-router';
 import { personOutline, mail, briefcase, calendar } from 'ionicons/icons';
 
@@ -137,7 +138,7 @@ async function getData(): Promise<void> {
     }
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get<UserType[]>('https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/GetAllUsers');
+    const response = await axios.get<UserType[]>('${API_BASE_URL}/api/GetAllUsers');
     users.value = response.data;
   } catch (error: any) {
     console.error('Error fetching data:', error.message);
@@ -154,7 +155,7 @@ async function fetchUserPosts(userId: string) {
     const token = checkUser();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-    const response = await axios.get<PostType[]>(`https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/user/${userId}`);
+    const response = await axios.get<PostType[]>(`${API_BASE_URL}/api/posts/user/${userId}`);
     userPosts.value = response.data;
   } catch (error: any) {
     console.error('Error fetching user posts:', error.message);
@@ -180,7 +181,7 @@ async function deleteUser(userID: string) {
     const acTo = checkUser();
     axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
-    await axios.delete(`https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/user/${userID}`);
+    await axios.delete(`${API_BASE_URL}/api/user/${userID}`);
     alert("User Deleted Successfully");
 
     users.value = users.value.filter(user => user.id !== userID);

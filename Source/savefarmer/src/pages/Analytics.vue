@@ -43,6 +43,7 @@
   import { useRouter } from 'vue-router';
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
+  import { API_BASE_URL } from '@/config/api';
   
   interface Post {
     id: string;
@@ -82,7 +83,7 @@
       }
   
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const response = await axios.get<UserAnalytics>(`https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/analytic`);
+      const response = await axios.get<UserAnalytics>(`${API_BASE_URL}/api/posts/analytic`);
       userData.value = response.data;
     } catch (error: any) {
       console.error('Error fetching user analytics:', error.message);

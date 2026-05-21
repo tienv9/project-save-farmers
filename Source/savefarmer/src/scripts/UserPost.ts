@@ -6,6 +6,7 @@ import carrotIcon from "@/images/icons/carrot.png";
 import cropIcon from "@/images/icons/crop.png";
 import potatoIcon from "@/images/icons/potato.png";
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
 export interface Post {
   postId: string;
@@ -43,7 +44,7 @@ export default class GetUserPostService {
 
       const uIds = await getUser();
       console.log(uIds);
-      const uIdurl = `https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/user/${uIds}`;
+      const uIdurl = `${API_BASE_URL}/api/posts/user/${uIds}`;
       console.log(uIdurl);
 
       const response = await axios.get(uIdurl);
@@ -64,7 +65,7 @@ export default class GetUserPostService {
 
   async EditCurrentPost(post : any): Promise<void> {
     try {
-      const response = await axios.put(`https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/${post.postID}`, {
+      const response = await axios.put(`${API_BASE_URL}/api/posts/${post.postID}`, {
         title: post.title,
         price: post.price,
         cropType: post.cropType,
@@ -116,7 +117,7 @@ export default class GetUserPostService {
       // axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
       console.log(post);
 
-      const response = await axios.post("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts", {
+      const response = await axios.post("${API_BASE_URL}/api/posts", {
         title: post.title,
         price: post.price,
         cropType: post.cropType,

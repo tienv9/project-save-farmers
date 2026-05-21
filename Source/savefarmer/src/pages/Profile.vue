@@ -167,9 +167,6 @@ import { usersPost } from '../scripts/UserPost';
 import OpenEditModal from '../components/EditPost.vue';
 
 
-const API_URL = "https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net";
-
-// https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net
 
 const PostList = computed(() => postSer.posts.value);
 const PostListUser = computed(() => usersPost.posts.value);
@@ -196,7 +193,7 @@ async function farmerUser() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
   
-  const userData = await axios.get("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/current-user");
+  const userData = await axios.get("${API_BASE_URL}/api/current-user");
   console.log(userData.data.role);
   if (userData.data.role === "Farmer") {
     return true;
@@ -217,7 +214,7 @@ async function deletePost(postID: string) {
 
       
       console.log(postID);
-      const postIDurl = `https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/${postID}`;
+      const postIDurl = `${API_BASE_URL}/api/posts/${postID}`;
 
       const response = await axios.delete(postIDurl);
         alert("Post Deleted Successfully");
@@ -248,7 +245,7 @@ async function postActivity(title: string, price: number, cropType: string, amou
 
         
         console.log(postID);
-        const postIDurl = `https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/${postID}`;
+        const postIDurl = `${API_BASE_URL}/api/posts/${postID}`;
 
         await axios.put(postIDurl, {
           title: title,
@@ -289,7 +286,7 @@ async function postActivity(title: string, price: number, cropType: string, amou
 
         
         console.log(postID);
-        const postIDurl = `https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/${postID}`;
+        const postIDurl = `${API_BASE_URL}/api/posts/${postID}`;
 
         await axios.put(postIDurl, {
           title: title,
@@ -347,7 +344,7 @@ async function postAnalysis() {
     const thisUsersID = sessionStorage.getItem('Id');
     console.log(thisUsersID);
 
-    const postResponse = await axios.get("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/user/" + thisUsersID);
+    const postResponse = await axios.get("${API_BASE_URL}/api/posts/user/" + thisUsersID);
     console.log("Post Data:", postResponse.data);
      postAmount = postResponse.data.length;
     
@@ -384,7 +381,7 @@ const CropPieChart = async () => {
     const thisUsersID = sessionStorage.getItem('Id');
     console.log(thisUsersID);
 
-    const postResponse = await axios.get("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/user/" + thisUsersID);
+    const postResponse = await axios.get("${API_BASE_URL}/api/posts/user/" + thisUsersID);
     console.log("Post Data:", postResponse.data);
      postAmount = postResponse.data.length;
     
@@ -528,6 +525,7 @@ onMounted(() => {
 //-------------------------fetching data from the server----------------------------
 
 import axios from 'axios';
+import { API_BASE_URL } from '@/config/api';
 //import { c } from "vite/dist/node/types.d-aGj9QkWt";
 // import { data } from "cypress/types/jquery";
 
@@ -558,7 +556,7 @@ async function getData(): Promise<DataType> {
     axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
 
-    const response = await axios.get<DataType>('https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/current-user'); 
+    const response = await axios.get<DataType>('${API_BASE_URL}/api/current-user'); 
     // Axios automatically parses the JSON response
     return response.data;
   } catch (error: any) {
@@ -607,7 +605,7 @@ async function getData(): Promise<DataType> {
 
 //     const uIds = await getUser();
 //     console.log(uIds);
-//     const uIdurl = `https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/user/${uIds}`;
+//     const uIdurl = `${API_BASE_URL}/api/posts/user/${uIds}`;
 //     console.log(uIdurl);
 
 //     const response = await axios.get<Post>(uIdurl); 

@@ -56,6 +56,7 @@ import { Chart, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { API_BASE_URL } from '@/config/api';
 
 Chart.register(...registerables, ChartDataLabels);
 
@@ -86,7 +87,7 @@ async function getData() {
     const acTo = checkUser();
     axios.defaults.headers.common["Authorization"] = `Bearer ${acTo}`;
 
-    const response = await axios.get("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/current-user");
+    const response = await axios.get("${API_BASE_URL}/api/current-user");
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);
@@ -121,14 +122,14 @@ onMounted(async () => {
   const acTo = checkUser();
   axios.defaults.headers.common["Authorization"] = `Bearer ${acTo}`;
 
-  const userResponse = await axios.get("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/GetAllUsers");
+  const userResponse = await axios.get("${API_BASE_URL}/api/GetAllUsers");
   console.log("User Data:", userResponse.data);
   const userAmount = userResponse.data.length;
 
   const farmers = userResponse.data.filter((user: any) => user.role === "Farmer").length;
   const buyers = userResponse.data.filter((user: any) => user.role === "Buyer").length;
 
-  const postResponse = await axios.get("https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/posts/analytic");
+  const postResponse = await axios.get("${API_BASE_URL}/api/posts/analytic");
   console.log("Post Data:", postResponse.data);
   const postAmount = postResponse.data.length;
 

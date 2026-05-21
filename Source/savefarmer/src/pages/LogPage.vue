@@ -60,6 +60,7 @@ import {
 } from "@ionic/vue";
 import { ref } from "vue";
 import axios from "axios";
+import { API_BASE_URL } from "@/config/api";
 
 const email = ref("");
 const password = ref("");
@@ -67,7 +68,7 @@ const rememberMe = ref(false);
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post('https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/login', {
+    const response = await axios.post('${API_BASE_URL}/api/login', {
       email: email.value,
       password: password.value
     });

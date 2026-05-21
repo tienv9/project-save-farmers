@@ -78,6 +78,7 @@
 
   import { ref } from "vue";
   import axios from "axios";
+  import { API_BASE_URL } from "@/config/api";
 
   const firstName = ref("");
   const lastName = ref("");
@@ -158,7 +159,7 @@ const handleLogin = async () => {
   }
 
   try {
-    const response = await axios.post('https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net/api/register', {
+    const response = await axios.post('${API_BASE_URL}/api/register', {
       FirstName: firstName.value,
       LastName: lastName.value,
       Email: email.value,
