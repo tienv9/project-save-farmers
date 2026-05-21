@@ -21,8 +21,8 @@ namespace FarmerAPI.Infrastructure.Context
             string LPassword = "Admin@123";
 
 
-            var adminRoleId = Guid.NewGuid().ToString();
-            var adminUserId = Guid.NewGuid().ToString();
+            const string adminRoleId = "1";
+            const string adminUserId = "1";
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
             {
                 Id = adminRoleId,
