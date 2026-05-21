@@ -110,14 +110,14 @@ const handleClose = () => {
   emit("update:isOpen", false);
 };
 
-const getCurrentDate = () => {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  return tomorrow.toISOString().split("T")[0];
+const getTomorrowMidnight = () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
+  return tomorrow.toISOString();
 };
 
-const minDate = getCurrentDate();
+const minDate = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0];
 const maxDate = new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0];
 
 const newPost : any = ref({
@@ -129,13 +129,16 @@ const newPost : any = ref({
   location: "My House",
   contact: "0000000000",
   description: "qwe",
-  expireDate: minDate,
+  expireDate: getTomorrowMidnight(),
   name: sessionStorage.getItem('Email'), //should be autofill from database or not? idk
   status: "Active",
   userId: sessionStorage.getItem('Id'), //this should be replace by database info but cant leave blank for now
 });
 
 const handleSubmit = async () => {
+  const expireAt = new Date(newPost.value.expireDate);
+  expireAt.setHours(0, 0, 0, 0);
+  newPost.value.expireDate = expireAt.toISOString();
   await postSer.createPost(newPost.value);
   handleClose();
   window.location.reload();

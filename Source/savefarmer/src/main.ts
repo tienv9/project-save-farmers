@@ -58,6 +58,12 @@ if (
 }
 const token = localStorage.getItem("RefreshToken");
 
+// Restore auth header lost on page reload
+const storedAccessToken = sessionStorage.getItem("AccessToken");
+if (storedAccessToken) {
+  Axios.defaults.headers.common["Authorization"] = `Bearer ${storedAccessToken}`;
+}
+
 const refreshAccessToken = async () => {
   if (token) {
     try {
