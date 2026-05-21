@@ -159,7 +159,7 @@ const handleLogin = async () => {
   }
 
   try {
-    const response = await axios.post('${API_BASE_URL}/api/register', {
+    const response = await axios.post(`${API_BASE_URL}/api/register`, {
       FirstName: firstName.value,
       LastName: lastName.value,
       Email: email.value,

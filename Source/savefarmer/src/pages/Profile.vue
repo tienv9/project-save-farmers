@@ -193,7 +193,7 @@ async function farmerUser() {
   axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
   
-  const userData = await axios.get("${API_BASE_URL}/api/current-user");
+  const userData = await axios.get(`${API_BASE_URL}/api/current-user`);
   console.log(userData.data.role);
   if (userData.data.role === "Farmer") {
     return true;
@@ -556,7 +556,7 @@ async function getData(): Promise<DataType> {
     axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
 
 
-    const response = await axios.get<DataType>('${API_BASE_URL}/api/current-user'); 
+    const response = await axios.get<DataType>(`${API_BASE_URL}/api/current-user`); 
     // Axios automatically parses the JSON response
     return response.data;
   } catch (error: any) {

@@ -68,7 +68,7 @@ const rememberMe = ref(false);
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post('${API_BASE_URL}/api/login', {
+    const response = await axios.post(`${API_BASE_URL}/api/login`, {
       email: email.value,
       password: password.value
     });

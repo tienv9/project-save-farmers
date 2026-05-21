@@ -34,7 +34,7 @@ export default class PostService {
 
   async fetchPosts(): Promise<void> {
     try {
-      const response = await axios.get("${API_BASE_URL}/api/posts");
+      const response = await axios.get(`${API_BASE_URL}/api/posts`);
       if (response.status === 200) {
         this.posts.value = response.data;
       }
@@ -61,7 +61,7 @@ export default class PostService {
       console.log(post);
 
       
-      const response = await axios.post("${API_BASE_URL}/api/posts", {
+      const response = await axios.post(`${API_BASE_URL}/api/posts`, {
         title: post.title,
         price: post.price,
         cropType: post.cropType,

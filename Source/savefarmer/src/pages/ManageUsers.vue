@@ -138,7 +138,7 @@ async function getData(): Promise<void> {
     }
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    const response = await axios.get<UserType[]>('${API_BASE_URL}/api/GetAllUsers');
+    const response = await axios.get<UserType[]>(`${API_BASE_URL}/api/GetAllUsers`);
     users.value = response.data;
   } catch (error: any) {
     console.error('Error fetching data:', error.message);
