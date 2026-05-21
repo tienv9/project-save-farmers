@@ -344,7 +344,7 @@ async function postAnalysis() {
     const thisUsersID = sessionStorage.getItem('Id');
     console.log(thisUsersID);
 
-    const postResponse = await axios.get("${API_BASE_URL}/api/posts/user/" + thisUsersID);
+    const postResponse = await axios.get(`${API_BASE_URL}/api/posts/user/` + thisUsersID);
     console.log("Post Data:", postResponse.data);
      postAmount = postResponse.data.length;
     
@@ -381,7 +381,7 @@ const CropPieChart = async () => {
     const thisUsersID = sessionStorage.getItem('Id');
     console.log(thisUsersID);
 
-    const postResponse = await axios.get("${API_BASE_URL}/api/posts/user/" + thisUsersID);
+    const postResponse = await axios.get(`${API_BASE_URL}/api/posts/user/` + thisUsersID);
     console.log("Post Data:", postResponse.data);
      postAmount = postResponse.data.length;
     

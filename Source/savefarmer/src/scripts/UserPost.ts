@@ -117,7 +117,7 @@ export default class GetUserPostService {
       // axios.defaults.headers.common['Authorization'] = `Bearer ${acTo}`;
       console.log(post);
 
-      const response = await axios.post("${API_BASE_URL}/api/posts", {
+      const response = await axios.post(`${API_BASE_URL}/api/posts`, {
         title: post.title,
         price: post.price,
         cropType: post.cropType,
