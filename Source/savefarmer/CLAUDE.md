@@ -12,7 +12,7 @@ npm run test:unit    # Vitest unit tests
 npm run test:e2e     # Cypress e2e tests
 ```
 
-When running locally, the app auto-detects `localhost`/`127.0.0.1` and switches Axios `baseURL` to `http://localhost:5209/` (the .NET API). In production it targets `https://farmerapi20250306133102-b8ejbnf8c4a0hve5.westus-01.azurewebsites.net`.
+When running locally, the app auto-detects `localhost`/`127.0.0.1` and switches Axios `baseURL` to `http://localhost:5209/` (the .NET API). In production it targets `https://api.savefarmer.help`.
 
 ## Architecture
 
