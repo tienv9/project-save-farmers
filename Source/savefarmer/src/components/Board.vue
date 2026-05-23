@@ -2,48 +2,154 @@
   <ion-page>
     <ion-content>
       <div class="board">
-        
-        <!-- Search Bar -->
-        <ion-searchbar v-model="searchQuery" @ionInput="updateSearchQuery" placeholder="Search posts..."></ion-searchbar>
 
-        <!-- Filter Bar -->
-        <div class="filter-bar">
-          <!-- Price Filter (Range) -->
-          <ion-range
-            v-model="priceRange"
-            :min="0"
-            :max="1000"
-            :step="1"
-            :snaps="true"
-            :pin="true"
-            @ionChange="filterPosts"
-          >
-            <ion-label slot="start">Min Price: 0$</ion-label>
-            <ion-label slot="end">Max Price: 1000$</ion-label>
-          </ion-range>
+        <!-- Search Row -->
+        <div class="search-row">
+          <ion-searchbar v-model="searchQuery" @ionInput="updateSearchQuery" placeholder="Search posts..."></ion-searchbar>
+          <ion-button fill="outline" class="advanced-btn" @click="toggleAdvanced">
+            {{ showAdvanced ? 'Hide Filters' : 'Advanced Search' }}
+            <span class="filter-badge" v-if="hasActiveFilters">{{ activeFilterCount }}</span>
+          </ion-button>
+        </div>
+
+        <!-- Advanced Search Panel -->
+        <div v-if="showAdvanced" class="advanced-panel">
+          <div class="advanced-header">
+            <span class="advanced-title">Advanced Filters</span>
+            <ion-button fill="clear" size="small" color="medium" @click="clearFilters">Clear All</ion-button>
+          </div>
+
+          <!-- Price Range -->
+          <div class="filter-group">
+            <p class="filter-label">Price Range ($)</p>
+            <div class="range-inputs">
+              <ion-item lines="none" class="range-item">
+                <ion-input
+                  label="Min"
+                  label-placement="stacked"
+                  type="number"
+                  :value="minPrice ?? ''"
+                  placeholder="0"
+                  min="0"
+                  @ionInput="(e: CustomEvent) => { minPrice = e.detail.value !== '' ? Number(e.detail.value) : null; filterPosts(); }"
+                ></ion-input>
+              </ion-item>
+              <span class="range-separator">—</span>
+              <ion-item lines="none" class="range-item">
+                <ion-input
+                  label="Max"
+                  label-placement="stacked"
+                  type="number"
+                  :value="maxPrice ?? ''"
+                  placeholder="Any"
+                  min="0"
+                  @ionInput="(e: CustomEvent) => { maxPrice = e.detail.value !== '' ? Number(e.detail.value) : null; filterPosts(); }"
+                ></ion-input>
+              </ion-item>
+            </div>
+          </div>
+
+          <!-- Amount Range -->
+          <div class="filter-group">
+            <p class="filter-label">Amount Range</p>
+            <div class="range-inputs">
+              <ion-item lines="none" class="range-item">
+                <ion-input
+                  label="Min"
+                  label-placement="stacked"
+                  type="number"
+                  :value="minAmount ?? ''"
+                  placeholder="0"
+                  min="0"
+                  @ionInput="(e: CustomEvent) => { minAmount = e.detail.value !== '' ? Number(e.detail.value) : null; filterPosts(); }"
+                ></ion-input>
+              </ion-item>
+              <span class="range-separator">—</span>
+              <ion-item lines="none" class="range-item">
+                <ion-input
+                  label="Max"
+                  label-placement="stacked"
+                  type="number"
+                  :value="maxAmount ?? ''"
+                  placeholder="Any"
+                  min="0"
+                  @ionInput="(e: CustomEvent) => { maxAmount = e.detail.value !== '' ? Number(e.detail.value) : null; filterPosts(); }"
+                ></ion-input>
+              </ion-item>
+            </div>
+          </div>
 
           <!-- Location Filter -->
-          <ion-select v-model="selectedLocation" @ionChange="filterPosts" placeholder="Filter by Location">
-            <ion-select-option value="">Filter By Location</ion-select-option>
-            <ion-select-option v-for="location in locations" :key="location" :value="location">
-              {{ location }}
-            </ion-select-option>
-          </ion-select>
+          <div class="filter-group">
+            <ion-select
+              v-model="selectedLocation"
+              @ionChange="filterPosts"
+              placeholder="All Locations"
+              label="Location"
+              label-placement="stacked"
+            >
+              <ion-select-option value="">All Locations</ion-select-option>
+              <ion-select-option v-for="location in locations" :key="location" :value="location">
+                {{ location }}
+              </ion-select-option>
+            </ion-select>
+          </div>
 
           <!-- Crop Type Filter -->
-          <ion-select v-model="selectedCropTypes" @ionChange="filterPosts" multiple placeholder="Filter by Crop Type">
-            <ion-select-option value="">All Crop Types</ion-select-option>
-            <ion-select-option v-for="crop in cropTypes" :key="crop" :value="crop">
-              {{ crop }}
-            </ion-select-option>
-          </ion-select>
+          <div class="filter-group">
+            <ion-select
+              v-model="selectedCropTypes"
+              @ionChange="filterPosts"
+              multiple
+              placeholder="All Crop Types"
+              label="Crop Type"
+              label-placement="stacked"
+            >
+              <ion-select-option v-for="crop in cropTypes" :key="crop" :value="crop">
+                {{ crop }}
+              </ion-select-option>
+            </ion-select>
+          </div>
+
+          <!-- Expiry Date Range -->
+          <div class="filter-group">
+            <p class="filter-label">Expiry Date Range</p>
+            <div class="range-inputs">
+              <ion-item lines="none" class="range-item">
+                <ion-input
+                  label="From"
+                  label-placement="stacked"
+                  type="date"
+                  :value="expiryFrom"
+                  @ionInput="(e: CustomEvent) => { expiryFrom = e.detail.value ?? ''; filterPosts(); }"
+                ></ion-input>
+              </ion-item>
+              <ion-item lines="none" class="range-item">
+                <ion-input
+                  label="To"
+                  label-placement="stacked"
+                  type="date"
+                  :value="expiryTo"
+                  @ionInput="(e: CustomEvent) => { expiryTo = e.detail.value ?? ''; filterPosts(); }"
+                ></ion-input>
+              </ion-item>
+            </div>
+          </div>
 
           <!-- Sort by Expiry Date -->
-          <ion-select v-model="sortExpiry" @ionChange="filterPosts" placeholder="Sort by Expiry Date">
-            <ion-select-option value="">Filter By Expiration</ion-select-option>
-            <ion-select-option value="asc">Expires Soon</ion-select-option>
-            <ion-select-option value="desc">Expires Last</ion-select-option>
-          </ion-select>
+          <div class="filter-group">
+            <ion-select
+              v-model="sortExpiry"
+              @ionChange="filterPosts"
+              placeholder="No Sort"
+              label="Sort by Expiry"
+              label-placement="stacked"
+            >
+              <ion-select-option value="">No Sort</ion-select-option>
+              <ion-select-option value="asc">Expires Soon First</ion-select-option>
+              <ion-select-option value="desc">Expires Last First</ion-select-option>
+            </ion-select>
+          </div>
         </div>
 
         <!-- Display Filtered Posts -->
@@ -103,93 +209,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
-import { IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent, IonContent, IonSearchbar, IonRange, IonSelect, IonSelectOption, IonLabel } from '@ionic/vue';
-import { postSer } from '@/scripts/PostService';
+import {
+  IonCardTitle, IonCardHeader, IonCard, IonPage, IonCardContent,
+  IonContent, IonSearchbar, IonSelect, IonSelectOption, IonButton,
+  IonInput, IonItem,
+} from '@ionic/vue';
+import { useBoard } from '@/scripts/useBoard';
 
-const posts = computed(() => postSer.posts.value);
-
-// Filter logic
-const searchQuery = ref('');
-const priceRange = ref(1000); // Max price
-const selectedLocation = ref('');
-const selectedCropTypes = ref<string[]>([]);
-const sortExpiry = ref<string>(''); 
-const filteredPosts = ref(posts.value);
-
-const locations = computed(() => [...new Set(posts.value.map(post => post.location))]);
-const cropTypes = computed(() => [...new Set(posts.value.map(post => post.cropType))]);
-
-// Update search query function
-const updateSearchQuery = (event: CustomEvent) => {
-  searchQuery.value = event.detail.value;
-};
-
-// Watcher to trigger filtering when search query changes
-watch(searchQuery, () => {
-  filterPosts();
-});
-
-// Date formatting function
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  return date.toLocaleString();
-};
-
-// Filtering function
-const filterPosts = () => {
-  let filtered = posts.value;
-
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase();
-
-    filtered = filtered.filter(post => 
-      post.title.toLowerCase().includes(query) ||
-      post.cropType.toLowerCase().includes(query) ||
-      post.userId.toLowerCase().includes(query) ||
-      post.location.toLowerCase().includes(query) ||
-      postSer.formatContact(post.contact).toLowerCase().includes(query) ||
-      post.price.toString().includes(query) ||
-      post.amount.toString().includes(query)
-    );
-  }
-
-  if (priceRange.value) {
-    filtered = filtered.filter(post => post.price <= priceRange.value);
-  }
-
-  if (selectedLocation.value) {
-    filtered = filtered.filter(post => post.location === selectedLocation.value);
-  }
-
-  if (selectedCropTypes.value.length > 0 && !selectedCropTypes.value.includes("")) {
-    filtered = filtered.filter(post => selectedCropTypes.value.includes(post.cropType));
-  }
-
-  if (sortExpiry.value) {
-    filtered = filtered.sort((a, b) => {
-      const dateA = new Date(a.expireDate).getTime();
-      const dateB = new Date(b.expireDate).getTime();
-      return sortExpiry.value === 'asc' ? dateA - dateB : dateB - dateA;
-    });
-  }
-
-  filteredPosts.value = filtered;
-};
-
-// Screen size detection logic
-const isMobileWidth = ref(false);
-const checkScreenWidth = () => {
-  isMobileWidth.value = window.innerWidth < 850;
-};
-
-// Initialize on component mount
-onMounted(async () => {
-  checkScreenWidth();
-  window.addEventListener('resize', checkScreenWidth);
-  await postSer.fetchPosts();
-  filteredPosts.value = posts.value; // Initialize with all posts
-});
+const {
+  searchQuery,
+  showAdvanced,
+  minPrice,
+  maxPrice,
+  minAmount,
+  maxAmount,
+  selectedLocation,
+  selectedCropTypes,
+  expiryFrom,
+  expiryTo,
+  sortExpiry,
+  filteredPosts,
+  locations,
+  cropTypes,
+  hasActiveFilters,
+  activeFilterCount,
+  isMobileWidth,
+  toggleAdvanced,
+  clearFilters,
+  updateSearchQuery,
+  filterPosts,
+  formatDate,
+  postSer,
+} = useBoard();
 </script>
 
 
@@ -202,29 +253,109 @@ onMounted(async () => {
   padding: 15px;
 }
 
+/* Search row: searchbar + advanced button */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.search-row ion-searchbar {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+}
+
+.advanced-btn {
+  flex-shrink: 0;
+  position: relative;
+  white-space: nowrap;
+}
+
+.filter-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ion-color-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: bold;
+  width: 16px;
+  height: 16px;
+  margin-left: 5px;
+}
+
+/* Advanced panel */
+.advanced-panel {
+  background: var(--ion-color-light);
+  border: 1px solid var(--ion-color-medium-tint);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.advanced-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.advanced-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.filter-group {
+  margin-bottom: 12px;
+}
+
+.filter-group ion-select {
+  width: 100%;
+  border: 1px solid var(--ion-color-medium-tint);
+  border-radius: 6px;
+  padding: 4px 8px;
+  background: var(--ion-color-light-shade);
+}
+
+.filter-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ion-color-medium);
+  margin: 0 0 4px 0;
+}
+
+.range-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.range-item {
+  flex: 1;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  border: 1px solid var(--ion-color-medium-tint);
+  border-radius: 6px;
+  background: var(--ion-color-light-shade);
+}
+
+.range-separator {
+  font-size: 1rem;
+  color: var(--ion-color-medium);
+  padding-bottom: 10px;
+  flex-shrink: 0;
+}
+
+/* Post cards */
 .board-card {
   width: 100%;
   font-family: 'Courier New', Courier, monospace;
   margin-left: 0px;
   margin-right: 0px;
   margin-top: 0px;
-}
-
-.filter-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;  /* Increased gap to improve spacing between filters */
-  padding: 5px;
-  margin-top: -30px; /* Ensures spacing from the search bar */
-}
-
-.filter-bar ion-range ion-label {
-  font-size: 1rem; /* Increase font size */
-}
-
-.filter-bar ion-range,
-.filter-bar ion-select {
-  width: 100%;
 }
 
 .info-header {
@@ -248,7 +379,7 @@ onMounted(async () => {
 .info-details span {
   flex: 1;
   flex-direction: column;
-  text-align: left; 
+  text-align: left;
 }
 
 .date-column {
@@ -259,7 +390,7 @@ onMounted(async () => {
 }
 
 .date-column div:first-child {
-  font-weight: bold; 
+  font-weight: bold;
   font-size: 0.9rem;
 }
 
@@ -279,12 +410,6 @@ onMounted(async () => {
 
 ion-content {
   --padding-top: 50px;
-}
-
-ion-searchbar {
-  position: relative;
-  z-index: 10;  /* Ensure it's on top */
-  margin-bottom: 10px; /* Add some space below */
 }
 
 @media (max-width: 850px) {
@@ -323,6 +448,23 @@ ion-searchbar {
 }
 
 @media (max-width: 500px) {
+  .search-row {
+    flex-wrap: wrap;
+  }
+
+  .advanced-btn {
+    width: 100%;
+  }
+
+  .range-inputs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .range-separator {
+    display: none;
+  }
+
   .info-header {
     font-size: 1rem;
   }
@@ -348,4 +490,3 @@ ion-searchbar {
   }
 }
 </style>
-
