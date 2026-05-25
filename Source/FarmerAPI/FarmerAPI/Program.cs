@@ -64,14 +64,14 @@ builder.Services.AddSwaggerGen(c =>
 // Adding Database context 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(
+    options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlOptions =>
+        npgsqlOptions =>
         {
-            sqlOptions.EnableRetryOnFailure(
+            npgsqlOptions.EnableRetryOnFailure(
                 maxRetryCount: 5,
                 maxRetryDelay: TimeSpan.FromSeconds(10),
-                errorNumbersToAdd: null
+                errorCodesToAdd: null
             );
         });
 });
