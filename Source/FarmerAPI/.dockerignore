@@ -1,0 +1,8 @@
+node_modules
+**/bin
+**/obj
+**/.vs
+yarn.lock
+package.json
+*.user
+.DS_Store
