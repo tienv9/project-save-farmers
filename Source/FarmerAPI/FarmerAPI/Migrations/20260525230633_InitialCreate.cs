@@ -4,6 +4,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace FarmerAPI.Migrations
 {
     /// <inheritdoc />
@@ -196,7 +198,22 @@ namespace FarmerAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreateAt", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RefreshToken", "RefreshTokenExpiryTime", "Role", "SecurityStamp", "TwoFactorEnabled", "UpdateAt", "UserName" },
-                values: new object[] { "1", 0, "d67e4921-ad14-4dec-8c60-545818923cca", new DateTime(2026, 5, 25, 22, 16, 31, 129, DateTimeKind.Utc).AddTicks(8243), "admin@admin.com", true, "System", "Administrator", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEMNb6NOD+xDEtmAJZuprVLZDsq2aP77t+Q519sfh+pXSjOyzSp1OZPQgr9UUxPIQaQ==", null, false, null, null, "Admin", "1012dd22-3f53-44d7-94bf-88c145539cda", false, new DateTime(2026, 5, 25, 22, 16, 31, 129, DateTimeKind.Utc).AddTicks(8244), "admin" });
+                values: new object[] { "1", 0, "4ae173ee-436c-4aa1-bb8a-30fa0f2e1847", new DateTime(2026, 5, 25, 23, 6, 33, 758, DateTimeKind.Utc).AddTicks(8333), "admin@admin.com", true, "System", "Administrator", false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEBOh9VDIsWRjKXEn6TmrMlrCPIGqL6m64pzc50apkGYYdhvGCvLeB+bvIv5Zjpg4nQ==", null, false, null, null, "Admin", "05f816ee-6050-41d6-9911-fec41f58fdff", false, new DateTime(2026, 5, 25, 23, 6, 33, 758, DateTimeKind.Utc).AddTicks(8334), "admin" });
+
+            migrationBuilder.InsertData(
+                table: "Posts",
+                columns: new[] { "PostId", "Amount", "Contact", "CreateDate", "CropType", "Description", "ExpireDate", "Location", "Name", "Price", "Status", "Title", "UpdateDate", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("11111111-1111-1111-1111-111111111111"), "500", "5091112233", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Wheat", "High-quality hard red winter wheat, perfect for milling or animal feed.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Spokane, WA", "farmer1@example.com", "15", "Active", "Fresh Wheat - Bulk Sale", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0001-0001-0001-aaaaaaaaaaaa") },
+                    { new Guid("22222222-2222-2222-2222-222222222222"), "300", "5092223344", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Corn", "Freshly harvested sweet corn, available for pickup or local delivery.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Yakima, WA", "grower2@example.com", "8", "Active", "Sweet Corn - Fresh Harvest", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0002-0002-0002-aaaaaaaaaaaa") },
+                    { new Guid("33333333-3333-3333-3333-333333333333"), "200", "5093334455", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Apples", "Certified organic Honeycrisp apples. Great for direct retail or farmers markets.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Wenatchee, WA", "orchard3@example.com", "25", "Active", "Organic Honeycrisp Apples", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0003-0003-0003-aaaaaaaaaaaa") },
+                    { new Guid("44444444-4444-4444-4444-444444444444"), "150", "5094445566", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Potatoes", "Idaho-style russet potatoes grown in Eastern Washington. Sold in 50lb bags.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Moses Lake, WA", "potato4@example.com", "20", "Active", "Russet Potatoes - 50lb Bags", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0004-0004-0004-aaaaaaaaaaaa") },
+                    { new Guid("55555555-5555-5555-5555-555555555555"), "400", "5095556677", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Tomatoes", "Firm Roma tomatoes ideal for sauces and canning. Wholesale pricing available.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Tri-Cities, WA", "veggie5@example.com", "12", "Active", "Roma Tomatoes - Wholesale", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0005-0005-0005-aaaaaaaaaaaa") },
+                    { new Guid("66666666-6666-6666-6666-666666666666"), "600", "5096667788", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Soybeans", "Certified non-GMO soybeans. Suitable for food-grade and feed markets.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Pullman, WA", "crops6@example.com", "18", "Active", "Non-GMO Soybeans", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0006-0006-0006-aaaaaaaaaaaa") },
+                    { new Guid("77777777-7777-7777-7777-777777777777"), "100", "5097778899", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Strawberries", "Vine-ripened strawberries. Pick-up only at the farm. Call ahead to schedule.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Bellingham, WA", "berry7@example.com", "30", "Active", "Fresh Strawberries - Pick Up Only", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0007-0007-0007-aaaaaaaaaaaa") },
+                    { new Guid("88888888-8888-8888-8888-888888888888"), "250", "5098889900", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), "Carrots", "Pre-washed baby carrots ready for restaurant and grocery supply chains.", new DateTime(9999, 12, 31, 0, 0, 0, 0, DateTimeKind.Utc), "Olympia, WA", "garden8@example.com", "10", "Active", "Baby Carrots - Restaurant Supply", new DateTime(2026, 5, 25, 0, 0, 0, 0, DateTimeKind.Utc), new Guid("aaaaaaaa-0008-0008-0008-aaaaaaaaaaaa") }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
