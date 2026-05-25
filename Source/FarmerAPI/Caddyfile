@@ -1,3 +1,7 @@
 api.savefarmer.help {
     reverse_proxy api:5000
 }
+
+api.wordleclone.lol {
+    reverse_proxy wordle-api:5001
+}
