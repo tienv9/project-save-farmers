@@ -48,7 +48,7 @@ namespace FarmerAPI.Service
                 issuer: _validIssuer,
                 audience: _validAudience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(_expires),
+                expires: DateTime.UtcNow.AddMinutes(_expires),
                 signingCredentials: signingCredentials
             );
         }

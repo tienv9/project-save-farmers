@@ -53,8 +53,8 @@ namespace FarmerAPI.Service
             }
             _logger.LogInformation("User created successfully");
             await _tokenService.GenerateToken(newUser);
-            newUser.CreateAt = DateTime.Now;
-            newUser.UpdateAt = DateTime.Now;
+            newUser.CreateAt = DateTime.UtcNow;
+            newUser.UpdateAt = DateTime.UtcNow;
             return _mapper.Map<UserResponse>(newUser);
         }
         private static bool IsValidEmail(string email)
@@ -124,10 +124,10 @@ namespace FarmerAPI.Service
 
             if (user.CreateAt == default)
             {
-                user.CreateAt = DateTime.Now;
+                user.CreateAt = DateTime.UtcNow;
             }
 
-            user.UpdateAt = DateTime.Now;
+            user.UpdateAt = DateTime.UtcNow;
 
             // Generate access token
             var token = await _tokenService.GenerateToken(user);
@@ -139,7 +139,7 @@ namespace FarmerAPI.Service
             using var sha256 = SHA256.Create();
             var refreshTokenHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(refreshToken));
             user.RefreshToken = Convert.ToBase64String(refreshTokenHash);
-            user.RefreshTokenExpiryTime = DateTime.Now.AddDays(30);
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(30);
             // Update user information in database
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -198,7 +198,7 @@ namespace FarmerAPI.Service
             }
 
             // Validate the refresh token expiry time
-            if (user.RefreshTokenExpiryTime < DateTime.Now)
+            if (user.RefreshTokenExpiryTime < DateTime.UtcNow)
             {
                 _logger.LogWarning("Refresh token expired for user ID: {UserId}", user.Id);
                 throw new Exception("Refresh token expired");
@@ -209,7 +209,7 @@ namespace FarmerAPI.Service
             _logger.LogInformation("Access token generated successfully");
             var currentUserResponse = _mapper.Map<CurrentUserResponse>(user);
             currentUserResponse.AccessToken = newAccessToken;
-            user.UpdateAt = DateTime.Now;
+            user.UpdateAt = DateTime.UtcNow;
             return currentUserResponse;
         }
 
@@ -233,7 +233,7 @@ namespace FarmerAPI.Service
                 }
 
                 // Validate the refresh token expiry time
-                if (user.RefreshTokenExpiryTime < DateTime.Now)
+                if (user.RefreshTokenExpiryTime < DateTime.UtcNow)
                 {
                     _logger.LogWarning("Refresh token expired for user ID: {UserId}", user.Id);
                     throw new Exception("Refresh token expired");
@@ -276,7 +276,7 @@ namespace FarmerAPI.Service
                 throw new Exception("User not found");
             }
 
-            user.UpdateAt = DateTime.Now;
+            user.UpdateAt = DateTime.UtcNow;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
             user.Email = request.Email;
